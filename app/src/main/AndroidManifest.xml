@@ -37,6 +37,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ViewProfileActivity"
+            android:label="@string/title_activity_view_profile" >
+        </activity>
+        <activity
+            android:name=".ViewGroupActivity"
+            android:label="@string/title_activity_view_group" >
+        </activity>
     </application>
 
 </manifest>
