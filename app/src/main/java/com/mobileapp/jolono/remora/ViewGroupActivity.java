@@ -13,6 +13,7 @@ public class ViewGroupActivity extends ActionBarActivity implements View.OnClick
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("life cycle", "view group, onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_group);
 
@@ -22,37 +23,37 @@ public class ViewGroupActivity extends ActionBarActivity implements View.OnClick
     /* life cycle logging --------------------------------------------------------------------*/
     @Override
     protected void onStart() {
-        Log.d("life cycle", "onStart");
+        Log.d("life cycle", "view group, onStart");
         super.onStart();
     }
 
     @Override
     protected void onResume() {
-        Log.d("life cycle", "onResume");
+        Log.d("life cycle", "view group, onResume");
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        Log.d("life cycle", "onPause");
+        Log.d("life cycle", "view group, onPause");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        Log.d("life cycle", "onStop");
+        Log.d("life cycle", "view group, onStop");
         super.onStop();
     }
 
     @Override
     protected void onRestart() {
-        Log.d("life cycle", "onRestart");
+        Log.d("life cycle", "view group, onRestart");
         super.onRestart();
     }
 
     @Override
     protected  void onDestroy() {
-        Log.d("life cycle", "onDestroy");
+        Log.d("life cycle", "view group, onDestroy");
         super.onDestroy();
     }
     /*---------------------------------------------------------------------------------------*/
@@ -83,7 +84,7 @@ public class ViewGroupActivity extends ActionBarActivity implements View.OnClick
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.groupPageMember1Button:
-                this.startActivity(new Intent(this, ViewGroupActivity.class));
+                this.startActivity(new Intent(this, ViewProfileActivity.class));
         }
     }
 }
