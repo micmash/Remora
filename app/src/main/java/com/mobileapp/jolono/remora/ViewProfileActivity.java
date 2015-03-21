@@ -1,6 +1,9 @@
 package com.mobileapp.jolono.remora;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +19,13 @@ public class ViewProfileActivity extends ActionBarActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
 
-        findViewById(R.id.profilePageGroupButton).setOnClickListener(this);
+        //create fragment and add to activity layout
+        Fragment profileFrag = ProfileFragment.newInstance("Noah Torrance", 23, getResources().getString(R.string.gender_type_male), "A pretty cool guy.");
+        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+        fragTrans.add(R.id.profile_frag_container, profileFrag);
+        fragTrans.commit();
+
+        findViewById(R.id.viewprofile_activity_group_button).setOnClickListener(this);
     }
 
     /* life cycle logging --------------------------------------------------------------------*/
@@ -84,7 +93,7 @@ public class ViewProfileActivity extends ActionBarActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.profilePageGroupButton:
+            case R.id.viewprofile_activity_group_button:
                 startActivity(new Intent(this, ViewGroupActivity.class));
         }
     }
