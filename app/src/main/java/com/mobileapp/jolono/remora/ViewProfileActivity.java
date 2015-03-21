@@ -20,7 +20,8 @@ public class ViewProfileActivity extends ActionBarActivity implements View.OnCli
         setContentView(R.layout.activity_view_profile);
 
         //create fragment and add to activity layout
-        Fragment profileFrag = ProfileFragment.newInstance("Noah Torrance", 23, getResources().getString(R.string.gender_type_male), "A pretty cool guy.");
+        Profile profile = Profile.getSelectedProfile(0);
+        Fragment profileFrag = ProfileFragment.newInstance(profile.mName, profile.mAge, profile.mGender, profile.mDescription);
         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
         fragTrans.add(R.id.profile_frag_container, profileFrag);
         fragTrans.commit();
