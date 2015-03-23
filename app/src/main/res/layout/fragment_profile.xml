@@ -1,103 +1,85 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.mobileapp.jolono.remora.ProfileFragment">
+    tools:context="com.mobileapp.jolono.remora.ProfileFragment"
+    android:orientation="vertical"
+    android:id="@+id/fragment_profile_base">
 
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_profile_title"
+        android:id="@+id/textView2"
+        style="@style/RemoraTheme.FragmentTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Full Name"
+        android:id="@+id/fragment_profile_name" />
+
+    <TableLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="left|top"
-        android:padding="4dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/profile_frag_title"
-            android:id="@+id/profile_frag_title"
-            android:paddingLeft="2dp"
-            android:paddingBottom="5dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Full Name"
-            android:id="@+id/profile_frag_name"
-            android:paddingBottom="10dp"
-            android:paddingLeft="2dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:paddingLeft="2dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/profile_frag_age"
-                android:id="@+id/profile_frag_age"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="age"
-                android:id="@+id/profile_frag_age_val"
-                android:paddingLeft="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:paddingLeft="2dp">
+            android:layout_height="fill_parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/profile_frag_gender"
-                android:id="@+id/profile_frag_gender"
-                android:textStyle="bold" />
+                android:text="@string/age"
+                android:id="@+id/textView4"
+                android:layout_column="0"
+                style="@style/RemoraTheme.FieldHeader" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="unspecified"
-                android:id="@+id/profile_frag_gender_val"
-                android:paddingLeft="10dp" />
-        </LinearLayout>
+                android:text="21"
+                android:id="@+id/fragment_profile_age"
+                android:layout_column="1"
+                android:layout_marginLeft="@dimen/header_field_separation" />
+        </TableRow>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/profile_frag_description"
-            android:id="@+id/profile_frag_description"
-            android:textStyle="bold"
-            android:padding="2dp"
-            android:paddingBottom="10dp" />
-
-        <EditText
+        <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/profile_frag_description_val"
-            android:elegantTextHeight="false"
-            android:text="This is a short, simple description about myself.\nWhy the fuck is this centered?"
-            android:padding="2dp"
-            android:background="@color/background_material_light" />
+            android:layout_height="fill_parent">
 
-    </LinearLayout>
-</FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender"
+                android:id="@+id/textView5"
+                android:layout_column="0"
+                style="@style/RemoraTheme.FieldHeader" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="male"
+                android:id="@+id/fragment_profile_gender"
+                android:layout_column="1"
+                android:layout_marginLeft="@dimen/header_field_separation" />
+
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_profile_description"
+        android:id="@+id/textView6"
+        style="@style/RemoraTheme.FieldHeader" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/fragment_profile_description" />
+
+</LinearLayout>

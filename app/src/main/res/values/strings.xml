@@ -4,17 +4,35 @@
     <string name="app_name">Remora</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_view_profile">ViewProfileActivity</string>
-    <string name="title_activity_view_group">ViewGroupActivity</string>
 
-    <string name="profile_frag_title">Profile</string>
-    <string name="profile_frag_gender">gender</string>
-    <string name="profile_frag_age">age</string>
-    <string name="profile_frag_description">description</string>
 
-    <string name="gender_type_male">male</string>
-    <string name="gender_type_female">female</string>
-    <string name="gender_type_unspecified">unspecified</string>
+    <!-- Generic -->
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="new_password">new password</string>
+    <string name="old_password">old password</string>
+    <string name="reenter_password">reenter new password</string>
+    <string name="gender">gender</string>
+    <string name="age">age</string>
 
+    <!-- Activity specific (format = "activity resource name"_"view element descriptor") -->
+    <string name="activity_create_account_title">Account</string>
+    <string name="activity_view_profile_title">ViewProfileActivity</string>
+    <string name="activity_view_group_title">ViewGroupActivity</string>
+    <string name="activity_get_account_title">GetAccountActivity</string>
+
+    <!-- Fragment specific (format = "fragment resource name"_"view element descriptor") -->
+    <string name="fragment_account_credentials_title">Account Credentials</string>
+    <string name="fragment_account_credentials_change_password">change password</string>
+
+    <string name="fragment_profile_title">Profile</string>
+    <string name="fragment_profile_description">description</string>
+
+    <string name="create_account_frag_account_cred_title">Account Credentials</string>
+    <string name="create_account_frag_email">email address</string>
+    <string name="create_account_frag_password">password</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

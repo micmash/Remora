@@ -79,10 +79,10 @@ public class ProfileFragment extends Fragment {
     public void onStart() {
         super.onStart();
         //display text
-        ((TextView) getView().findViewById(R.id.profile_frag_name)).setText(mName);
-        ((TextView) getView().findViewById(R.id.profile_frag_age_val)).setText(Integer.toString(mAge));
-        ((TextView) getView().findViewById(R.id.profile_frag_gender_val)).setText(mGender);
-        ((TextView) getView().findViewById(R.id.profile_frag_description_val)).setText(mDescription);
+        ((TextView) getView().findViewById(R.id.fragment_profile_name)).setText(mName);
+        ((TextView) getView().findViewById(R.id.fragment_profile_age)).setText(Integer.toString(mAge));
+        ((TextView) getView().findViewById(R.id.fragment_profile_gender)).setText(mGender);
+        ((TextView) getView().findViewById(R.id.fragment_profile_description)).setText(mDescription);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

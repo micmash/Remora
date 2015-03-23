@@ -23,7 +23,7 @@ public class ViewProfileActivity extends ActionBarActivity implements View.OnCli
         Profile profile = Profile.getSelectedProfile(0);
         Fragment profileFrag = ProfileFragment.newInstance(profile.mName, profile.mAge, profile.mGender, profile.mDescription);
         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-        fragTrans.add(R.id.profile_frag_container, profileFrag);
+        fragTrans.add(R.id.activity_view_profile_base, profileFrag);
         fragTrans.commit();
 
         findViewById(R.id.viewprofile_activity_group_button).setOnClickListener(this);
