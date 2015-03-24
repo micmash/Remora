@@ -8,16 +8,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_get_account_scrollview" >
+        android:layout_height="wrap_content">
 
-        <fragment
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:name="com.mobileapp.jolono.remora.AccountCredentialsFragment"
-            android:id="@+id/fragment"
-            tools:layout="@layout/fragment_account_credentials"
-            android:layout_gravity="center_horizontal|top" />
+            android:id="@+id/activity_get_account_fragment_container"></LinearLayout>
     </ScrollView>
 
 </FrameLayout>

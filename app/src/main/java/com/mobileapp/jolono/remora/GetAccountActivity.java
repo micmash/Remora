@@ -4,22 +4,30 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class GetAccountActivity extends ActionBarActivity {
+public class GetAccountActivity extends ActionBarActivity implements AccountCredentialsFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_account);
 
-        //create fragment and add to activity layout
-        Profile profile = Profile.getSelectedProfile(0);
-        Fragment profileFrag = ProfileFragment.newInstance(profile.mName, profile.mAge, profile.mGender, profile.mDescription);
+        UserAccount.login("torrance.8@osu.edu", "password"); //TODO: GET RID OF THIS.
+        //create fragments and add to activity layout
+        if(!UserAccount.verify()) Log.e("AUTH", "failed account verification.");//TODO: DO MORE
         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-        fragTrans.add(R.id.activity_get_account_scrollview, profileFrag);
+
+        Fragment accountCredFrag = AccountCredentialsFragment.newInstance(UserAccount.mAccountName);
+        fragTrans.add(R.id.activity_get_account_fragment_container, accountCredFrag);
+
+        Profile profile = Profile.getSelectedProfile(UserAccount.mUserId);
+        Fragment profileFrag = ProfileFragment.newInstance(profile.mName, profile.mAge, profile.mGender, profile.mDescription);
+        fragTrans.add(R.id.activity_get_account_fragment_container, profileFrag);
+
         fragTrans.commit();
     }
 
@@ -44,5 +52,11 @@ public class GetAccountActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //prob should just handle in fragment but wanted to show example of frag to activity interaction.
+    @Override
+    public void onChangePassword() {
+        Log.d("fragTEst", "I just changed the password! (not really)");
     }
 }

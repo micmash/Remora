@@ -3,7 +3,7 @@ package com.mobileapp.jolono.remora;
 /**
  * TODO: Move to separate package for organization.
  * Profile is public information about a user.
- * Account contains a profile but we don't want to pull account information if not user.
+ * UserAccount contains a profile but we don't want to pull account information if not user.
  *
  * Profile cannot directly update itself on database as the only person who can is the holder
  * of the account. i.e. account can be updated with new profile, profile cannot update itself.
