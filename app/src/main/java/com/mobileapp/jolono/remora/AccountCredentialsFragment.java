@@ -52,6 +52,10 @@ public class AccountCredentialsFragment extends Fragment implements View.OnClick
         if (getArguments() != null) {
             mAccountName = getArguments().getString(ACCOUNT_NAME);
         }
+
+        getView().findViewById(R.id.fragment_account_credentials_change_password_button).setOnClickListener(this);
+
+
     }
 
     @Override
