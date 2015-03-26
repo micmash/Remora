@@ -16,6 +16,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,8 +28,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import org.apache.http.HttpEntity;
+import org.json.*;
 
 
 /**
@@ -266,18 +280,58 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                String s = "http://ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
+                //String s = "http://www.android.com/";
+                URL url = new URL(s);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                int status = urlConnection.getResponseCode();
+                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
+                //InputStreamReader streamReader = new InputStreamReader(inputStream))
+                String response = "";
+                Scanner scanner = new Scanner(inputStream);
+                scanner.useDelimiter("\\A");
+                if(scanner.hasNext()) {
+                    response = scanner.next();
+                }
+
+                Log.d("response", response);
+
+                JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
+                String name = jsonObject.getString("name");
+                Log.d("response", name);
+
+//                while(jsonReader.hasNext()) {
+//
+//                    String name = jsonReader.nextName();
+//                    if(jsonReader.hasNext()) {
+//                        switch (name) {
+//                            case "name":
+//                                UserAccount.mAccountName = jsonReader.nextString();
+//                            break;
+//                        }
+//                    }
+//                }
+
+               // Log.d("response", UserAccount.mAccountName);
+
+               // Thread.sleep(2000);
+            } catch (MalformedURLException e) {
+                return false;
+            } catch (IOException e) {
+                Log.d("sdafkljda", e.getMessage());
+                return false;
+            } catch (JSONException e) {
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // UserAccount exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
+//            for (String credential : DUMMY_CREDENTIALS) {
+//                String[] pieces = credential.split(":");
+//                if (pieces[0].equals(mEmail)) {
+//                    // UserAccount exists, return true if the password matches.
+//                    return pieces[1].equals(mPassword);
+//                }
+//            }
 
             // TODO: register the new account here.
             return true;

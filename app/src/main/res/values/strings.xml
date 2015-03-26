@@ -5,7 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-
+    <string name="server_url_insecure">ec2-52-0-168-55.compute-1.amazonaws.com/</string>
+    <string name="login_password">dhh:secret</string>
     <!-- Generic -->
     <string name="email">email</string>
     <string name="password">password</string>
