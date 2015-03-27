@@ -52,10 +52,6 @@ public class AccountCredentialsFragment extends Fragment implements View.OnClick
         if (getArguments() != null) {
             mAccountName = getArguments().getString(ACCOUNT_NAME);
         }
-
-        getView().findViewById(R.id.fragment_account_credentials_change_password_button).setOnClickListener(this);
-
-
     }
 
     @Override
@@ -68,7 +64,10 @@ public class AccountCredentialsFragment extends Fragment implements View.OnClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_credentials, container, false);
+        View view = inflater.inflate(R.layout.fragment_account_credentials, container, false);
+        getView().findViewById(R.id.fragment_account_credentials_change_password_button).setOnClickListener(this);
+
+        return view;
     }
 
     @Override
