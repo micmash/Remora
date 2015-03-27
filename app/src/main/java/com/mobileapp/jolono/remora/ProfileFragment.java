@@ -66,6 +66,7 @@ public class ProfileFragment extends Fragment {
             mAge = getArguments().getInt(ARG_AGE);
             mGender = getArguments().getString(ARG_GENDER);
             mDescription = getArguments().getString(ARG_DESCRIPTION);
+
         }
     }
 

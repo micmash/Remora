@@ -28,6 +28,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +54,7 @@ import org.json.*;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -66,6 +73,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    public Profile p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,74 +272,49 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
+
+        
         private final Activity mLoginActivity;
         private final String mEmail;
         private final String mPassword;
+        private RequestQueue queue;
 
         UserLoginTask(Activity loginActivity, String email, String password) {
             mLoginActivity = loginActivity;
             mEmail = email;
             mPassword = password;
+            queue = Volley.newRequestQueue(mLoginActivity);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                String s = "http://ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
-                //String s = "http://www.android.com/";
-                URL url = new URL(s);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                int status = urlConnection.getResponseCode();
-                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
 
-                //InputStreamReader streamReader = new InputStreamReader(inputStream))
-                String response = "";
-                Scanner scanner = new Scanner(inputStream);
-                scanner.useDelimiter("\\A");
-                if(scanner.hasNext()) {
-                    response = scanner.next();
+            // Simulate network access.
+            String s = "http://ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
+            //String s = "http://www.android.com/";
+
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, s, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            //Call a Static Factory Method (this is where we parse)
+                            p = Profile.getSelectedProfile(0);
+                        }
+
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
                 }
+            });
 
-                Log.d("response", response);
 
-                JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
-                String name = jsonObject.getString("name");
-                Log.d("response", name);
 
-//                while(jsonReader.hasNext()) {
-//
-//                    String name = jsonReader.nextName();
-//                    if(jsonReader.hasNext()) {
-//                        switch (name) {
-//                            case "name":
-//                                UserAccount.mAccountName = jsonReader.nextString();
-//                            break;
-//                        }
-//                    }
-//                }
 
-               // Log.d("response", UserAccount.mAccountName);
 
-               // Thread.sleep(2000);
-            } catch (MalformedURLException e) {
-                return false;
-            } catch (IOException e) {
-                Log.d("sdafkljda", e.getMessage());
-                return false;
-            } catch (JSONException e) {
-                return false;
-            }
-
-//            for (String credential : DUMMY_CREDENTIALS) {
-//                String[] pieces = credential.split(":");
-//                if (pieces[0].equals(mEmail)) {
-//                    // UserAccount exists, return true if the password matches.
-//                    return pieces[1].equals(mPassword);
-//                }
-//            }
 
             // TODO: register the new account here.
             return true;

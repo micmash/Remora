@@ -16,9 +16,9 @@ public class GetAccountActivity extends ActionBarActivity implements AccountCred
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_account);
 
-        UserAccount.login("torrance.8@osu.edu", "password"); //TODO: GET RID OF THIS.
+        //UserAccount.login("torrance.8@osu.edu", "password"); //TODO: GET RID OF THIS.
         //create fragments and add to activity layout
-        if(!UserAccount.verify()) Log.e("AUTH", "failed account verification.");//TODO: DO MORE
+        //if(!UserAccount.verify()) Log.e("AUTH", "failed account verification.");//TODO: DO MORE
         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
 
         Fragment accountCredFrag = AccountCredentialsFragment.newInstance(UserAccount.mAccountName);
