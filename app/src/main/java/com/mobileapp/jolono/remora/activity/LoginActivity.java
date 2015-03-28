@@ -26,19 +26,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.*;
 
 
 /**
@@ -317,7 +311,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
             if (success) {
                 finish();
-                mLoginActivity.startActivity(new Intent(mLoginActivity, ViewProfileActivity.class));
+                mLoginActivity.startActivity(new Intent(mLoginActivity, GetProfileActivity.class));
 
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

@@ -34,11 +34,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ViewProfileActivity"
+            android:name=".activity.GetProfileActivity"
             android:label="@string/activity_view_profile_title" >
         </activity>
         <activity
-            android:name=".activity.ViewGroupActivity"
+            android:name=".activity.GetGroupActivity"
             android:label="@string/activity_view_group_title" >
         </activity>
         <activity

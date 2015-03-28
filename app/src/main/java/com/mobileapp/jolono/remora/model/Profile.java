@@ -27,52 +27,24 @@ public class Profile {
     public String mGender;
     public String mDescription;
 
+    public String mUrl;
+
     private static final String NAME_ARG_NAME = "name";
     private static final String AGE_ARG_NAME = "age";
-
-
-//
-//    private Profile(int id, String name, int age, String gender, String description) {
-//        mId = id;
-//        mName = name;
-//        mAge = age;
-//        mGender = gender;
-//        mDescription = description;
-//    }
+    private static final String URL_ARG_URL = "url";
 
     public Profile(JSONObject jsonObject) {
         try {
             mName = jsonObject.getString(NAME_ARG_NAME);
+            mUrl = jsonObject.getString(URL_ARG_URL);
         } catch (JSONException e) {
             Log.e(e.getClass().toString(), e.getMessage());
         }
     }
 
-
-//    public static Profile getProfile(int id) {
-////        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, s, null,
-////                new Response.Listener<JSONObject>() {
-////                    @Override
-////                    public void onResponse(JSONObject response) {
-////                        //Call a Static Factory Method (this is where we parse)
-////                        return new Profile()
-////                    }
-////
-////                }, new Response.ErrorListener() {
-////            @Override
-////            public void onErrorResponse(VolleyError error) {
-////
-////            }
-////        });
-//
-//        //if profile with id in cache, get profile from cache and return.
-//        //else connect to database with separate thread, retrieve profile data, create new
-//        //profile instance and return.
-//        Profile profile = new Profile(id, "Noah Torrance", 23, "male", "I'm a pretty cool guy.");
-//
-//        return profile;
-//    }
-
-
+    @Override
+    public String toString() {
+        return mName + " " + mAge + " " + mGender;
+    }
 
 }

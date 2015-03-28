@@ -22,14 +22,14 @@ import com.mobileapp.jolono.remora.model.RequestManager;
 import org.json.JSONObject;
 
 
-public class ViewProfileActivity extends ActionBarActivity implements View.OnClickListener {
+public class GetProfileActivity extends ActionBarActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("life cycle", "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_profile);
+        setContentView(R.layout.activity_get_profile);
 
-        String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
+        String url = getIntent().getStringExtra("url");
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -118,7 +118,7 @@ public class ViewProfileActivity extends ActionBarActivity implements View.OnCli
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.viewprofile_activity_group_button:
-                startActivity(new Intent(this, ViewGroupActivity.class));
+                startActivity(new Intent(this, GetGroupActivity.class));
         }
     }
 

@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.mobileapp.jolono.remora.activity.ViewProfileActivity"
+    tools:context="com.mobileapp.jolono.remora.activity.GetProfileActivity"
     android:clickable="false"
     android:id="@+id/activity_view_profile_base"
     android:orientation="vertical">
