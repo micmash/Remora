@@ -1,20 +1,11 @@
-package com.mobileapp.jolono.remora;
+package com.mobileapp.jolono.remora.model;
 
 import android.util.Log;
 
-import com.mobileapp.jolono.remora.model.AbstractDatabaseObject;
-
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Scanner;
 
 /**
  * TODO: Put under separate package.
@@ -23,39 +14,11 @@ import java.util.Scanner;
  *
  * Created by Noah on 3/23/2015.
  */
-public class UserAccount extends AbstractDatabaseObject {
+public class UserAccount {
     public static int mUserId = -1;
     public static String mAccountName = null;
     public static Profile mUserProfile = null;
     
-    
-    public UserAccount getObject(int id) {
-
-
-        // Simulate network access.
-        String s = super.baseDomain;
-        URL url = null;
-        try {
-            url = new URL(s);
-            //add stuff here 
-            JSONObject json = super.getJsonResponse(url);
-        } catch (MalformedURLException e) {
-            Log.d("WOMP WOMP BAD URL", e.getMessage());
-        }
-
-
-           
-           // Log.d("response", name);
-            
-        return this;
-    }
-    
-    public boolean putObject() {
-        
-        
-        return false;
-    }
-
 
 /*    public static boolean login(String accountName, String password) {
         //call database to login.

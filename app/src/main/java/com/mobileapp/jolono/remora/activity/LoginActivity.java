@@ -1,4 +1,4 @@
-package com.mobileapp.jolono.remora;
+package com.mobileapp.jolono.remora.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -16,8 +16,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.JsonReader;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,20 +32,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.mobileapp.jolono.remora.R;
+import com.mobileapp.jolono.remora.model.Profile;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-import org.apache.http.HttpEntity;
 import org.json.*;
 
 
@@ -290,31 +280,31 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-
-            // Simulate network access.
-            String s = "http://ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
-            //String s = "http://www.android.com/";
-
-
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, s, null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            //Call a Static Factory Method (this is where we parse)
-                            p = Profile.getSelectedProfile(0);
-                        }
-
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
-
-
-
-
-
+//
+//            // Simulate network access.
+//            String s = "http://ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
+//            //String s = "http://www.android.com/";
+//
+//
+//            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, s, null,
+//                    new Response.Listener<JSONObject>() {
+//                        @Override
+//                        public void onResponse(JSONObject response) {
+//                            //Call a Static Factory Method (this is where we parse)
+//                            p = Profile.getSelectedProfile(0);
+//                        }
+//
+//                    }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//
+//                }
+//            });
+//
+//
+//
+//
+//
 
             // TODO: register the new account here.
             return true;
