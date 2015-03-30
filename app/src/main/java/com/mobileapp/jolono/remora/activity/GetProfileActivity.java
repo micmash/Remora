@@ -50,6 +50,7 @@ public class GetProfileActivity extends ActionBarActivity implements View.OnClic
 
 
         findViewById(R.id.viewprofile_activity_group_button).setOnClickListener(this);
+        findViewById(R.id.viewmap_activity_map_button).setOnClickListener(this);
     }
 
     /* life cycle logging --------------------------------------------------------------------*/
@@ -119,6 +120,9 @@ public class GetProfileActivity extends ActionBarActivity implements View.OnClic
         switch(v.getId()) {
             case R.id.viewprofile_activity_group_button:
                 startActivity(new Intent(this, GetGroupActivity.class));
+                break;
+            case R.id.viewmap_activity_map_button:
+                startActivity(new Intent(this, MapsActivity.class));
         }
     }
 
