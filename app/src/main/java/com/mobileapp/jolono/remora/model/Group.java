@@ -7,7 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Noah on 3/28/2015.
@@ -31,5 +33,13 @@ public class Group {
         } catch (JSONException e) {
             Log.e(e.getClass().toString(), e.getMessage());
         }
+    }
+
+    public void AddMember(Profile member) {
+        mMembers.add(member);
+    }
+
+    public void RemoveMember(Profile member) {
+        mMembers.remove(member);
     }
 }

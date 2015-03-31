@@ -28,32 +28,32 @@ public class
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_account);
-
-        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-
-        Fragment accountCredFrag = AccountCredentialsFragment.newInstance(UserAccount.mAccountName);
-        fragTrans.add(R.id.activity_get_account_fragment_container, accountCredFrag);
-        fragTrans.commit();
-
-        String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Fragment profileFrag = ProfileFragment.newInstance(new Profile(response));
-                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                        fragTrans.add(R.id.activity_view_profile_base, profileFrag);
-                        fragTrans.commit();
-                    }
-
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        RequestManager.getInstance(this).addToRequestQueue(request);
+//        setContentView(R.layout.activity_get_account);
+//
+//        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+//
+//        Fragment accountCredFrag = AccountCredentialsFragment.newInstance(UserAccount.mAccountName);
+//        fragTrans.add(R.id.activity_get_account_fragment_container, accountCredFrag);
+//        fragTrans.commit();
+//
+//        String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        Fragment profileFrag = ProfileFragment.newInstance(new Profile(response));
+//                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+//                        fragTrans.add(R.id.activity_view_profile_base, profileFrag);
+//                        fragTrans.commit();
+//                    }
+//
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        RequestManager.getInstance(this).addToRequestQueue(request);
     }
 
 

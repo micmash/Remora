@@ -1,11 +1,15 @@
 package com.mobileapp.jolono.remora.model;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.mobileapp.jolono.remora.R;
+import com.mobileapp.jolono.remora.fragment.ProfileFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,9 +46,30 @@ public class Profile {
         }
     }
 
+    public JsonObjectRequest getJSONRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put(NAME_ARG_NAME, mName);
+        } catch(JSONException e) {
+
+        }
+
+        String url = mUrl;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, mUrl, jsonObj, responseListener, errorListener);
+
+        return  request;
+    }
+
     @Override
     public String toString() {
         return mName + " " + mAge + " " + mGender;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) return true;
+        if ( !(obj instanceof Profile )) return false;
+        return ((Profile)obj).mId == mId;
     }
 
 }

@@ -27,12 +27,19 @@ import org.json.JSONObject;
 
 
 public class GetGroupActivity extends ActionBarActivity {
-
+    private static final String FRAG_TAG = "gf";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("life cycle", "view group, onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_group);
+
+        Fragment frag;
+        if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
+            FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+            fragTrans.remove(frag);
+            fragTrans.commit();
+        }
 
         String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/accounts.json";
         JsonArrayRequest request = new JsonArrayRequest(url,
@@ -41,7 +48,7 @@ public class GetGroupActivity extends ActionBarActivity {
                     public void onResponse(JSONArray response) {
                         Fragment groupFrag = GroupFragment.newInstance(new Group(response));
                         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                        fragTrans.add(R.id.activity_get_group_base, groupFrag);
+                        fragTrans.add(R.id.activity_get_group_base, groupFrag, FRAG_TAG);
                         fragTrans.commit();
                     }
 

@@ -23,30 +23,40 @@ import org.json.JSONObject;
 
 
 public class GetProfileActivity extends ActionBarActivity implements View.OnClickListener {
+    private static final String FRAG_TAG = "frag";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("life cycle", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_profile);
 
+        Fragment frag;
+        if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
+            FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+            fragTrans.remove(frag);
+            fragTrans.commit();
+            getFragmentManager().executePendingTransactions();
+        }
+
         String url = getIntent().getStringExtra("url");
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Fragment profileFrag = ProfileFragment.newInstance(new Profile(response));
+                        Fragment profileFrag = ProfileFragment.newInstance(new Profile(response), true);
                         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                        fragTrans.add(R.id.activity_view_profile_base, profileFrag);
+                        fragTrans.add(R.id.activity_view_profile_base, profileFrag, FRAG_TAG);
                         fragTrans.commit();
                     }
 
                 }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
+            }
+        });
         RequestManager.getInstance(this).addToRequestQueue(request);
+
 
 
         findViewById(R.id.viewprofile_activity_group_button).setOnClickListener(this);

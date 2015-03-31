@@ -55,35 +55,26 @@ public class GroupFragment extends Fragment implements AbsListView.OnItemClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new ArrayAdapter<Profile>(getActivity(),
-                android.R.layout.simple_list_item_1, mGroup.mMembers);
+        if(mGroup != null) {
+            mAdapter = new ArrayAdapter<Profile>(getActivity(),
+                    android.R.layout.simple_list_item_1, mGroup.mMembers);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_groupmember, container, false);
+        if(mAdapter != null) {
+            // Set the adapter
+            mListView = (AbsListView) view.findViewById(android.R.id.list);
+            ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
-        // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
-
+            // Set OnItemClickListener so we can be notified on item clicks
+            mListView.setOnItemClickListener(this);
+        }
         return view;
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
