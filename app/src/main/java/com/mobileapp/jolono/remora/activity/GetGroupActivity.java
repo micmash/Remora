@@ -41,7 +41,7 @@ public class GetGroupActivity extends ActionBarActivity {
             fragTrans.commit();
         }
 
-        String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/accounts.json";
+        String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/demos.json";
         JsonArrayRequest request = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override

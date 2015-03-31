@@ -43,7 +43,9 @@ public class GetProfileActivity extends ActionBarActivity implements View.OnClic
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Fragment profileFrag = ProfileFragment.newInstance(new Profile(response), true);
+                        Profile profile = new Profile(response);
+                        profile.mUrl = getIntent().getStringExtra("url");
+                        Fragment profileFrag = ProfileFragment.newInstance(profile, true);
                         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                         fragTrans.add(R.id.activity_view_profile_base, profileFrag, FRAG_TAG);
                         fragTrans.commit();

@@ -10,9 +10,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Profile;
+import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
 
 import org.json.JSONObject;
@@ -69,8 +74,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if(v.getId() == R.id.fragment_profile_save_button) {
             EditText description = (EditText) getView().findViewById(R.id.fragment_profile_description);
-            mProfile.mName = description.getText().toString();
 
+            mProfile.mName = description.getText().toString();
+            JsonObjectRequest request = mProfile.getJSONRequest(new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    Log.d("good?", "good?");
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Log.d("shit", "shit");
+                }
+            });
+
+            RequestManager.getInstance(getActivity()).addToRequestQueue(request);
         }
     }
 }

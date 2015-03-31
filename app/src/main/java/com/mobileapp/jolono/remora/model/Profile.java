@@ -41,6 +41,7 @@ public class Profile {
         try {
             mName = jsonObject.getString(NAME_ARG_NAME);
             mUrl = jsonObject.getString(URL_ARG_URL);
+            Log.d("asfdjl", "dskal;fjd");
         } catch (JSONException e) {
             Log.e(e.getClass().toString(), e.getMessage());
         }
@@ -54,8 +55,8 @@ public class Profile {
 
         }
 
-        String url = mUrl;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, mUrl, jsonObj, responseListener, errorListener);
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/demos/1";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, jsonObj, responseListener, errorListener);
 
         return  request;
     }
