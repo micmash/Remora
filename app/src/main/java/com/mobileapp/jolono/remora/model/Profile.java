@@ -1,27 +1,16 @@
 package com.mobileapp.jolono.remora.model;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.mobileapp.jolono.remora.R;
-import com.mobileapp.jolono.remora.fragment.ProfileFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * TODO: Move to separate package for organization.
  * Profile is public information about a user.
- * UserAccount contains a profile but we don't want to pull account information if not user.
- *
- * Profile cannot directly update itself on database as the only person who can is the holder
- * of the account. i.e. account can be updated with new profile, profile cannot update itself.
- *
  * Created by Noah on 3/21/2015.
  */
 public class Profile {
@@ -31,34 +20,76 @@ public class Profile {
     public String mGender;
     public String mDescription;
 
-    public String mUrl;
+    public String mUrl; //optional
 
-    private static final String NAME_ARG_NAME = "name";
-    private static final String AGE_ARG_NAME = "age";
-    private static final String URL_ARG_URL = "url";
+    //entry names for values in db.
+    private static final String NAME_ARG = "name";
+    private static final String BIRTHDATE_ARG = "age";
+    private static final String GENDER_ARG = "gender";
+    private static final String DESCRIPTION_ARG = "description";
+    private static final String URL_ARG = "url";
+
+    public Profile() {
+    }
 
     public Profile(JSONObject jsonObject) {
         try {
-            mName = jsonObject.getString(NAME_ARG_NAME);
-            mUrl = jsonObject.getString(URL_ARG_URL);
-            Log.d("asfdjl", "dskal;fjd");
+            mName = jsonObject.getString(NAME_ARG);
+            if(jsonObject.has(URL_ARG)) mUrl = jsonObject.getString(URL_ARG);
         } catch (JSONException e) {
-            Log.e(e.getClass().toString(), e.getMessage());
+            Log.e(e.getClass().toString(), e.getStackTrace().toString());
         }
     }
 
-    public JsonObjectRequest getJSONRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+    /**
+     * Creates a request to retrieve a profile.
+     * @param url
+     * @param responseListener should construct a Profile here.
+     * @param errorListener
+     * @return
+     */
+    public static JsonObjectRequest getProfileRequest(String url, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener);
+        return request;
+    }
+
+
+    /**
+     * Creates a request to edit this profile.
+     * @param responseListener
+     * @param errorListener
+     * @return
+     */
+    public JsonObjectRequest editProfileRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put(NAME_ARG_NAME, mName);
+            jsonObj.put(NAME_ARG, mName);
         } catch(JSONException e) {
-
         }
 
-        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/demos/1";
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/demos/1.json";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, jsonObj, responseListener, errorListener);
 
         return  request;
+    }
+
+    /**
+     * Creates a request to create a profile.
+     * @param responseListener
+     * @param errorListener
+     * @return
+     */
+    public JsonObjectRequest createProfileRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put(NAME_ARG, mName);
+        } catch(JSONException e) {
+        }
+
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/demos.json";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonObj, responseListener, errorListener);
+
+        return request;
     }
 
     @Override

@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             EditText description = (EditText) getView().findViewById(R.id.fragment_profile_description);
 
             mProfile.mName = description.getText().toString();
-            JsonObjectRequest request = mProfile.getJSONRequest(new Response.Listener<JSONObject>() {
+            JsonObjectRequest request = mProfile.editProfileRequest(new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     Log.d("good?", "good?");
@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Log.d("shit", "shit");
+                    Log.e("shit", volleyError.getCause().toString());
                 }
             });
 

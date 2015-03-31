@@ -39,24 +39,39 @@ public class GetProfileActivity extends ActionBarActivity implements View.OnClic
         }
 
         String url = getIntent().getStringExtra("url");
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Profile profile = new Profile(response);
-                        profile.mUrl = getIntent().getStringExtra("url");
-                        Fragment profileFrag = ProfileFragment.newInstance(profile, true);
-                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                        fragTrans.add(R.id.activity_view_profile_base, profileFrag, FRAG_TAG);
-                        fragTrans.commit();
-                    }
-
-                }, new Response.ErrorListener() {
+        JsonObjectRequest request = Profile.getProfileRequest(url, new Response.Listener<JSONObject>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-
+            public void onResponse(JSONObject response) {
+                Profile profile = new Profile(response);
+                Fragment profileFrag = ProfileFragment.newInstance(profile, true);
+                FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+                fragTrans.add(R.id.activity_view_profile_base, profileFrag, FRAG_TAG);
+                fragTrans.commit();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
             }
         });
+
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        Profile profile = new Profile(response);
+//                        profile.mUrl = getIntent().getStringExtra("url");
+//                        Fragment profileFrag = ProfileFragment.newInstance(profile, true);
+//                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+//                        fragTrans.add(R.id.activity_view_profile_base, profileFrag, FRAG_TAG);
+//                        fragTrans.commit();
+//                    }
+//
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
         RequestManager.getInstance(this).addToRequestQueue(request);
 
 
