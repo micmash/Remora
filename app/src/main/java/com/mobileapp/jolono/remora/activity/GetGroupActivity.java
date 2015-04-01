@@ -50,7 +50,7 @@ public class GetGroupActivity extends ActionBarActivity {
         }
 
 
-        String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/group/1.json";
+        String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups/1.json";
         JsonObjectRequest groupRequest = Group.getGroupRequest(url1, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

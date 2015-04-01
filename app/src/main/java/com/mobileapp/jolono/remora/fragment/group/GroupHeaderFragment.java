@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Group;
@@ -20,6 +21,8 @@ import com.mobileapp.jolono.remora.model.Group;
  */
 public class GroupHeaderFragment extends Fragment {
     public Group mGroup;
+    
+    private TextView mGroupName;
 
     /**
      * Use this factory method to create a new instance of
@@ -39,9 +42,31 @@ public class GroupHeaderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //mGroupName.setText("Group Name");
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mGroupName = ((TextView) getView().findViewById(R.id.group_header_event_name));
+        mGroupName.setText(mGroup.getName());
+        
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        //bundle.putString("mGroupName", mGroupName.getText().toString());
+        
+    }
+    
+    @Override
+    public void onActivityCreated(Bundle toLoad) {
+        super.onActivityCreated(toLoad);
+        //mGroupName.setText(toLoad.get("mGroupName").toString());
+        
+    }
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
