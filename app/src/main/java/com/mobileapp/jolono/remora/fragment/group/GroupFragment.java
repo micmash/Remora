@@ -1,6 +1,5 @@
-package com.mobileapp.jolono.remora.fragment;
+package com.mobileapp.jolono.remora.fragment.group;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.mobileapp.jolono.remora.R;
 
-import com.mobileapp.jolono.remora.activity.GetGroupActivity;
 import com.mobileapp.jolono.remora.activity.GetProfileActivity;
 import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.Profile;

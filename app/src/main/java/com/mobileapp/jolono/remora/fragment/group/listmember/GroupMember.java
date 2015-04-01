@@ -1,4 +1,4 @@
-package com.mobileapp.jolono.remora.fragment.listmember;
+package com.mobileapp.jolono.remora.fragment.group.listmember;
 
 import java.util.ArrayList;
 import java.util.HashMap;

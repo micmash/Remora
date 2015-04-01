@@ -1,9 +1,9 @@
 package com.mobileapp.jolono.remora.activity;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,8 +20,10 @@ import com.mobileapp.jolono.remora.model.RequestManager;
 
 import org.json.JSONArray;
 
-
-public class GetGroupActivity extends ActionBarActivity {
+/**
+ * Created by Logan on 3/31/15.
+ */
+public class GetEventActivity extends Activity {
     private static final String FRAG_TAG = "gf";
     private static final String FRAG_TAG_2 = "fg";
     @Override
@@ -90,5 +92,4 @@ public class GetGroupActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }
