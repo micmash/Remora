@@ -56,7 +56,7 @@ public class GetGroupActivity extends ActionBarActivity {
                     public void onResponse(JSONObject response) {
                         Fragment headerFrag = GroupHeaderFragment.newInstance(new Group(response));
                         FragmentTransaction f = getFragmentManager().beginTransaction();
-                        f.add(R.id.activity_get_group_base, headerFrag, FRAG_TAG_2);
+                        f.add(R.id.activity_get_group_header_fragment_base, headerFrag, FRAG_TAG_2);
                         f.commit();
                     }
                 }, new Response.ErrorListener() {
@@ -67,14 +67,14 @@ public class GetGroupActivity extends ActionBarActivity {
                 });
 
 
-        String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/demos.json";
+        String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
         JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Fragment groupFrag = GroupFragment.newInstance(new Group(response));
                         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                        fragTrans.add(R.id.activity_get_group_base, groupFrag, FRAG_TAG);
+                        fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
                         fragTrans.commit();
                     }
 
