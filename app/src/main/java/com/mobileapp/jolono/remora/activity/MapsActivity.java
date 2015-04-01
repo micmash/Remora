@@ -2,6 +2,7 @@ package com.mobileapp.jolono.remora.activity;
 
 import android.content.Context;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mobileapp.jolono.remora.R;
+import com.mobileapp.jolono.remora.Services.GPSSystem;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,10 +38,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     
     private EditText mAddressView;
     private Button mFindAddressButton;
+    private Button mFindMeButton;
     private LatLng mAddress;
+    private LatLng mMyLocation;
     private GoogleMap mMap = null;
     private Marker mMarker = null;
+    private Marker mMyMarker = null;
+    private GPSSystem gps;
 
+    
+    private LocationManager locationManager;
+    private LocationListener locationListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +59,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mAddressView = (EditText) findViewById(R.id.et_location);
         mAddress = new LatLng(39.999446, -83.012967);
-        
+
         mFindAddressButton = (Button) findViewById(R.id.btn_find);
+        mFindMeButton = (Button) findViewById(R.id.find_me_map_button);
+        mFindMeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMap.clear();
+                gps = new GPSSystem(MapsActivity.this);
+                mMyLocation = gps.getMyLoc();
+                if(mMyLocation != null) {
+                    mMyMarker = mMap.addMarker(new MarkerOptions().position(mMyLocation));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyLocation, 13));
+                    gps.stopUsingGPS();
+                }
+                
+            }
+        });
         mFindAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+        
     }
 
     @Override
