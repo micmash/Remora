@@ -22,8 +22,7 @@ import com.mobileapp.jolono.remora.model.UserAccount;
 import org.json.JSONObject;
 
 
-public class
-        GetAccountActivity extends ActionBarActivity implements AccountCredentialsFragment.OnFragmentInteractionListener {
+public class GetAccountActivity extends ActionBarActivity implements AccountCredentialsFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

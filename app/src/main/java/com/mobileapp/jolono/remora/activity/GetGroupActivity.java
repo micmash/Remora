@@ -2,23 +2,29 @@ package com.mobileapp.jolono.remora.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.net.Uri;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.fragment.group.GroupFragment;
+import com.mobileapp.jolono.remora.fragment.ProfileFragment;
 import com.mobileapp.jolono.remora.fragment.group.GroupHeaderFragment;
 import com.mobileapp.jolono.remora.model.Group;
+import com.mobileapp.jolono.remora.model.Profile;
 import com.mobileapp.jolono.remora.model.RequestManager;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class GetGroupActivity extends ActionBarActivity {
@@ -43,13 +49,26 @@ public class GetGroupActivity extends ActionBarActivity {
             fragTrans.commit();
         }
 
-        Fragment headerFrag = GroupHeaderFragment.newInstance();
-        FragmentTransaction f = getFragmentManager().beginTransaction();
-        f.add(R.id.activity_get_group_base, headerFrag, FRAG_TAG_2);
-        f.commit();
+
+        String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/group/1.json";
+        JsonObjectRequest groupRequest = Group.getGroupRequest(url1, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Fragment headerFrag = GroupHeaderFragment.newInstance(new Group(response));
+                        FragmentTransaction f = getFragmentManager().beginTransaction();
+                        f.add(R.id.activity_get_group_base, headerFrag, FRAG_TAG_2);
+                        f.commit();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+                });
+
 
         String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/demos.json";
-        JsonArrayRequest request = new JsonArrayRequest(url,
+        JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -66,7 +85,8 @@ public class GetGroupActivity extends ActionBarActivity {
             }
         });
 
-        RequestManager.getInstance(this).addToRequestQueue(request);
+        RequestManager.getInstance(this).addToRequestQueue(groupRequest);
+        RequestManager.getInstance(this).addToRequestQueue(groupMemberRequest);
     }
 
     @Override
@@ -90,5 +110,4 @@ public class GetGroupActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

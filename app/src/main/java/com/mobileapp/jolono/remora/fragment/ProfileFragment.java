@@ -28,12 +28,10 @@ import org.json.JSONObject;
  */
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     public Profile mProfile;
-    public boolean mIsUser = false;
 
-    public static ProfileFragment newInstance(Profile profile, boolean isUser) {
+    public static ProfileFragment newInstance(Profile profile) {
         ProfileFragment profileFragment = new ProfileFragment();
         profileFragment.mProfile = profile;
-        profileFragment.mIsUser = isUser;
 
         return profileFragment;
     }
@@ -46,7 +44,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
-        if(mIsUser) {
+        //if(UserAccount.mUserProfile == mProfile) {
+        if(true) {
            View descriptionView = v.findViewById(R.id.fragment_profile_description);
            descriptionView.setFocusable(true);
            descriptionView.setEnabled(true);
@@ -63,10 +62,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onStart();
         if(mProfile != null) {
             //display text
-            ((TextView) getView().findViewById(R.id.fragment_profile_name)).setText(mProfile.mName);
-            ((TextView) getView().findViewById(R.id.fragment_profile_age)).setText(Integer.toString(mProfile.mAge));
-            ((TextView) getView().findViewById(R.id.fragment_profile_gender)).setText(mProfile.mGender);
-            ((TextView) getView().findViewById(R.id.fragment_profile_description)).setText(mProfile.mDescription);
+            ((TextView) getView().findViewById(R.id.fragment_profile_name)).setText(mProfile.getFirstName());
+            ((TextView) getView().findViewById(R.id.fragment_profile_age)).setText(Integer.toString(mProfile.getAge()));
+            ((TextView) getView().findViewById(R.id.fragment_profile_gender)).setText(mProfile.getGender());
+            ((TextView) getView().findViewById(R.id.fragment_profile_description)).setText(mProfile.getDescription());
         }
     }
 
@@ -75,7 +74,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if(v.getId() == R.id.fragment_profile_save_button) {
             EditText description = (EditText) getView().findViewById(R.id.fragment_profile_description);
 
-            mProfile.mName = description.getText().toString();
+            mProfile.setFirstName(description.getText().toString());
             JsonObjectRequest request = mProfile.editProfileRequest(new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {

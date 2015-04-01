@@ -43,7 +43,7 @@ public class GetProfileActivity extends ActionBarActivity implements View.OnClic
             @Override
             public void onResponse(JSONObject response) {
                 Profile profile = new Profile(response);
-                Fragment profileFrag = ProfileFragment.newInstance(profile, true);
+                Fragment profileFrag = ProfileFragment.newInstance(profile);
                 FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                 fragTrans.add(R.id.activity_view_profile_base, profileFrag, FRAG_TAG);
                 fragTrans.commit();

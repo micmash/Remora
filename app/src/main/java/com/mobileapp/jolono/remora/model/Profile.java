@@ -14,30 +14,87 @@ import org.json.JSONObject;
  * Created by Noah on 3/21/2015.
  */
 public class Profile {
-    public int mId;
-    public String mName;
-    public int mAge;
-    public String mGender;
-    public String mDescription;
-
-    public String mUrl; //optional
-
     //entry names for values in db.
-    private static final String NAME_ARG = "name";
+    private static final String FIRST_NAME_ARG = "first_name";
+    private static final String MIDDLE_NAME_ARG = "middle_name";
+    private static final String LAST_NAME_ARG = "last_name";
     private static final String BIRTHDATE_ARG = "age";
     private static final String GENDER_ARG = "gender";
     private static final String DESCRIPTION_ARG = "description";
     private static final String URL_ARG = "url";
 
+    private JSONObject mData;
+    private JSONObject mPushData = new JSONObject();
+
+    public String getFirstName() {
+        try {
+            return mData.getString(FIRST_NAME_ARG);
+        } catch (JSONException e) {
+        }
+        return null;
+    }
+
+    public void setFirstName(String name) {
+        try {
+            mPushData.put(FIRST_NAME_ARG, name);
+        } catch (JSONException e) {
+        }
+    }
+
+    public String getBirthdate() {
+        return null;
+    }
+
+    public void setBirthdate(String date) {
+        try {
+            mPushData.put(BIRTHDATE_ARG, date);
+        } catch (JSONException e) {
+        }
+    }
+
+    public String getGender() {
+        try {
+            return mPushData.getString(GENDER_ARG);
+        } catch (JSONException e) {
+        }
+        return  null;
+    }
+
+    public void setGender(String gender) {
+        try {
+            mPushData.put(GENDER_ARG, gender);
+        } catch (JSONException e) {
+        }
+    }
+
+    public String getDescription() {
+        try {
+            return mData.getString(DESCRIPTION_ARG);
+        } catch (JSONException e) {
+        }
+        return null;
+    }
+
+    public void setDescription(String description) {
+        try {
+            mPushData.put(DESCRIPTION_ARG, description);
+        } catch (JSONException e) {
+        }
+    }
+
+    public int getAge() { return 0; }
+
+    public String mUrl; //optional
+
     public Profile() {
     }
 
     public Profile(JSONObject jsonObject) {
+        mData = jsonObject;
         try {
-            mName = jsonObject.getString(NAME_ARG);
-            if(jsonObject.has(URL_ARG)) mUrl = jsonObject.getString(URL_ARG);
+            mUrl = mData.getString(URL_ARG);
         } catch (JSONException e) {
-            Log.e(e.getClass().toString(), e.getStackTrace().toString());
+
         }
     }
 
@@ -61,14 +118,8 @@ public class Profile {
      * @return
      */
     public JsonObjectRequest editProfileRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
-        JSONObject jsonObj = new JSONObject();
-        try {
-            jsonObj.put(NAME_ARG, mName);
-        } catch(JSONException e) {
-        }
-
-        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/demos/1.json";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, jsonObj, responseListener, errorListener);
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles/2.json";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, mPushData, responseListener, errorListener);
 
         return  request;
     }
@@ -80,28 +131,14 @@ public class Profile {
      * @return
      */
     public JsonObjectRequest createProfileRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
-        JSONObject jsonObj = new JSONObject();
-        try {
-            jsonObj.put(NAME_ARG, mName);
-        } catch(JSONException e) {
-        }
-
-        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/demos.json";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonObj, responseListener, errorListener);
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, mPushData, responseListener, errorListener);
 
         return request;
     }
 
     @Override
     public String toString() {
-        return mName + " " + mAge + " " + mGender;
+        return getFirstName() + getBirthdate() + getGender();
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this) return true;
-        if ( !(obj instanceof Profile )) return false;
-        return ((Profile)obj).mId == mId;
-    }
-
 }
