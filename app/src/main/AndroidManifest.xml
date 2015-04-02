@@ -73,7 +73,10 @@
             android:name=".activity.MapsActivity"
             android:label="@string/title_activity_maps" >
         </activity>
-
+        <activity
+            android:name=".activity.GetEventActivity"
+            android:label="@string/title_activity_get_event" >
+        </activity>
     </application>
 
 </manifest>

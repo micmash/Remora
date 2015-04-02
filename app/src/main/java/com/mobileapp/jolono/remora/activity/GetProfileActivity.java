@@ -43,6 +43,7 @@ public class GetProfileActivity extends ActionBarActivity  {
             @Override
             public void onResponse(JSONObject response) {
                 Profile profile = new Profile(response);
+                profile.mObjUrl = url;
                 Fragment profileFrag = ProfileFragment.newInstance(profile);
                 FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                 fragTrans.add(R.id.activity_view_profile_base, profileFrag, FRAG_TAG);

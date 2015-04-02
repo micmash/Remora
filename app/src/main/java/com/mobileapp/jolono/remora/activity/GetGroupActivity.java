@@ -50,11 +50,13 @@ public class GetGroupActivity extends ActionBarActivity {
         }
 
 
-        final String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups/1.json";
+        final String url1 = getIntent().getStringExtra("url");//"http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups/1.json";
         JsonObjectRequest groupRequest = Group.getRequest(url1, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Fragment headerFrag = GroupHeaderFragment.newInstance(new Group(response));
+                        Group group = new Group(response);
+                        group.mObjUrl = url1;
+                        Fragment headerFrag = GroupHeaderFragment.newInstance(group);
                         FragmentTransaction f = getFragmentManager().beginTransaction();
                         f.add(R.id.activity_get_group_header_fragment_base, headerFrag, FRAG_TAG_2);
                         f.commit();
@@ -67,8 +69,8 @@ public class GetGroupActivity extends ActionBarActivity {
                 });
 
 
-        String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
-        JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url,
+        String url2 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
+        JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url2,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {

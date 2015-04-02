@@ -59,6 +59,7 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_get_account, menu);
+
         return true;
     }
 
@@ -67,11 +68,12 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(item.getItemId()) {
+            case R.id.action_search:
+                Log.d("menu", "search");
+                return true;
+            case R.id.action_settings:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -87,7 +89,7 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.activity_get_account_group_button:
-                startActivity(new Intent(this, GetGroupActivity.class));
+                startActivity(new Intent(this, GetEventActivity.class));
                 break;
             case R.id.activity_get_account_map_button:
                 startActivity(new Intent(this, MapsActivity.class));

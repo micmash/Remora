@@ -53,9 +53,22 @@ public class Group extends AbstractJsonBackedObject {
         return null;
     }
 
+    public String getDescription() {
+        try {
+            return mData.getString(DESCRIPTION_ARG);
+        } catch (JSONException e) {
+        }
+        return null;
+    }
+
     public static JsonArrayRequest getGroupMembers(String url, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);
         return request;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + getDescription();
     }
 
 }

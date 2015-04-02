@@ -20,6 +20,11 @@
     <string name="age">age</string>
     <string name="group">group</string>
     <string name="map">map</string>
+    <string name="start_time">start time</string>
+    <string name="end_time">end_time</string>
+    <string name="location">location</string>
+    <string name="description">description</string>
+    <string name="save">save</string>
 
     <!-- Activity specific (format = "activity resource name"_"view element descriptor") -->
     <string name="activity_create_account_title">Account</string>
@@ -43,8 +48,12 @@
     <string name="create_account_frag_email">email address</string>
     <string name="create_account_frag_password">password</string>
 
+    <string name="fragment_event_header_default_name">Event Name</string>
+
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_get_event">GetEventActivity</string>
 
 </resources>

@@ -15,7 +15,7 @@ public abstract class AbstractJsonBackedObject {
     protected JSONObject mPushData = new JSONObject();
 
     protected String mBaseUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/";
-    protected String mObjUrl;
+    public String mObjUrl; //TODO: protected.  but currently have to set url manually in response.
 
     protected static final String URL_ARG = "url";
 
@@ -54,7 +54,7 @@ public abstract class AbstractJsonBackedObject {
      * @param errorListener
      * @return
      */
-    public JsonObjectRequest editProfileRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+    public JsonObjectRequest editRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, mObjUrl, mPushData, responseListener, errorListener);
 
         return  request;
@@ -66,7 +66,7 @@ public abstract class AbstractJsonBackedObject {
      * @param errorListener
      * @return
      */
-    public JsonObjectRequest createProfileRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+    public JsonObjectRequest createRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, mBaseUrl, mPushData, responseListener, errorListener);
 
         return request;
