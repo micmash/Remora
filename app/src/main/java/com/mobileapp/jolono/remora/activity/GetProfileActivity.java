@@ -22,7 +22,7 @@ import com.mobileapp.jolono.remora.model.RequestManager;
 import org.json.JSONObject;
 
 
-public class GetProfileActivity extends ActionBarActivity implements View.OnClickListener {
+public class GetProfileActivity extends ActionBarActivity  {
     private static final String FRAG_TAG = "frag";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class GetProfileActivity extends ActionBarActivity implements View.OnClic
             getFragmentManager().executePendingTransactions();
         }
 
-        String url = getIntent().getStringExtra("url");
-        JsonObjectRequest request = Profile.getProfileRequest(url, new Response.Listener<JSONObject>() {
+        final String url = getIntent().getStringExtra("url");
+        JsonObjectRequest request = Profile.getRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Profile profile = new Profile(response);
@@ -73,11 +73,6 @@ public class GetProfileActivity extends ActionBarActivity implements View.OnClic
 //            }
 //        });
         RequestManager.getInstance(this).addToRequestQueue(request);
-
-
-
-        findViewById(R.id.viewprofile_activity_group_button).setOnClickListener(this);
-        findViewById(R.id.viewmap_activity_map_button).setOnClickListener(this);
     }
 
     /* life cycle logging --------------------------------------------------------------------*/
@@ -141,16 +136,4 @@ public class GetProfileActivity extends ActionBarActivity implements View.OnClic
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.viewprofile_activity_group_button:
-                startActivity(new Intent(this, GetGroupActivity.class));
-                break;
-            case R.id.viewmap_activity_map_button:
-                startActivity(new Intent(this, MapsActivity.class));
-        }
-    }
-
 }

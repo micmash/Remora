@@ -1,12 +1,15 @@
 package com.mobileapp.jolono.remora.activity;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,37 +25,33 @@ import com.mobileapp.jolono.remora.model.UserAccount;
 import org.json.JSONObject;
 
 
-public class GetAccountActivity extends ActionBarActivity implements AccountCredentialsFragment.OnFragmentInteractionListener {
-
+public class GetAccountActivity extends ActionBarActivity implements View.OnClickListener, AccountCredentialsFragment.OnFragmentInteractionListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_get_account);
-//
-//        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-//
-//        Fragment accountCredFrag = AccountCredentialsFragment.newInstance(UserAccount.mAccountName);
-//        fragTrans.add(R.id.activity_get_account_fragment_container, accountCredFrag);
-//        fragTrans.commit();
-//
-//        String url = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Fragment profileFrag = ProfileFragment.newInstance(new Profile(response));
-//                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-//                        fragTrans.add(R.id.activity_view_profile_base, profileFrag);
-//                        fragTrans.commit();
-//                    }
-//
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//        RequestManager.getInstance(this).addToRequestQueue(request);
+        setContentView(R.layout.activity_get_account);
+
+        //final String url = UserAccount.getBaseURL() + "?username=" + UserAccount.mAccountName;
+        final String url = UserAccount.getBaseURL() + "/3.json";
+        JsonObjectRequest request = UserAccount.getAccountRequest(url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Fragment frag = new AccountCredentialsFragment();
+                FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+                fragTrans.add(R.id.activity_get_account_base, frag);
+                fragTrans.commit();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+
+        RequestManager.getInstance(this).addToRequestQueue(request);
+
+        findViewById(R.id.activity_get_account_group_button).setOnClickListener(this);
+        findViewById(R.id.activity_get_account_map_button).setOnClickListener(this);
     }
 
 
@@ -82,5 +81,16 @@ public class GetAccountActivity extends ActionBarActivity implements AccountCred
     @Override
     public void onChangePassword() {
         Log.d("fragTEst", "I just changed the password! (not really)");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.activity_get_account_group_button:
+                startActivity(new Intent(this, GetGroupActivity.class));
+                break;
+            case R.id.activity_get_account_map_button:
+                startActivity(new Intent(this, MapsActivity.class));
+        }
     }
 }

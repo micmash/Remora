@@ -2,6 +2,11 @@ package com.mobileapp.jolono.remora.model;
 
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
@@ -15,43 +20,32 @@ import java.net.URL;
  * Created by Noah on 3/23/2015.
  */
 public class UserAccount {
-    public static int mUserId = -1;
-    public static String mAccountName = null;
     public static Profile mUserProfile = null;
-    
+    public static String mAccountName = "AndrewMack"; //TODO: change to null once db is working.
+    private static final String ACCOUNT_NAME_ARG = "username";
 
-/*    public static boolean login(String accountName, String password) {
-        //call database to login.
-        //if not successful return false.
-        //else
-        mUserId = 0; //assign from account pulled from database.
-        mAccountName = accountName;
-        //prob should pull profile with account.
-        mUserProfile = Profile.getSelectedProfile(mUserId);
+    private static final String mBaseURL = "http://ec2-52-0-168-55.compute-1.amazonaws.com/accounts";
 
-        return true;
+    public static String getBaseURL() {
+        return mBaseURL;
     }
 
-    public static boolean logout() {
-        //call database to logout.
-        mUserId = -1;
-        mAccountName = null;
-        mUserProfile = null;
-
-        return true;
+    public static JsonObjectRequest getAccountRequest(String url, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener);
+        return request;
     }
 
-    public static boolean changePassword(String oldPassword, String newPassword) {
-        //call database with mAccountName and oldPassword encrypted to verify.
-        //change password on database.
-        //if successful return true
-        //else
-        return false;
+    public static JsonObjectRequest createAccountRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+        JSONObject account =  new JSONObject();
+        try {
+            account.put(ACCOUNT_NAME_ARG, mAccountName);
+        } catch (JSONException e) {
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, mBaseURL + ".json", account, responseListener, errorListener);
+
+        return request;
     }
 
-    public static boolean verify() {
-        //pull stored session info. verify. if things check out. return true.
-        //else false
-        return true;
-    }*/
+
 }

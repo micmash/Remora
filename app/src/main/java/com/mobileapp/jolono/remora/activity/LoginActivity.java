@@ -88,6 +88,15 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             }
         });
 
+        Button registerButton = (Button) findViewById(R.id.activity_login_register_button);
+        registerButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
+                finish();
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -255,9 +264,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-
-        
         private final Activity mLoginActivity;
         private final String mEmail;
         private final String mPassword;
@@ -310,8 +316,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(false);
 
             if (success) {
+                mLoginActivity.startActivity(new Intent(mLoginActivity, GetAccountActivity.class));
                 finish();
-                mLoginActivity.startActivity(new Intent(mLoginActivity, GetProfileActivity.class));
 
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

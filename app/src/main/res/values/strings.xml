@@ -18,12 +18,19 @@
     <string name="reenter_password">reenter new password</string>
     <string name="gender">gender</string>
     <string name="age">age</string>
+    <string name="group">group</string>
+    <string name="map">map</string>
 
     <!-- Activity specific (format = "activity resource name"_"view element descriptor") -->
     <string name="activity_create_account_title">Account</string>
+    <string name="activity_create_account_username">email address</string>
+    <string name="activity_create_account_birthdate">birth date</string>
+    <string name="activity_create_account_accept">create account</string>
+
     <string name="activity_view_profile_title">ViewProfileActivity</string>
     <string name="activity_view_group_title">ViewGroupActivity</string>
     <string name="activity_get_account_title">GetAccountActivity</string>
+
 
     <!-- Fragment specific (format = "fragment resource name"_"view element descriptor") -->
     <string name="fragment_account_credentials_title">Account Credentials</string>

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobileapp.jolono.remora.R;
+import com.mobileapp.jolono.remora.model.UserAccount;
 
 
 /**
@@ -21,9 +22,6 @@ import com.mobileapp.jolono.remora.R;
  * create an instance of this fragment.
  */
 public class AccountCredentialsFragment extends Fragment implements View.OnClickListener {
-    private static final String ACCOUNT_NAME = "accountName";
-
-    private String mAccountName;
 
     private OnFragmentInteractionListener mListener;
 
@@ -37,9 +35,6 @@ public class AccountCredentialsFragment extends Fragment implements View.OnClick
     // TODO: Rename and change types and number of parameters
     public static AccountCredentialsFragment newInstance(String accountName) {
         AccountCredentialsFragment fragment = new AccountCredentialsFragment();
-        Bundle args = new Bundle();
-        args.putString(ACCOUNT_NAME, accountName);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -50,15 +45,12 @@ public class AccountCredentialsFragment extends Fragment implements View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mAccountName = getArguments().getString(ACCOUNT_NAME);
-        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        ((TextView) getView().findViewById(R.id.fragment_account_credentials_email)).setText(mAccountName);
+        ((TextView) getView().findViewById(R.id.fragment_account_credentials_email)).setText(UserAccount.mAccountName);
     }
 
     @Override
@@ -66,8 +58,6 @@ public class AccountCredentialsFragment extends Fragment implements View.OnClick
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account_credentials, container, false);
-        getView().findViewById(R.id.fragment_account_credentials_change_password_button).setOnClickListener(this);
-
         return view;
     }
 

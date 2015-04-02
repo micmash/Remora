@@ -13,7 +13,7 @@ import org.json.JSONObject;
  * Profile is public information about a user.
  * Created by Noah on 3/21/2015.
  */
-public class Profile {
+public class Profile extends AbstractJsonBackedObject {
     //entry names for values in db.
     private static final String FIRST_NAME_ARG = "first_name";
     private static final String MIDDLE_NAME_ARG = "middle_name";
@@ -21,10 +21,6 @@ public class Profile {
     private static final String BIRTHDATE_ARG = "age";
     private static final String GENDER_ARG = "gender";
     private static final String DESCRIPTION_ARG = "description";
-    private static final String URL_ARG = "url";
-
-    private JSONObject mData;
-    private JSONObject mPushData = new JSONObject();
 
     public String getFirstName() {
         try {
@@ -84,57 +80,15 @@ public class Profile {
 
     public int getAge() { return 0; }
 
-    public String mUrl; //optional
-
-    public Profile() {
+    public Profile(String name) {
+        super();
+        mBaseUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
+        setFirstName(name);
     }
 
     public Profile(JSONObject jsonObject) {
-        mData = jsonObject;
-        try {
-            mUrl = mData.getString(URL_ARG);
-        } catch (JSONException e) {
-
-        }
-    }
-
-    /**
-     * Creates a request to retrieve a profile.
-     * @param url
-     * @param responseListener should construct a Profile here.
-     * @param errorListener
-     * @return
-     */
-    public static JsonObjectRequest getProfileRequest(String url, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener);
-        return request;
-    }
-
-
-    /**
-     * Creates a request to edit this profile.
-     * @param responseListener
-     * @param errorListener
-     * @return
-     */
-    public JsonObjectRequest editProfileRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
-        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles/2.json";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, mPushData, responseListener, errorListener);
-
-        return  request;
-    }
-
-    /**
-     * Creates a request to create a profile.
-     * @param responseListener
-     * @param errorListener
-     * @return
-     */
-    public JsonObjectRequest createProfileRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
-        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, mPushData, responseListener, errorListener);
-
-        return request;
+        super(jsonObject);
+        mBaseUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
     }
 
     @Override
