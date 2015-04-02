@@ -16,7 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Find"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/find_me_map_button"
+            android:layout_toStartOf="@+id/find_me_map_button" />
 
         <EditText
             android:id="@+id/et_location"
@@ -24,7 +26,18 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="Location"
-            android:layout_toLeftOf="@id/btn_find" />
+            android:layout_toStartOf="@+id/btn_find"
+            android:layout_toLeftOf="@+id/btn_find" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Me"
+            android:id="@+id/find_me_map_button"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
