@@ -23,9 +23,21 @@ import java.util.Map;
 public class Group extends AbstractJsonBackedObject {
     private static final String NAME_ARG = "name";
     private static final String DESCRIPTION_ARG = "description";
+    private static final String UID_ARG = "u_id";
     private static final String ID_ARG = "id";
 
     public List<Profile> mMembers = new ArrayList<>();
+
+    public Group(String name, String description) {
+        mBaseUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/groups.json";
+        try {
+            mPushData.put(NAME_ARG, name);
+            mPushData.put(DESCRIPTION_ARG, description);
+            mPushData.put(UID_ARG, UserAccount.mUID.toString());
+        } catch (JSONException e) {
+        }
+
+    }
 
     public Group(JSONObject jsonObject) {
         super(jsonObject);
@@ -78,8 +90,8 @@ public class Group extends AbstractJsonBackedObject {
         return request;
     }
 
-    public JsonObjectRequest addMemberRequest(int memberId, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
-        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/attach_profile_to_group?g_id=" + getID() + "&" + "p_id=" + memberId;
+    public JsonObjectRequest addMemberRequest(String memberId, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/attach_profile_to_group.json?g_id=" + getID() + "&" + "u_id=" + memberId;
         JsonObjectRequest addMemberRequest = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener);
 
         return addMemberRequest;

@@ -40,6 +40,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
         setContentView(R.layout.activity_get_group);
 
         mAddGroup = (Button)findViewById(R.id.activity_get_group_addProfile);
+        mAddGroup.setOnClickListener(this);
 
         Fragment frag;
         if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
@@ -55,7 +56,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
         }
 
 
-        final String url1 = getIntent().getStringExtra("url");//"http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups/1.json";
+        final String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups/5.json";//getIntent().getStringExtra("url");//"http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups/1.json";
         JsonObjectRequest groupRequest = Group.getRequest(url1, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -70,7 +71,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-
+                        Log.e("asdflkj;a", volleyError.getMessage());
                     }
                 });
 
@@ -124,7 +125,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.activity_get_group_addProfile:
                 if(mGroup != null) {
-                    mGroup.addMemberRequest(UserAccount.mUserProfile.getID(), new Response.Listener<JSONObject>() {
+                    JsonObjectRequest addMemberRequest = mGroup.addMemberRequest(UserAccount.mUID.toString(), new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {
                             mGroup.mMembers.add(UserAccount.mUserProfile);
@@ -132,8 +133,11 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
+                            Log.e("blah", volleyError.getMessage());
                         }
                     });
+
+                    RequestManager.getInstance(this).addToRequestQueue(addMemberRequest);
                 }
         }
     }

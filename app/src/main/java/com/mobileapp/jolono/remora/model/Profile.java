@@ -63,6 +63,11 @@ public class Profile extends AbstractJsonBackedObject {
     }
 
     public String getBirthdate() {
+        try {
+            mData.getString(BIRTHDATE_ARG);
+        } catch (JSONException e) {
+
+        }
         return null;
     }
 
@@ -75,7 +80,7 @@ public class Profile extends AbstractJsonBackedObject {
 
     public String getGender() {
         try {
-            return mPushData.getString(GENDER_ARG);
+            return mData.getString(GENDER_ARG);
         } catch (JSONException e) {
         }
         return  null;
@@ -141,6 +146,7 @@ public class Profile extends AbstractJsonBackedObject {
     public Profile(JSONObject jsonObject) {
         super(jsonObject);
         mBaseUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
+        mObjUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles/" + getID() + ".json";
     }
 
     public static JsonArrayRequest getGroupsRequest(Response.Listener<JSONArray> response,

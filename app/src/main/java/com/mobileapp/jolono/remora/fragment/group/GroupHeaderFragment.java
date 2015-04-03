@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Group;
 
+import org.w3c.dom.Text;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -50,7 +52,8 @@ public class GroupHeaderFragment extends Fragment {
         super.onStart();
         mGroupName = ((TextView) getView().findViewById(R.id.group_header_event_name));
         mGroupName.setText(mGroup.getName());
-        
+
+        ((TextView) getView().findViewById(R.id.group_header_group_description)).setText(mGroup.getDescription());
     }
     
     @Override

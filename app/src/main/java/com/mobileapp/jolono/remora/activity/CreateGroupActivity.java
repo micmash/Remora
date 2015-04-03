@@ -15,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
+import com.mobileapp.jolono.remora.model.Group;
+import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
 
 import org.json.JSONObject;
@@ -37,6 +39,8 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
         mSaveGroupButton = (Button) findViewById(R.id.activity_create_group_save_group);
         
         mEventName.setText(getIntent().getStringExtra("eventName"));
+
+        findViewById(R.id.activity_create_group_save_group).setOnClickListener(this);
 
         
     }
@@ -68,9 +72,13 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.activity_create_group_save_group:
-                EditText editText = (EditText) findViewById(R.id.activity_create_account_email);
-                UserAccount.mAccountName = editText.getText().toString();
-                JsonObjectRequest request = UserAccount.createAccountRequest(new Response.Listener<JSONObject>() {
+                EditText editText = (EditText) findViewById(R.id.activity_create_group_name);
+                String name = editText.getText().toString();
+                editText = (EditText) findViewById(R.id.activity_create_group_description);
+                String description = editText.getText().toString();
+
+                Group group = new Group(name, description);
+                JsonObjectRequest request = group.createRequest(new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject request) {
                         startActivity(new Intent(CreateGroupActivity.this, GetGroupActivity.class));
@@ -79,12 +87,14 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        if(volleyError instanceof ParseError) {
+                        if (volleyError instanceof ParseError) {
                             startActivity(new Intent(CreateGroupActivity.this, GetGroupActivity.class));
                             finish();
                         }
                     }
                 });
+
+                RequestManager.getInstance(this).addToRequestQueue(request);
         }
         
     }

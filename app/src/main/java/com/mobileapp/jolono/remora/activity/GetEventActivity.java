@@ -46,7 +46,7 @@ public class GetEventActivity extends ActionBarActivity {
             fragTrans.commit();
         }
 
-        final String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/events/1.json";
+        final String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/events/2.json";
         JsonObjectRequest eventRequest = Event.getRequest(url1, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -62,7 +62,7 @@ public class GetEventActivity extends ActionBarActivity {
         });
 
         final String url2 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups.json";
-        JsonArrayRequest groupsRequest = Event.getEventGroups(url2, new Response.Listener<JSONArray>() {
+        JsonArrayRequest groupsRequest = Event.getEventGroups(new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 mEvent = new Event(response);
