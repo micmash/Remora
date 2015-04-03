@@ -21,6 +21,7 @@ public class Event extends AbstractJsonBackedObject {
     private static final String LOCATION_ARG = "location";
     private static final String START_TIME_ARG = "starttime";
     private static final String END_TIME_ARG = "endtime";
+    private static final String ID_ARG = "id";
 
     public List<Group> mGroups = new ArrayList<>();
 
@@ -115,6 +116,15 @@ public class Event extends AbstractJsonBackedObject {
         } catch (JSONException e) {
         }
         return null;
+    }
+
+    public int getID() {
+        try {
+            return mData.getInt(ID_ARG);
+        } catch (JSONException e) {
+        }
+
+        return -1;
     }
 
     public void getGroups(JSONArray jsonArray) {
