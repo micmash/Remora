@@ -49,6 +49,15 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search"
+                android:id="@+id/activity_get_account_search_button"
+                android:layout_below="@+id/activity_get_account_events_button"
+                android:layout_toRightOf="@+id/activity_get_account_events_button"
+                android:layout_toEndOf="@+id/activity_get_account_events_button" />
         </RelativeLayout>
 
     </LinearLayout>

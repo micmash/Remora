@@ -26,18 +26,19 @@ import java.util.List;
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
+ *
+ * TODO: use AbstractJsonBackedObject instead so only one fragment is needed.
  */
 public class EventListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     public List<Event> mEvents;
 
     // TODO: Rename and change types of parameters
-    public static EventListFragment newInstance() {
+    public static EventListFragment newInstance(List<Event> events) {
 
         EventListFragment fragment = new EventListFragment();
-
+        fragment.mEvents = events;
         return fragment;
     }
 
@@ -89,21 +90,6 @@ public class EventListFragment extends Fragment implements AbsListView.OnItemCli
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
         }
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
     }
 
 }

@@ -129,6 +129,7 @@ public class Event extends AbstractJsonBackedObject {
     }
 
     public void getGroups(JSONArray jsonArray) {
+        mGroups.clear();
         try {
             for(int i = 0; i < jsonArray.length(); ++i) {
                 JSONObject group = jsonArray.getJSONObject(i);
@@ -142,5 +143,10 @@ public class Event extends AbstractJsonBackedObject {
         String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/get_attached_groups_to_event.json?e_id=" + id;
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);
         return request;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getStartTime() + " " + getEndTime();
     }
 }

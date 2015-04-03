@@ -24,6 +24,7 @@
     <string name="description">description</string>
     <string name="save">save</string>
     <string name="add">add</string>
+    <string name="search">search</string>
 
     <!-- Activity specific (format = "activity resource name"_"view element descriptor") -->
     <string name="activity_create_account_title">Account</string>

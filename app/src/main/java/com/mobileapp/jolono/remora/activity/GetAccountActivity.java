@@ -53,13 +53,14 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
         findViewById(R.id.activity_get_account_events_button).setOnClickListener(this);
         findViewById(R.id.activity_get_account_map_button).setOnClickListener(this);
         findViewById(R.id.activity_get_account_groups_button).setOnClickListener(this);
+        findViewById(R.id.activity_get_account_search_button).setOnClickListener(this);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_get_account, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
 
         return true;
     }
@@ -97,6 +98,9 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
                 break;
             case R.id.activity_get_account_groups_button:
                 startActivity(new Intent(this, GetGroupsFromAccountActivity.class));
+                break;
+            case R.id.activity_get_account_search_button:
+                startActivity(new Intent(this, SearchActivity.class));
                 break;
         }
     }

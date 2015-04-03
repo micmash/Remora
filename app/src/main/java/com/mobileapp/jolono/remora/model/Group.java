@@ -84,16 +84,6 @@ public class Group extends AbstractJsonBackedObject {
 
         return -1;
     }
-    
-    //NEVER USE THIS EVER!!!!! TODO fix
-    public void neverUseAgainSetID(String id) {
-        try {
-            mData.put(ID_ARG, id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public static JsonArrayRequest getGroupMembers(String url, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);
