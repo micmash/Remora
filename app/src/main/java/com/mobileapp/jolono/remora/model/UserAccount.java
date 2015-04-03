@@ -38,6 +38,7 @@ public class UserAccount {
         try {
             mAccountName = jsonObject.getString(ACCOUNT_NAME_ARG);
             mUserProfile = new Profile(jsonObject.getJSONObject("profile"));
+            mUID = UUID.fromString(jsonObject.getString(UID_ARG));
         } catch(JSONException e) {
         }
     }

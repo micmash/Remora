@@ -24,10 +24,10 @@ public abstract class AbstractJsonBackedObject {
 
     public AbstractJsonBackedObject(JSONObject jsonObject) {
         mData = jsonObject;
-        try {
-            mObjUrl = mData.getString(URL_ARG);
+/*        try {
+           mObjUrl = mData.getString(URL_ARG);
         } catch (JSONException e) {
-        }
+        }*/
     }
 
     public String getUrl() {

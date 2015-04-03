@@ -1,7 +1,6 @@
-package com.mobileapp.jolono.remora.fragment;
+package com.mobileapp.jolono.remora.fragment.profile;
 
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,15 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.ParseError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Profile;
 import com.mobileapp.jolono.remora.model.RequestManager;
-import com.mobileapp.jolono.remora.model.UserAccount;
 
 import org.json.JSONObject;
 

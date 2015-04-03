@@ -1,14 +1,19 @@
 package com.mobileapp.jolono.remora.model;
 
+import android.provider.CalendarContract;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,6 +28,8 @@ public class Profile extends AbstractJsonBackedObject {
     private static final String GENDER_ARG = "gender";
     private static final String DESCRIPTION_ARG = "description";
     private static final String UID_ARG = "u_id";
+    public List<Group> mJoinedGroups = new ArrayList<Group>();
+    public List<Event> mLoinedEvents;
 
     public String getFirstName() {
         try {
@@ -125,6 +132,28 @@ public class Profile extends AbstractJsonBackedObject {
     public Profile(JSONObject jsonObject) {
         super(jsonObject);
         mBaseUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
+    }
+
+    public static JsonArrayRequest getGroupsRequest(Response.Listener<JSONArray> response,
+                                                    Response.ErrorListener listener) {
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com" +
+                "/get_attached_groups_to_profile.json?u_id=" + UserAccount.mUID.toString();
+        JsonArrayRequest request = new JsonArrayRequest(url, response, listener);
+        return request;
+    }
+
+    public void getJoinedGroups(JSONArray a) {
+        try {
+            for(int i = 0; i < a.length(); i++) {
+                JSONObject g = a.getJSONObject(i);
+                Group group = new Group((g));
+                mJoinedGroups.add(group);
+
+            }
+        } catch (Exception e) {
+            Log.d("e", e.getMessage());
+        }
+
     }
 
 
