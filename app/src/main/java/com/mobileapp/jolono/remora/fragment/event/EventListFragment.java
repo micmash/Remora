@@ -74,7 +74,7 @@ public class EventListFragment extends Fragment implements AbsListView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent getEventIntent = new Intent(getActivity(), GetEventActivity.class);
-        getEventIntent.putExtra("id", mEvents.get(position).getID());
+        getEventIntent.putExtra("id", Integer.toString(mEvents.get(position).getID()));
 
         startActivity(getEventIntent);
     }

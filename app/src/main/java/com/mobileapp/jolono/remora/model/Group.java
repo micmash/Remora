@@ -89,6 +89,19 @@ public class Group extends AbstractJsonBackedObject {
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);
         return request;
     }
+    
+    public void setGroupMembers(JSONArray arrayOfMember) {
+        this.mMembers.clear();
+        for(int i = 0; i < arrayOfMember.length(); i++) {
+            try {
+                this.mMembers.add(new Profile(arrayOfMember.getJSONObject(i)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        
+    }
 
     public JsonObjectRequest addMemberRequest(String memberId, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/attach_profile_to_group.json?g_id=" + getID() + "&" + "u_id=" + memberId;
@@ -100,6 +113,16 @@ public class Group extends AbstractJsonBackedObject {
     @Override
     public String toString() {
         return getName();
+    }
+    
+    public JsonObjectRequest removeMemberRequest(String memberId, 
+                                                 Response.Listener<JSONObject> responseListener,
+                                                 Response.ErrorListener errorListener) {
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
+                "detach_profile.json?g_id=" + getID() + "&" + "u_id=" + memberId;
+        JsonObjectRequest removeMemberRequest = new JsonObjectRequest(Request.Method.GET, url,
+                null, responseListener, errorListener);
+        return removeMemberRequest;
     }
 
 }

@@ -32,6 +32,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
     private static final String FRAG_TAG = "gf";
     private static final String FRAG_TAG_2 = "fg";
     private static Button mAddGroup;
+    private static Button mRemoveProfile;
     private Group mGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,8 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
 
         mAddGroup = (Button)findViewById(R.id.activity_get_group_addProfile);
         mAddGroup.setOnClickListener(this);
+        mRemoveProfile = (Button)findViewById(R.id.activity_get_group_removeProfile);
+        mRemoveProfile.setOnClickListener(this);
 
         Fragment frag;
         if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
@@ -85,6 +88,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        mGroup.setGroupMembers(response);
                         Fragment groupFrag = GroupFragment.newInstance(new Group(response));
                         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                         fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
@@ -128,7 +132,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_get_group_addProfile:
-                if(mGroup != null && mGroup.mMembers.contains(UserAccount.mUserProfile)) {
+                if(mGroup != null && !mGroup.mMembers.contains(UserAccount.mUserProfile)) {
                     JsonObjectRequest addMemberRequest = mGroup.addMemberRequest(UserAccount.mUID.toString(), new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {
@@ -143,6 +147,28 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
 
                     RequestManager.getInstance(this).addToRequestQueue(addMemberRequest);
                 }
+            case R.id.activity_get_group_removeProfile:
+                boolean q = mGroup.mMembers.contains(UserAccount.mUserProfile);
+                boolean e = q;
+                if(mGroup != null && mGroup.mMembers.contains(UserAccount.mUserProfile)) {
+                    JsonObjectRequest removeMemberRequest = mGroup.removeMemberRequest(UserAccount.mUID.toString(), new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            mGroup.mMembers.remove(UserAccount.mUserProfile);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Log.e("blah", volleyError.getMessage());
+                        }
+                    });
+
+                    RequestManager.getInstance(this).addToRequestQueue(removeMemberRequest);
+                }
+                Intent intent = new Intent(this, GetAccountActivity.class);
+                intent.putExtra("username", UserAccount.mAccountName);
+                        
+                startActivity(intent);
         }
     }
 }

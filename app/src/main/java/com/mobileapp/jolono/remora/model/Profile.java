@@ -29,7 +29,7 @@ public class Profile extends AbstractJsonBackedObject {
     private static final String DESCRIPTION_ARG = "description";
     private static final String UID_ARG = "u_id";
     public List<Group> mJoinedGroups = new ArrayList<Group>();
-    public List<Event> mJoinedEvents;
+    public List<Event> mJoinedEvents = new ArrayList<Event>();
     private static final String ID_ARG = "id";
 
     public String getFirstName() {
@@ -156,6 +156,14 @@ public class Profile extends AbstractJsonBackedObject {
         JsonArrayRequest request = new JsonArrayRequest(url, response, listener);
         return request;
     }
+    
+    public static JsonArrayRequest getEventsRequest(Response.Listener<JSONArray> response,
+                                                    Response.ErrorListener listener) {
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com" +
+                "/get_attached_events_to_profile.json?u_id=" + UserAccount.mUID.toString();
+        JsonArrayRequest request = new JsonArrayRequest(url, response, listener);
+        return request;
+    }
 
     public void getJoinedGroups(JSONArray a) {
         try {
@@ -184,7 +192,7 @@ public class Profile extends AbstractJsonBackedObject {
         } catch (Exception e) {
             Log.d("e", e.getMessage());
         }
-        
+
     }
 
 
@@ -192,5 +200,16 @@ public class Profile extends AbstractJsonBackedObject {
     @Override
     public String toString() {
         return getFirstName() + getBirthdate() + getGender();
+    }
+    
+    @Override
+    public boolean equals(Object profile) {
+        if(this == profile)
+            return true;
+        try {
+            return ((Profile) profile).getUID().equals(this.getUID());
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
