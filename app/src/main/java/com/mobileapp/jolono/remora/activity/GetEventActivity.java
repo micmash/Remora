@@ -1,7 +1,6 @@
 package com.mobileapp.jolono.remora.activity;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
-import com.mobileapp.jolono.remora.fragment.event.EventFragment;
+import com.mobileapp.jolono.remora.fragment.GroupListFragment;
 import com.mobileapp.jolono.remora.fragment.event.EventHeaderFragment;
 import com.mobileapp.jolono.remora.model.Event;
 import com.mobileapp.jolono.remora.model.RequestManager;
@@ -26,6 +25,7 @@ public class GetEventActivity extends ActionBarActivity {
     private static final String FRAG_TAG = "h";
     private static final String FRAG_TAG_2 = "gl";
 
+    private Event mEvent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,8 @@ public class GetEventActivity extends ActionBarActivity {
         JsonArrayRequest groupsRequest = Event.getEventGroups(url2, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Fragment eventFrag = EventFragment.newInstance(new Event(response));
+                mEvent = new Event(response);
+                Fragment eventFrag = GroupListFragment.newInstance(mEvent.mGroups);
                 FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                 fragTrans.add(R.id.activity_get_event_groups_fragment_container, eventFrag, FRAG_TAG_2);
                 fragTrans.commit();

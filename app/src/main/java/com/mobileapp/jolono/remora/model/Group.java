@@ -68,7 +68,7 @@ public class Group extends AbstractJsonBackedObject {
 
     @Override
     public String toString() {
-        return getName() + getDescription();
+        return getName();
     }
 
 }

@@ -117,6 +117,15 @@ public class Event extends AbstractJsonBackedObject {
         return null;
     }
 
+    public void getGroups(JSONArray jsonArray) {
+        try {
+            for(int i = 0; i < jsonArray.length(); ++i) {
+                JSONObject group = jsonArray.getJSONObject(i);
+                mGroups.add(new Group(group));
+            }
+        } catch (JSONException e) {
+        }
+    }
 
     public static JsonArrayRequest getEventGroups(String url, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);

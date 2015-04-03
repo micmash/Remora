@@ -127,6 +127,8 @@ public class Profile extends AbstractJsonBackedObject {
         mBaseUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
     }
 
+
+
     @Override
     public String toString() {
         return getFirstName() + getBirthdate() + getGender();

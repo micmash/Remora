@@ -1,6 +1,5 @@
-package com.mobileapp.jolono.remora.fragment.event;
+package com.mobileapp.jolono.remora.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -16,20 +15,21 @@ import android.widget.TextView;
 import com.mobileapp.jolono.remora.R;
 
 import com.mobileapp.jolono.remora.activity.GetGroupActivity;
-import com.mobileapp.jolono.remora.model.Event;
 import com.mobileapp.jolono.remora.model.Group;
+
+import java.util.List;
 
 /**
  */
-public class EventFragment extends Fragment implements AbsListView.OnItemClickListener {
-    public Event mEvent;
+public class GroupListFragment extends Fragment implements AbsListView.OnItemClickListener {
+    public List<Group> mGroups;
 
     private AbsListView mListView;
     private ListAdapter mAdapter;
 
-    public static EventFragment newInstance(Event event) {
-        EventFragment fragment = new EventFragment();
-        fragment.mEvent = event;
+    public static GroupListFragment newInstance(List<Group> groups) {
+        GroupListFragment fragment = new GroupListFragment();
+        fragment.mGroups = groups;
         return fragment;
     }
 
@@ -37,16 +37,16 @@ public class EventFragment extends Fragment implements AbsListView.OnItemClickLi
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public EventFragment() {
+    public GroupListFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(mEvent != null) {
+        if(mGroups != null) {
             mAdapter = new ArrayAdapter<Group>(getActivity(),
-                    android.R.layout.simple_list_item_1, mEvent.mGroups);
+                    android.R.layout.simple_list_item_1, mGroups);
         }
     }
 
@@ -68,7 +68,7 @@ public class EventFragment extends Fragment implements AbsListView.OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent getGroupIntent = new Intent(getActivity(), GetGroupActivity.class);
-        getGroupIntent.putExtra("url", mEvent.mGroups.get(position).getUrl());
+        getGroupIntent.putExtra("url", mGroups.get(position).getUrl());
 
         startActivity(getGroupIntent);
     }
