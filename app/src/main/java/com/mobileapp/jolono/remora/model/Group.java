@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class Group extends AbstractJsonBackedObject {
     private static final String NAME_ARG = "name";
     private static final String DESCRIPTION_ARG = "description";
+    private static final String ID_ARG = "id";
 
     public List<Profile> mMembers = new ArrayList<>();
 
@@ -61,9 +63,26 @@ public class Group extends AbstractJsonBackedObject {
         return null;
     }
 
+    public int getID() {
+        try {
+            return mData.getInt(ID_ARG);
+        } catch(JSONException e) {
+
+        }
+
+        return 0;
+    }
+
     public static JsonArrayRequest getGroupMembers(String url, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);
         return request;
+    }
+
+    public JsonObjectRequest addMemberRequest(int memberId, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/attach_profile_to_group?g_id=" + getID() + "&" + "p_id=" + memberId;
+        JsonObjectRequest addMemberRequest = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener);
+
+        return addMemberRequest;
     }
 
     @Override

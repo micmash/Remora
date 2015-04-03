@@ -23,6 +23,7 @@ public class Profile extends AbstractJsonBackedObject {
     private static final String GENDER_ARG = "gender";
     private static final String DESCRIPTION_ARG = "description";
     private static final String UID_ARG = "u_id";
+    private static final String ID_ARG = "id";
 
     public String getFirstName() {
         try {
@@ -108,6 +109,14 @@ public class Profile extends AbstractJsonBackedObject {
             mPushData.put(UID_ARG, uid.toString());
         } catch (JSONException e) {
         }
+    }
+
+    public int getID() {
+        try {
+            return mData.getInt(ID_ARG);
+        } catch (JSONException e) {
+        }
+        return 0;
     }
 
     public int getAge() { return 0; }
