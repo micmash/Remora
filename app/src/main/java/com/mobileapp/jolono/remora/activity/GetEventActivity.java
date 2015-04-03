@@ -46,7 +46,8 @@ public class GetEventActivity extends ActionBarActivity {
             fragTrans.commit();
         }
 
-        final String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/events/2.json";
+        int id  = getIntent().getIntExtra("id", 0);
+        final String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/events/" + id + ".json";
         JsonObjectRequest eventRequest = Event.getRequest(url1, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -61,11 +62,10 @@ public class GetEventActivity extends ActionBarActivity {
             }
         });
 
-        final String url2 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups.json";
-        JsonArrayRequest groupsRequest = Event.getEventGroups(new Response.Listener<JSONArray>() {
+        JsonArrayRequest groupsRequest = Event.getEventGroups(id, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                mEvent = new Event(response);
+                mEvent = new Event(response); //TODO: only use on instance of Event and call getGroups
                 Fragment eventFrag = GroupListFragment.newInstance(mEvent.mGroups);
                 FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                 fragTrans.add(R.id.activity_get_event_groups_fragment_container, eventFrag, FRAG_TAG_2);

@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.mobileapp.jolono.remora.R;
 
 import com.mobileapp.jolono.remora.activity.GetEventActivity;
-import com.mobileapp.jolono.remora.fragment.event.dummy.DummyContent;
 import com.mobileapp.jolono.remora.model.Event;
 
 import java.util.List;

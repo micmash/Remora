@@ -82,7 +82,7 @@ public class Group extends AbstractJsonBackedObject {
 
         }
 
-        return 0;
+        return -1;
     }
 
     public static JsonArrayRequest getGroupMembers(String url, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {

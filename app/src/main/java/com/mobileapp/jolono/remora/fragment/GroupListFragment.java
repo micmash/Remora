@@ -68,7 +68,7 @@ public class GroupListFragment extends Fragment implements AbsListView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent getGroupIntent = new Intent(getActivity(), GetGroupActivity.class);
-        getGroupIntent.putExtra("url", mGroups.get(position).getUrl());
+        getGroupIntent.putExtra("id", mGroups.get(position).getID());
 
         startActivity(getGroupIntent);
     }

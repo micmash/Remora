@@ -23,6 +23,7 @@ public class Event extends AbstractJsonBackedObject {
     private static final String END_TIME_ARG = "endtime";
     private static final String ID_ARG = "id";
 
+
     public List<Group> mGroups = new ArrayList<>();
 
     public Event(JSONObject jsonObject) {
@@ -137,8 +138,8 @@ public class Event extends AbstractJsonBackedObject {
         }
     }
 
-    public static JsonArrayRequest getEventGroups(Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
-        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/get_attached_groups_to_event.json?e_id=2";
+    public static JsonArrayRequest getEventGroups(int id, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/get_attached_groups_to_event.json?e_id=" + id;
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);
         return request;
     }

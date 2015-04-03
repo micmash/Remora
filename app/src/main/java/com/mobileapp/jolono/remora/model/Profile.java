@@ -30,6 +30,7 @@ public class Profile extends AbstractJsonBackedObject {
     private static final String UID_ARG = "u_id";
     public List<Group> mJoinedGroups = new ArrayList<Group>();
     public List<Event> mLoinedEvents;
+
     private static final String ID_ARG = "id";
 
     public String getFirstName() {
