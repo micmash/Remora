@@ -9,7 +9,6 @@
     <string name="server_domain">ec2-52-0-168-55.compute-1.amazonaws.com/</string>
     <string name="login_password">dhh:secret</string>
 
-
     <!-- Generic -->
     <string name="email">email</string>
     <string name="password">password</string>
@@ -25,6 +24,7 @@
     <string name="location">location</string>
     <string name="description">description</string>
     <string name="save">save</string>
+    <string name="add">add</string>
 
     <!-- Activity specific (format = "activity resource name"_"view element descriptor") -->
     <string name="activity_create_account_title">Account</string>

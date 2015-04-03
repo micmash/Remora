@@ -14,9 +14,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
+import com.mobileapp.jolono.remora.model.Profile;
+import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
 
 import org.json.JSONObject;
+
+import java.util.UUID;
 
 
 public class CreateAccountActivity extends ActionBarActivity implements View.OnClickListener {
@@ -74,21 +78,49 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
             case R.id.activity_create_account_accept_button:
                 EditText editText = (EditText) findViewById(R.id.activity_create_account_email);
                 UserAccount.mAccountName = editText.getText().toString();
-                JsonObjectRequest request = UserAccount.createAccountRequest(new Response.Listener<JSONObject>() {
+                //profile fields
+                editText = (EditText) findViewById(R.id.activity_create_account_name);
+                String fname = editText.getText().toString();
+                editText = (EditText) findViewById(R.id.activity_create_account_name);
+                String lname = editText.getText().toString();
+                editText = (EditText) findViewById(R.id.activity_create_account_birthdate);
+                String birthdate = editText.getText().toString();
+                editText = (EditText) findViewById(R.id.activity_create_account_gender);
+                String gender = editText.getText().toString();
+
+                //create profile.
+                final UUID uuid = UUID.randomUUID();
+                final Profile profile = new Profile(fname, lname, birthdate, gender, uuid);
+
+                JsonObjectRequest createProfileRequest = profile.createRequest(new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject request) {
-                        startActivity(new Intent(CreateAccountActivity.this, GetAccountActivity.class));
-                        finish();
+                    public void onResponse(JSONObject response) {
+                        UserAccount.mUID = uuid;
+                        //create account
+                        JsonObjectRequest createAccountRequest = UserAccount.createAccountRequest(new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject request) {
+                                Intent getAccountIntent = new Intent(CreateAccountActivity.this, GetAccountActivity.class);
+                                getAccountIntent.putExtra("username", UserAccount.mAccountName);
+                                startActivity(getAccountIntent);
+                                finish();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                            }
+                        });
+
+                        RequestManager.getInstance(CreateAccountActivity.this).addToRequestQueue(createAccountRequest);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        if(volleyError instanceof ParseError) {
-                            startActivity(new Intent(CreateAccountActivity.this, GetAccountActivity.class));
-                            finish();
-                        }
                     }
                 });
+
+
+                RequestManager.getInstance(this).addToRequestQueue(createProfileRequest);
         }
     }
 }

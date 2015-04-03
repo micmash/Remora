@@ -36,8 +36,8 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
         mGroupDescription = (EditText) findViewById(R.id.activity_create_group_description);
         mSaveGroupButton = (Button) findViewById(R.id.activity_create_group_save_group);
         
-        mEventName.setText(getIntent().getStringExtra("Name"));
-        
+        mEventName.setText(getIntent().getStringExtra("eventName"));
+
         
     }
 

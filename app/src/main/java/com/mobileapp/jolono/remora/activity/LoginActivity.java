@@ -316,7 +316,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(false);
 
             if (success) {
-                mLoginActivity.startActivity(new Intent(mLoginActivity, GetAccountActivity.class));
+                Intent getAccountIntent = new Intent(mLoginActivity, GetAccountActivity.class);
+                getAccountIntent.putExtra("username", mEmailView.getText().toString());
+                mLoginActivity.startActivity(getAccountIntent);
                 finish();
 
             } else {

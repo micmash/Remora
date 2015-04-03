@@ -32,19 +32,22 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
         setContentView(R.layout.activity_get_account);
 
         //final String url = UserAccount.getBaseURL() + "?username=" + UserAccount.mAccountName;
-        final String url = UserAccount.getBaseURL() + "/3.json";
-        JsonObjectRequest request = UserAccount.getAccountRequest(url, new Response.Listener<JSONObject>() {
+        final String userName = getIntent().getStringExtra("username");
+        JsonObjectRequest request = UserAccount.getAccountRequest(userName, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Fragment frag = new AccountCredentialsFragment();
+                UserAccount.getAccountFromJSONObject(response);
+                Fragment accountCredFrag = AccountCredentialsFragment.newInstance();
+                Fragment accountProfileFrag = ProfileFragment.newInstance(UserAccount.mUserProfile);
                 FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                fragTrans.add(R.id.activity_get_account_base, frag);
+                fragTrans.add(R.id.activity_get_account_base, accountCredFrag);
+                fragTrans.add(R.id.activity_get_account_base, accountProfileFrag);
                 fragTrans.commit();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+               // Log.e("fuck you", volleyError.getMessage());
             }
         });
 

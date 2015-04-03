@@ -71,4 +71,9 @@ public abstract class AbstractJsonBackedObject {
 
         return request;
     }
+
+    public JsonObjectRequest deleteRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, mObjUrl, null, responseListener, errorListener);
+        return request;
+    }
 }

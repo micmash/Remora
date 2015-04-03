@@ -1,6 +1,7 @@
 package com.mobileapp.jolono.remora.fragment.event;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
+import com.mobileapp.jolono.remora.activity.CreateAccountActivity;
+import com.mobileapp.jolono.remora.activity.CreateGroupActivity;
 import com.mobileapp.jolono.remora.model.Event;
 import com.mobileapp.jolono.remora.model.RequestManager;
 
@@ -68,6 +71,17 @@ public class EventHeaderFragment extends Fragment {
 
                     RequestManager.getInstance(getActivity()).addToRequestQueue(request);
                 }
+            });
+
+            (v.findViewById(R.id.fragment_event_header_add_group_button)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+                    intent.putExtra("eventName", mEvent.getName());
+                    intent.putExtra("eventId", 3); //TODO: get id.
+                    startActivity(intent);
+                }
+
             });
         }
 

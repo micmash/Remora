@@ -25,15 +25,8 @@ public class AccountCredentialsFragment extends Fragment implements View.OnClick
 
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param accountName account name.
-     * @return A new instance of fragment AccountCredentialsFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static AccountCredentialsFragment newInstance(String accountName) {
+    public static AccountCredentialsFragment newInstance() {
         AccountCredentialsFragment fragment = new AccountCredentialsFragment();
         return fragment;
     }
