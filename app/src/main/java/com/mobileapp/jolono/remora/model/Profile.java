@@ -29,8 +29,7 @@ public class Profile extends AbstractJsonBackedObject {
     private static final String DESCRIPTION_ARG = "description";
     private static final String UID_ARG = "u_id";
     public List<Group> mJoinedGroups = new ArrayList<Group>();
-    public List<Event> mLoinedEvents;
-
+    public List<Event> mJoinedEvents;
     private static final String ID_ARG = "id";
 
     public String getFirstName() {
@@ -160,6 +159,7 @@ public class Profile extends AbstractJsonBackedObject {
 
     public void getJoinedGroups(JSONArray a) {
         try {
+            mJoinedGroups.clear();
             for(int i = 0; i < a.length(); i++) {
                 JSONObject g = a.getJSONObject(i);
                 Group group = new Group((g));
@@ -170,6 +170,21 @@ public class Profile extends AbstractJsonBackedObject {
             Log.d("e", e.getMessage());
         }
 
+    }
+    
+    public void getJoinedEvents(JSONArray a) {
+        try {
+            mJoinedEvents.clear();
+            for(int i = 0; i < a.length(); i++) {
+                JSONObject e = a.getJSONObject(i);
+                Event event = new Event((e));
+                mJoinedEvents.add(event);
+
+            }
+        } catch (Exception e) {
+            Log.d("e", e.getMessage());
+        }
+        
     }
 
 

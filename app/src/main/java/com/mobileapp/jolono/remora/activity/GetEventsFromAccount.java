@@ -7,41 +7,25 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.mobileapp.jolono.remora.R;
-//import com.mobileapp.jolono.remora.fragment.event.EventFragment;
 import com.mobileapp.jolono.remora.fragment.GroupListFragment;
-import com.mobileapp.jolono.remora.model.Event;
-import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.Profile;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
 
 import org.json.JSONArray;
 
-import java.util.List;
+public class GetEventsFromAccount extends ActionBarActivity {
 
-public class GetGroupsFromAccountActivity extends ActionBarActivity {
-
-    private String FRAG_TAG_2 = "HSHSH";
-    private List<Group> g;
-
+    private String FRAG_TAG_2 = "fy";
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Fragment frag;
-        if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG_2)) != null) {
-            FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-            fragTrans.remove(frag);
-            fragTrans.commit();
-            getFragmentManager().executePendingTransactions();
-        }
-
-        setContentView(R.layout.activity_get_groups_from_account);
+        setContentView(R.layout.activity_get_events_from_account);
         JsonArrayRequest groupsRequest = Profile.getGroupsRequest(new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -64,7 +48,7 @@ public class GetGroupsFromAccountActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_get_group_from_account, menu);
+        getMenuInflater().inflate(R.menu.menu_get_events_from_account, menu);
         return true;
     }
 

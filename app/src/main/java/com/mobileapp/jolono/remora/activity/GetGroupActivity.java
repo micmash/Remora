@@ -56,7 +56,10 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
         }
 
 
-        final String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups/5.json";//getIntent().getStringExtra("url");//"http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/groups/1.json";
+
+        String g_id = getIntent().getStringExtra("id");
+        final String url1 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
+                "groups/" + g_id + ".json";
         JsonObjectRequest groupRequest = Group.getRequest(url1, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -76,7 +79,8 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                 });
 
 
-        String url2 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/profiles.json";
+        String url2 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
+                "view_attached_profiles_to_group.json?g_id=" + g_id;
         JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url2,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -124,7 +128,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_get_group_addProfile:
-                if(mGroup != null) {
+                if(mGroup != null && mGroup.mMembers.contains(UserAccount.mUserProfile)) {
                     JsonObjectRequest addMemberRequest = mGroup.addMemberRequest(UserAccount.mUID.toString(), new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {

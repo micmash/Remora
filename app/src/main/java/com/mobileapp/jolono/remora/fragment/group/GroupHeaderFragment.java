@@ -50,7 +50,7 @@ public class GroupHeaderFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mGroupName = ((TextView) getView().findViewById(R.id.group_header_event_name));
+        mGroupName = ((TextView) getView().findViewById(R.id.group_header_group_name));
         mGroupName.setText(mGroup.getName());
 
         ((TextView) getView().findViewById(R.id.group_header_group_description)).setText(mGroup.getDescription());

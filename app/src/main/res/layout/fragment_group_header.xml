@@ -6,33 +6,47 @@
     android:orientation = "vertical
 
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/group_header_event_name"
-        android:clickable="true"
-        android:inputType="textShortMessage" 
-        android:enabled="false"
-        android:focusable="false"
-        android:text="Event Title goes here"/>
-        
-        
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Group Name"
+        android:id="@+id/textView14" />
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/group_header_group_name"
-        android:inputType="textShortMessage"
-        android:enabled="false"
-        android:focusable="false"/>
-        
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
 
-    <EditText
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Group Description"
+        android:id="@+id/textView15" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/group_header_group_description"
-        android:inputType="textShortMessage"
-        android:enabled="false"
-        android:focusable="false"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Members:"
+            android:id="@+id/textView16"
+            android:layout_column="3" />
+    </TableRow>
+
 
 </TableLayout>

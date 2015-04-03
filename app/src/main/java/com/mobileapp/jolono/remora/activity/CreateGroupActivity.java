@@ -11,15 +11,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.ParseError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
 
 import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class CreateGroupActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -80,8 +85,16 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                 Group group = new Group(name, description);
                 JsonObjectRequest request = group.createRequest(new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject request) {
-                        startActivity(new Intent(CreateGroupActivity.this, GetGroupActivity.class));
+                    public void onResponse(JSONObject response) {
+                        Intent getGroupIntent = new Intent(CreateGroupActivity.this, GetGroupActivity.class);
+                        try {
+                            String id = response.getString("id");
+                            getGroupIntent.putExtra("id", id);
+
+
+                        } catch (Exception e) {
+                        }
+                        startActivity(getGroupIntent);
                         finish();
                     }
                 }, new Response.ErrorListener() {
