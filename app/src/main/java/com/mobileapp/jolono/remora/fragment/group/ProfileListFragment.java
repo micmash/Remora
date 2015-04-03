@@ -22,7 +22,7 @@ import com.mobileapp.jolono.remora.model.Profile;
  * A
  * interface.
  */
-public class GroupFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class ProfileListFragment extends Fragment implements AbsListView.OnItemClickListener {
     private Group mGroup;
 
     /**
@@ -36,8 +36,8 @@ public class GroupFragment extends Fragment implements AbsListView.OnItemClickLi
      */
     private ListAdapter mAdapter;
 
-    public static GroupFragment newInstance(Group group) {
-        GroupFragment fragment = new GroupFragment();
+    public static ProfileListFragment newInstance(Group group) {
+        ProfileListFragment fragment = new ProfileListFragment();
         fragment.mGroup = group;
         return fragment;
     }
@@ -46,7 +46,7 @@ public class GroupFragment extends Fragment implements AbsListView.OnItemClickLi
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public GroupFragment() {
+    public ProfileListFragment() {
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.mobileapp.jolono.remora.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,16 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
-import com.mobileapp.jolono.remora.fragment.group.GroupFragment;
+import com.mobileapp.jolono.remora.fragment.group.ProfileListFragment;
 import com.mobileapp.jolono.remora.fragment.group.GroupHeaderFragment;
 import com.mobileapp.jolono.remora.model.Group;
-import com.mobileapp.jolono.remora.model.Profile;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
 
@@ -85,7 +82,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Fragment groupFrag = GroupFragment.newInstance(new Group(response));
+                        Fragment groupFrag = ProfileListFragment.newInstance(new Group(response));
                         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                         fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
                         fragTrans.commit();
