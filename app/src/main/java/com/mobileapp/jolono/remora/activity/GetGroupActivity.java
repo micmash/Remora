@@ -18,7 +18,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.fragment.group.GroupFragment;
-import com.mobileapp.jolono.remora.fragment.ProfileFragment;
 import com.mobileapp.jolono.remora.fragment.group.GroupHeaderFragment;
 import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.Profile;
