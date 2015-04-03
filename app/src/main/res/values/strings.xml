@@ -58,4 +58,4 @@
     <string name="title_activity_create_group">CreateGroupActivity</string>
     <string name="title_activity_get_group_from_account">GetGroupFromAccountActivity</string>
 
-</resources>
+    </resources>

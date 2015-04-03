@@ -17,5 +17,13 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/activity_get_group_list_fragment_base"></FrameLayout>
+        android:id="@+id/activity_get_group_list_fragment_base">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Profile"
+            android:id="@+id/activity_get_group_addProfile"
+            android:layout_gravity="left|top" />
+    </FrameLayout>
 </LinearLayout>

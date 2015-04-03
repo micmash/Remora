@@ -2,34 +2,45 @@ package com.mobileapp.jolono.remora.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.fragment.group.GroupFragment;
+import com.mobileapp.jolono.remora.fragment.ProfileFragment;
 import com.mobileapp.jolono.remora.fragment.group.GroupHeaderFragment;
 import com.mobileapp.jolono.remora.model.Group;
+import com.mobileapp.jolono.remora.model.Profile;
 import com.mobileapp.jolono.remora.model.RequestManager;
+import com.mobileapp.jolono.remora.model.UserAccount;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-public class GetGroupActivity extends ActionBarActivity {
+public class GetGroupActivity extends ActionBarActivity implements View.OnClickListener{
     private static final String FRAG_TAG = "gf";
     private static final String FRAG_TAG_2 = "fg";
+    private static Button mAddGroup;
+    private Group mGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("life cycle", "view group, onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_group);
+
+        mAddGroup = (Button)findViewById(R.id.activity_get_group_addProfile);
 
         Fragment frag;
         if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
@@ -50,6 +61,7 @@ public class GetGroupActivity extends ActionBarActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Group group = new Group(response);
+                        mGroup = group;
                         group.mObjUrl = url1;
                         Fragment headerFrag = GroupHeaderFragment.newInstance(group);
                         FragmentTransaction f = getFragmentManager().beginTransaction();
@@ -106,5 +118,24 @@ public class GetGroupActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.activity_get_group_addProfile:
+                if(mGroup != null) {
+                    mGroup.addMemberRequest(UserAccount.mUserProfile.getID(), new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            mGroup.mMembers.add(UserAccount.mUserProfile);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                        }
+                    });
+                }
+        }
     }
 }
