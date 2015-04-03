@@ -77,6 +77,10 @@
             android:name=".activity.GetEventActivity"
             android:label="@string/title_activity_get_event" >
         </activity>
+        <activity
+            android:name=".activity.CreateGroupActivity"
+            android:label="@string/title_activity_create_group" >
+        </activity>
     </application>
 
 </manifest>

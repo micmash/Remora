@@ -55,5 +55,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_get_event">GetEventActivity</string>
+    <string name="title_activity_create_group">CreateGroupActivity</string>
 
 </resources>
