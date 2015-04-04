@@ -22,16 +22,19 @@ public class Event extends AbstractJsonBackedObject {
     private static final String START_TIME_ARG = "starttime";
     private static final String END_TIME_ARG = "endtime";
     private static final String ID_ARG = "id";
+    private static final String OWNER_UID_ARG = "u_id";
 
 
     public List<Group> mGroups = new ArrayList<>();
 
     public Event(String name, String location, String description, String starttime, String endtime) {
+        mBaseUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/events.json";
         setName(name);
         setLocation(location);
         setDescription(description);
         setStartTime(starttime);
         setEndTime(endtime);
+        setOwnerUID(UserAccount.mUID.toString());
     }
 
     public Event(JSONObject jsonObject) {
@@ -141,6 +144,21 @@ public class Event extends AbstractJsonBackedObject {
         }
 
         return -1;
+    }
+
+    public String getOwnerUID() {
+        try {
+            return mData.getString(OWNER_UID_ARG);
+        } catch (JSONException e) {
+
+        }
+        return null;
+    }
+    public void setOwnerUID(String uid) {
+        try {
+            mPushData.put(OWNER_UID_ARG, uid);
+        } catch (JSONException e) {
+        }
     }
 
     public void getGroups(JSONArray jsonArray) {

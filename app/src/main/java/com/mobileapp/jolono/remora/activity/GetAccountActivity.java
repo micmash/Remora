@@ -54,6 +54,7 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
         findViewById(R.id.activity_get_account_map_button).setOnClickListener(this);
         findViewById(R.id.activity_get_account_groups_button).setOnClickListener(this);
         findViewById(R.id.activity_get_account_search_button).setOnClickListener(this);
+        findViewById(R.id.activity_get_account_create_event_button).setOnClickListener(this);
     }
 
 
@@ -101,6 +102,9 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
                 break;
             case R.id.activity_get_account_search_button:
                 startActivity(new Intent(this, SearchActivity.class));
+                break;
+            case R.id.activity_get_account_create_event_button:
+                startActivity(new Intent(this, CreateEventActivity.class));
                 break;
         }
     }

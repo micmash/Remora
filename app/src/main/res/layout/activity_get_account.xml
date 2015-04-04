@@ -58,6 +58,15 @@
                 android:layout_below="@+id/activity_get_account_events_button"
                 android:layout_toRightOf="@+id/activity_get_account_events_button"
                 android:layout_toEndOf="@+id/activity_get_account_events_button" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Event"
+                android:id="@+id/activity_get_account_create_event_button"
+                android:layout_alignBottom="@+id/activity_get_account_search_button"
+                android:layout_toLeftOf="@+id/activity_get_account_delete_button"
+                android:layout_toStartOf="@+id/activity_get_account_delete_button" />
         </RelativeLayout>
 
     </LinearLayout>

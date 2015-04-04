@@ -10,8 +10,10 @@ import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Event;
+import com.mobileapp.jolono.remora.model.RequestManager;
 
 import org.json.JSONObject;
 
@@ -37,15 +39,14 @@ public class CreateEventActivity extends ActionBarActivity {
                 String location = editText.getText().toString();
 
                 Event event = new Event(name, location, description, starttime, endtime);
-                event.createRequest(new Response.Listener<JSONObject>() {
+                JsonObjectRequest createRequest = event.createRequest(new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         Event createdEvent = new Event(jsonObject);
-                        createdEvent.getID();
 
-                        Intent getEventIntent;
-
-
+                        Intent getEventIntent = new Intent(CreateEventActivity.this, GetEventActivity.class);
+                        getEventIntent.putExtra("id", Integer.toString(createdEvent.getID()));
+                        startActivity(getEventIntent);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -53,6 +54,8 @@ public class CreateEventActivity extends ActionBarActivity {
 
                     }
                 });
+
+                RequestManager.getInstance(CreateEventActivity.this).addToRequestQueue(createRequest);
 
             }
         });
