@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -181,5 +182,10 @@ public class Event extends AbstractJsonBackedObject {
     @Override
     public String toString() {
         return getName() + " " + getStartTime() + " " + getEndTime();
+    }
+    
+    public static void deleteEvent(Event e) {
+        
+        
     }
 }

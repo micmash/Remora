@@ -106,6 +106,9 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
             case R.id.activity_get_account_create_event_button:
                 startActivity(new Intent(this, CreateEventActivity.class));
                 break;
+            case R.id.activity_get_account_delete_button:
+                UserAccount.deleteAccount();
+                break;
         }
     }
 }

@@ -12,25 +12,29 @@
         android:layout_height="wrap_content"
         android:id="@+id/activity_get_account_base">
 
-        <RelativeLayout
+        <GridLayout
             android:layout_width="fill_parent"
-            android:layout_height="90dp">
+            android:layout_height="wrap_content">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/activity_get_account_map_button"
                 android:text="@string/map"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:layout_row="0"
+                android:layout_column="0" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="177dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/activity_get_account_events_button"
                 android:text="events"
                 android:layout_alignBottom="@+id/activity_get_account_groups_button"
                 android:layout_toRightOf="@+id/activity_get_account_groups_button"
-                android:layout_toEndOf="@+id/activity_get_account_groups_button" />
+                android:layout_toEndOf="@+id/activity_get_account_groups_button"
+                android:layout_row="0"
+                android:layout_column="1" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -39,7 +43,9 @@
                 android:id="@+id/activity_get_account_groups_button"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/activity_get_account_map_button"
-                android:layout_toEndOf="@+id/activity_get_account_map_button" />
+                android:layout_toEndOf="@+id/activity_get_account_map_button"
+                android:layout_row="0"
+                android:layout_column="5" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -48,7 +54,20 @@
                 android:id="@+id/activity_get_account_delete_button"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_row="1"
+                android:layout_column="0" />
+
+            <Button
+                android:layout_width="177dp"
+                android:layout_height="wrap_content"
+                android:text="Create Event"
+                android:id="@+id/activity_get_account_create_event_button"
+                android:layout_alignBottom="@+id/activity_get_account_search_button"
+                android:layout_toLeftOf="@+id/activity_get_account_delete_button"
+                android:layout_toStartOf="@+id/activity_get_account_delete_button"
+                android:layout_row="1"
+                android:layout_column="1" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -57,17 +76,10 @@
                 android:id="@+id/activity_get_account_search_button"
                 android:layout_below="@+id/activity_get_account_events_button"
                 android:layout_toRightOf="@+id/activity_get_account_events_button"
-                android:layout_toEndOf="@+id/activity_get_account_events_button" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create Event"
-                android:id="@+id/activity_get_account_create_event_button"
-                android:layout_alignBottom="@+id/activity_get_account_search_button"
-                android:layout_toLeftOf="@+id/activity_get_account_delete_button"
-                android:layout_toStartOf="@+id/activity_get_account_delete_button" />
-        </RelativeLayout>
+                android:layout_toEndOf="@+id/activity_get_account_events_button"
+                android:layout_row="1"
+                android:layout_column="5" />
+        </GridLayout>
 
     </LinearLayout>
 </ScrollView>

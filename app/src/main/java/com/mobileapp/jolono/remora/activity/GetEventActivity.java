@@ -2,10 +2,14 @@ package com.mobileapp.jolono.remora.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -16,14 +20,17 @@ import com.mobileapp.jolono.remora.fragment.GroupListFragment;
 import com.mobileapp.jolono.remora.fragment.event.EventHeaderFragment;
 import com.mobileapp.jolono.remora.model.Event;
 import com.mobileapp.jolono.remora.model.RequestManager;
+import com.mobileapp.jolono.remora.model.UserAccount;
 
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class GetEventActivity extends ActionBarActivity {
+public class GetEventActivity extends ActionBarActivity implements View.OnClickListener {
     private static final String FRAG_TAG = "h";
     private static final String FRAG_TAG_2 = "gl";
+    private static Button mdeleteButton;
+    private final String url1 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/events/";
 
     private Event mEvent;
     @Override
@@ -46,31 +53,35 @@ public class GetEventActivity extends ActionBarActivity {
             fragTrans.commit();
         }
 
-        String id  = getIntent().getStringExtra("id");
-        final String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/events/" + id + ".json";
-        JsonObjectRequest eventRequest = Event.getRequest(url1, new Response.Listener<JSONObject>() {
+        final String id  = getIntent().getStringExtra("id");
+        JsonObjectRequest eventRequest = Event.getRequest(url1 + id + ".json", new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                
+                mEvent= new Event(response);
                 Fragment headerFrag = EventHeaderFragment.newInstance(new Event(response));
                 FragmentTransaction f = getFragmentManager().beginTransaction();
                 f.add(R.id.activity_get_event_header_fragment_container, headerFrag, FRAG_TAG);
                 f.commit();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-            }
-        });
 
-        JsonArrayRequest groupsRequest = Event.getEventGroups(id, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                mEvent = new Event(response); //TODO: only use on instance of Event and call getGroups
-                Fragment eventFrag = GroupListFragment.newInstance(mEvent.mGroups);
-                FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                fragTrans.add(R.id.activity_get_event_groups_fragment_container, eventFrag, FRAG_TAG_2);
-                fragTrans.commit();
+
+                JsonArrayRequest groupsRequest = Event.getEventGroups(id, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        mEvent.getGroups(response); //TODO: only use on instance of Event and call getGroups
+                        Fragment eventFrag = GroupListFragment.newInstance(mEvent.mGroups);
+                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+                        fragTrans.add(R.id.activity_get_event_groups_fragment_container, eventFrag, FRAG_TAG_2);
+                        fragTrans.commit();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                    }
+                });
+                RequestManager.getInstance(GetEventActivity.this).addToRequestQueue(groupsRequest);
             }
+            
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -78,7 +89,11 @@ public class GetEventActivity extends ActionBarActivity {
         });
 
         RequestManager.getInstance(this).addToRequestQueue(eventRequest);
-        RequestManager.getInstance(this).addToRequestQueue(groupsRequest);
+       
+        
+        mdeleteButton = (Button) findViewById(R.id.activity_get_event_delete);
+        mdeleteButton.setOnClickListener(this);
+
     }
 
 
@@ -102,5 +117,29 @@ public class GetEventActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.activity_get_event_delete:
+                JsonObjectRequest delete = mEvent.deleteRequest(new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e("HAHAHASIJBAEC", volleyError.getMessage());
+                    }
+                }, (url1 + mEvent.getID()));
+                RequestManager.getInstance(this).addToRequestQueue(delete);
+                Intent i = new Intent(GetEventActivity.this, GetAccountActivity.class);
+                i.putExtra("username", UserAccount.mAccountName);
+                startActivity(i);
+                break;
+        }
     }
 }

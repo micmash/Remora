@@ -61,4 +61,9 @@ public class UserAccount {
 
         return request;
     }
+    
+    public static void deleteAccount() {
+        
+        
+    }
 }

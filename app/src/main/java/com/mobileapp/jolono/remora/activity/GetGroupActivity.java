@@ -2,6 +2,7 @@ package com.mobileapp.jolono.remora.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,8 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
     private static final String FRAG_TAG = "gf";
     private static final String FRAG_TAG_2 = "fg";
     private static Button mAddGroup;
+    private static Button mRemoveProfile;
+    private static Button mDeleteGroup;
     private Group mGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,10 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
 
         mAddGroup = (Button)findViewById(R.id.activity_get_group_addProfile);
         mAddGroup.setOnClickListener(this);
+        mRemoveProfile = (Button)findViewById(R.id.activity_get_group_removeProfile);
+        mRemoveProfile.setOnClickListener(this);
+        mDeleteGroup = (Button) findViewById(R.id.activity_get_group_delete);
+        mDeleteGroup.setOnClickListener(this);
 
         Fragment frag;
         if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
@@ -96,7 +103,29 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                     }
                 });
 
+
+        String url2 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
+                "view_attached_profiles_to_group.json?g_id=" + g_id;
+        JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url2,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        mGroup.setGroupMembers(response);
+                        Fragment groupFrag = ProfileListFragment.newInstance(new Group(response));
+                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+                        fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
+                        fragTrans.commit();
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("blah", "blah");
+            }
+        });
+
         RequestManager.getInstance(this).addToRequestQueue(groupRequest);
+        RequestManager.getInstance(this).addToRequestQueue(groupMemberRequest);
     }
 
     @Override
@@ -122,10 +151,10 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.activity_get_group_addProfile:
-                if(mGroup != null && mGroup.mMembers.contains(UserAccount.mUserProfile)) {
+                if(mGroup != null && !mGroup.mMembers.contains(UserAccount.mUserProfile)) {
                     JsonObjectRequest addMemberRequest = mGroup.addMemberRequest(UserAccount.mUID.toString(), new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {
@@ -140,6 +169,49 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
 
                     RequestManager.getInstance(this).addToRequestQueue(addMemberRequest);
                 }
+            case R.id.activity_get_group_removeProfile:
+                boolean q = mGroup.mMembers.contains(UserAccount.mUserProfile);
+                boolean e = q;
+                if(mGroup != null && mGroup.mMembers.contains(UserAccount.mUserProfile)) {
+                    JsonObjectRequest removeMemberRequest = mGroup.removeMemberRequest(UserAccount.mUID.toString(), new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            mGroup.mMembers.remove(UserAccount.mUserProfile);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Log.e("blah", volleyError.getMessage());
+                        }
+                    });
+
+                    RequestManager.getInstance(this).addToRequestQueue(removeMemberRequest);
+                }
+                Intent intent = new Intent(this, GetAccountActivity.class);
+                intent.putExtra("username", UserAccount.mAccountName);
+                        
+                startActivity(intent);
+                break;
+            case R.id.activity_get_group_delete:
+                String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/groups/" + mGroup.getID() +".json";
+                JsonObjectRequest delete = mGroup.deleteRequest(new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e("kasdjhlakjh", volleyError.getMessage());
+                    }
+                }, url);
+                RequestManager.getInstance(this).addToRequestQueue(delete);
+
+                Intent i = new Intent(GetGroupActivity.this, GetAccountActivity.class);
+                i.putExtra("username", UserAccount.mAccountName);
+                startActivity(i);
+                finish();
+
         }
     }
 }
