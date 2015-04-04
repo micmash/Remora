@@ -54,7 +54,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
 
 
 
-        String g_id = getIntent().getStringExtra("id");
+        final String g_id = getIntent().getStringExtra("id");
         final String url1 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
                 "groups/" + g_id + ".json";
         JsonObjectRequest groupRequest = Group.getRequest(url1, new Response.Listener<JSONObject>() {
@@ -67,6 +67,27 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                         FragmentTransaction f = getFragmentManager().beginTransaction();
                         f.add(R.id.activity_get_group_header_fragment_base, headerFrag, FRAG_TAG_2);
                         f.commit();
+
+                        String url2 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
+                                "view_attached_profiles_to_group.json?g_id=" + g_id;
+                        JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url2,
+                                new Response.Listener<JSONArray>() {
+                                    @Override
+                                    public void onResponse(JSONArray response) {
+                                        mGroup.setGroupMembers(response);
+                                        Fragment groupFrag = ProfileListFragment.newInstance(new Group(response));
+                                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+                                        fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
+                                        fragTrans.commit();
+                                    }
+
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.e("blah", "blah");
+                                    }
+                                });
+                        RequestManager.getInstance(GetGroupActivity.this).addToRequestQueue(groupMemberRequest);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -75,29 +96,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                     }
                 });
 
-
-        String url2 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
-                "view_attached_profiles_to_group.json?g_id=" + g_id;
-        JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url2,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        mGroup.setGroupMembers(response);
-                        Fragment groupFrag = ProfileListFragment.newInstance(new Group(response));
-                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                        fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
-                        fragTrans.commit();
-                    }
-
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("blah", "blah");
-            }
-        });
-
         RequestManager.getInstance(this).addToRequestQueue(groupRequest);
-        RequestManager.getInstance(this).addToRequestQueue(groupMemberRequest);
     }
 
     @Override

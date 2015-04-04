@@ -93,6 +93,10 @@
             android:name=".activity.SearchActivity"
             android:label="@string/title_activity_search" >
         </activity>
+        <activity
+            android:name=".activity.CreateEventActivity"
+            android:label="@string/title_activity_create" >
+        </activity>
     </application>
 
 </manifest>

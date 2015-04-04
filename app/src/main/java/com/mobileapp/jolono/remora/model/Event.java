@@ -26,6 +26,14 @@ public class Event extends AbstractJsonBackedObject {
 
     public List<Group> mGroups = new ArrayList<>();
 
+    public Event(String name, String location, String description, String starttime, String endtime) {
+        setName(name);
+        setLocation(location);
+        setDescription(description);
+        setStartTime(starttime);
+        setEndTime(endtime);
+    }
+
     public Event(JSONObject jsonObject) {
         super(jsonObject);
         mBaseUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/events.json";
@@ -53,6 +61,13 @@ public class Event extends AbstractJsonBackedObject {
         } catch(JSONException e) {
         }
         return null;
+    }
+
+    public void setName(String name) {
+        try {
+            mPushData.put(NAME_ARG, name);
+        } catch(JSONException e) {
+        }
     }
 
     public String getDescription() {

@@ -77,7 +77,8 @@ public class ProfileListFragment extends Fragment implements AbsListView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent getProfileIntent = new Intent(getActivity(), GetProfileActivity.class);
-        getProfileIntent.putExtra("url", mGroup.mMembers.get(position).getUrl());
+        String sId = Integer.toString(mGroup.mMembers.get(position).getID());
+        getProfileIntent.putExtra("id", sId);
        
         startActivity(getProfileIntent);
     }

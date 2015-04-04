@@ -57,7 +57,7 @@ public class EventHeaderFragment extends Fragment {
             (v.findViewById(R.id.fragment_event_header_save_button)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mEvent.mObjUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/events/2.json"; //TODO: get url not hardcoded.
+                    mEvent.mObjUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/events/" + mEvent.getID() + ".json"; //TODO: get url not hardcoded.
                     JsonObjectRequest request = mEvent.editRequest(new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {

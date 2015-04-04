@@ -53,5 +53,6 @@
     <string name="title_activity_get_group_from_account">GetGroupFromAccountActivity</string>
     <string name="title_activity_get_events_from_account">GetEventsFromAccount</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_create">CreateActivity</string>
 
 </resources>

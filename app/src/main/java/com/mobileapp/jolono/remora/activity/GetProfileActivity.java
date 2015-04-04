@@ -35,7 +35,9 @@ public class GetProfileActivity extends ActionBarActivity  {
             getFragmentManager().executePendingTransactions();
         }
 
-        final String url = getIntent().getStringExtra("url");
+        //final String url = getIntent().getStringExtra("url");
+        final String id = getIntent().getStringExtra("id");
+        final String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/profiles/" + id + ".json";
         JsonObjectRequest request = Profile.getRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
