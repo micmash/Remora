@@ -139,8 +139,8 @@ public class Event extends AbstractJsonBackedObject {
         }
     }
 
-    public static JsonArrayRequest getEventGroups(int id, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
-        String url = "http://ec2-52-0-168-55.compute-1.amazronaws.com/get_attached_groups_to_event.json?e_id=" + id;
+    public static JsonArrayRequest getEventGroups(String id, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/get_attached_groups_to_event.json?e_id=" + id;
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);
         return request;
     }

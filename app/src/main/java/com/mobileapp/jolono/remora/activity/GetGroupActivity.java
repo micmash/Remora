@@ -82,6 +82,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        mGroup.setGroupMembers(response);
                         Fragment groupFrag = ProfileListFragment.newInstance(new Group(response));
                         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                         fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);

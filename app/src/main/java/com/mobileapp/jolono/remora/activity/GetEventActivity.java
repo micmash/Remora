@@ -46,7 +46,7 @@ public class GetEventActivity extends ActionBarActivity {
             fragTrans.commit();
         }
 
-        int id  = getIntent().getIntExtra("id", 0);
+        String id  = getIntent().getStringExtra("id");
         final String url1 = "http://dhh:secret@ec2-52-0-168-55.compute-1.amazonaws.com/events/" + id + ".json";
         JsonObjectRequest eventRequest = Event.getRequest(url1, new Response.Listener<JSONObject>() {
             @Override

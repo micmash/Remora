@@ -91,7 +91,7 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.activity_get_account_events_button:
-                startActivity(new Intent(this, GetEventActivity.class));
+                startActivity(new Intent(this, GetEventsFromAccount.class));
                 break;
             case R.id.activity_get_account_map_button:
                 startActivity(new Intent(this, MapsActivity.class));
