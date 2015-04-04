@@ -54,9 +54,27 @@ public class EventHeaderFragment extends Fragment {
             ((EditText) v.findViewById(R.id.fragment_event_header_end_time)).setText(mEvent.getEndTime());
             ((EditText) v.findViewById(R.id.fragment_event_header_description)).setText(mEvent.getDescription());
 
+
             (v.findViewById(R.id.fragment_event_header_save_button)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    EditText editText = (EditText) getView().findViewById(R.id.fragment_event_header_name);
+                    String name = editText.getText().toString();
+                    editText = (EditText) getView().findViewById(R.id.fragment_event_header_location);
+                    String location = editText.getText().toString();
+                    editText = (EditText) getView().findViewById(R.id.fragment_event_header_description);
+                    String description = editText.getText().toString();
+                    editText = (EditText) getView().findViewById(R.id.fragment_event_header_start_time);
+                    String startime = editText.getText().toString();
+                    editText = (EditText) getView().findViewById(R.id.fragment_event_header_end_time);
+                    String endtime = editText.getText().toString();
+
+                    mEvent.setName(name);
+                    mEvent.setLocation(location);
+                    mEvent.setDescription(description);
+                    mEvent.setStartTime(startime);
+                    mEvent.setEndTime(endtime);
+
                     mEvent.mObjUrl = "http://ec2-52-0-168-55.compute-1.amazonaws.com/events/" + mEvent.getID() + ".json"; //TODO: get url not hardcoded.
                     JsonObjectRequest request = mEvent.editRequest(new Response.Listener<JSONObject>() {
                         @Override

@@ -69,9 +69,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.fragment_profile_save_button) {
-            EditText description = (EditText) getView().findViewById(R.id.fragment_profile_description);
+            EditText editText = (EditText) getView().findViewById(R.id.fragment_profile_name);
+            String fName = editText.getText().toString();
+            editText = (EditText) getView().findViewById(R.id.fragment_profile_description);
+            String description = editText.getText().toString();
 
-            mProfile.setFirstName(description.getText().toString());
+            mProfile.setFirstName(fName);
+            mProfile.setDescription(description);
+
+
             JsonObjectRequest request = mProfile.editRequest(new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
