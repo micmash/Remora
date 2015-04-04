@@ -67,12 +67,28 @@ public class Group extends AbstractJsonBackedObject {
         return null;
     }
 
+    public void setName(String name) {
+        try {
+            mPushData.put(NAME_ARG, name);
+        } catch (JSONException e) {
+
+        }
+    }
+
     public String getDescription() {
         try {
             return mData.getString(DESCRIPTION_ARG);
         } catch (JSONException e) {
         }
         return null;
+    }
+
+    public void setDescription(String description) {
+        try {
+            mPushData.put(DESCRIPTION_ARG, description);
+        } catch (JSONException e) {
+
+        }
     }
 
     public int getID() {
@@ -84,6 +100,8 @@ public class Group extends AbstractJsonBackedObject {
 
         return -1;
     }
+
+
 
     public static JsonArrayRequest getGroupMembers(String url, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);

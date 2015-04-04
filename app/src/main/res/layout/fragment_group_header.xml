@@ -13,7 +13,7 @@
         android:text="Group Name"
         android:id="@+id/textView14" />
 
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/group_header_group_name"
@@ -28,12 +28,18 @@
         android:text="Group Description"
         android:id="@+id/textView15" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/group_header_group_description"
         android:textAppearance="?android:attr/textAppearanceLarge"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/fragment_group_header_save_button" />
 
     <TableRow
         android:layout_width="fill_parent"

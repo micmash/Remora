@@ -103,29 +103,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                     }
                 });
 
-
-        String url2 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
-                "view_attached_profiles_to_group.json?g_id=" + g_id;
-        JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url2,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        mGroup.setGroupMembers(response);
-                        Fragment groupFrag = ProfileListFragment.newInstance(new Group(response));
-                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                        fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
-                        fragTrans.commit();
-                    }
-
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("blah", "blah");
-            }
-        });
-
         RequestManager.getInstance(this).addToRequestQueue(groupRequest);
-        RequestManager.getInstance(this).addToRequestQueue(groupMemberRequest);
     }
 
     @Override
