@@ -44,6 +44,10 @@
     <string name="create_account_frag_email">email address</string>
     <string name="create_account_frag_password">password</string>
     <string name="fragment_event_header_default_name">Event Name</string>
+    
+    
+    <!--Search stuff -->
+    <string name="search_hint">enter tags</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

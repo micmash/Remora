@@ -77,7 +77,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             mProfile.setFirstName(fName);
             mProfile.setDescription(description);
 
-
+            
             JsonObjectRequest request = mProfile.editRequest(new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

@@ -57,12 +57,7 @@
             android:name=".activity.GetAccountActivity"
             android:label="@string/activity_get_account_title" >
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
         </activity>
 
         <meta-data
@@ -91,7 +86,11 @@
         </activity>
         <activity
             android:name=".activity.SearchActivity"
-            android:label="@string/title_activity_search" >
+            android:label="@string/title_activity_search"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.CreateEventActivity"
