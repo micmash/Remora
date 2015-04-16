@@ -33,11 +33,8 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
     private final String url1 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/events/";
 
     private Event mEvent;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_event);
 
+    private void loadFragments() {
         //remove fragments so new ones with updated info can be used.
         //TODO: this is kind of lame. prob should find a way to update frag withoout removing?
         Fragment frag;
@@ -57,7 +54,7 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
         JsonObjectRequest eventRequest = Event.getRequest(url1 + id + ".json", new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                
+
                 mEvent= new Event(response);
                 Fragment headerFrag = EventHeaderFragment.newInstance(new Event(response));
                 FragmentTransaction f = getFragmentManager().beginTransaction();
@@ -81,7 +78,7 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
                 });
                 RequestManager.getInstance(GetEventActivity.this).addToRequestQueue(groupsRequest);
             }
-            
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -89,11 +86,24 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
         });
 
         RequestManager.getInstance(this).addToRequestQueue(eventRequest);
-       
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_get_event);
+
+        loadFragments();
         
         mdeleteButton = (Button) findViewById(R.id.activity_get_event_delete);
         mdeleteButton.setOnClickListener(this);
 
+    }
+
+    @Override
+    protected  void onRestart() {
+        super.onRestart();
+        loadFragments();
     }
 
 

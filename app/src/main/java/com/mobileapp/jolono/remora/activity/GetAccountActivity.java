@@ -26,10 +26,22 @@ import org.json.JSONObject;
 
 
 public class GetAccountActivity extends ActionBarActivity implements View.OnClickListener, AccountCredentialsFragment.OnFragmentInteractionListener {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_account);
+    public static final String FRAG_TAG_1 = "p";
+    public static final String FRAG_TAG_2 = "h";
+
+    private void loadFragments() {
+        Fragment frag;
+        if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG_1)) != null) {
+            FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+            fragTrans.remove(frag);
+            fragTrans.commit();
+        }
+
+        if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG_2)) != null) {
+            FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+            fragTrans.remove(frag);
+            fragTrans.commit();
+        }
 
         //final String url = UserAccount.getBaseURL() + "?username=" + UserAccount.mAccountName;
         final String userName = getIntent().getStringExtra("username");
@@ -40,24 +52,38 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
                 Fragment accountCredFrag = AccountCredentialsFragment.newInstance();
                 Fragment accountProfileFrag = ProfileFragment.newInstance(UserAccount.mUserProfile);
                 FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                fragTrans.add(R.id.activity_get_account_base, accountCredFrag);
-                fragTrans.add(R.id.activity_get_account_base, accountProfileFrag);
+                fragTrans.add(R.id.activity_get_account_base_account_credentials_frag_container, accountCredFrag, FRAG_TAG_1);
+                fragTrans.add(R.id.activity_get_account_base, accountProfileFrag, FRAG_TAG_2);
                 fragTrans.commit();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                // Log.e("fuck you", volleyError.getMessage());
+                 Log.e("fuck you", volleyError.getMessage());
             }
         });
 
         RequestManager.getInstance(this).addToRequestQueue(request);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_get_account);
+
+        loadFragments();
 
         findViewById(R.id.activity_get_account_events_button).setOnClickListener(this);
         findViewById(R.id.activity_get_account_map_button).setOnClickListener(this);
         findViewById(R.id.activity_get_account_groups_button).setOnClickListener(this);
         findViewById(R.id.activity_get_account_search_button).setOnClickListener(this);
         findViewById(R.id.activity_get_account_create_event_button).setOnClickListener(this);
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        loadFragments();
     }
 
 

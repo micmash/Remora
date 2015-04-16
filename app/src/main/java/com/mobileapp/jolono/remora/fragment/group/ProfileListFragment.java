@@ -62,8 +62,10 @@ public class ProfileListFragment extends Fragment implements AbsListView.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_groupmember, container, false);
-        if(mAdapter != null) {
+
+        View view = null;
+        if(mGroup != null) {
+            view = inflater.inflate(R.layout.fragment_groupmember, container, false);
             // Set the adapter
             mListView = (AbsListView) view.findViewById(android.R.id.list);
             ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);

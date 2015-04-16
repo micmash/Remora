@@ -21,12 +21,8 @@ import org.json.JSONObject;
 
 public class GetProfileActivity extends ActionBarActivity  {
     private static final String FRAG_TAG = "frag";
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.d("life cycle", "onCreate");
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_profile);
 
+    private void loadFragments() {
         Fragment frag;
         if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
             FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
@@ -54,66 +50,20 @@ public class GetProfileActivity extends ActionBarActivity  {
             }
         });
 
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Profile profile = new Profile(response);
-//                        profile.mUrl = getIntent().getStringExtra("url");
-//                        Fragment profileFrag = ProfileFragment.newInstance(profile, true);
-//                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-//                        fragTrans.add(R.id.activity_view_profile_base, profileFrag, FRAG_TAG);
-//                        fragTrans.commit();
-//                    }
-//
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
         RequestManager.getInstance(this).addToRequestQueue(request);
     }
-
-    /* life cycle logging --------------------------------------------------------------------*/
-
     @Override
-    protected void onStart() {
-        Log.d("life cycle", "onStart");
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        Log.d("life cycle", "onResume");
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        Log.d("life cycle", "onPause");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.d("life cycle", "onStop");
-        super.onStop();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_get_profile);
+        loadFragments();
     }
 
     @Override
     protected void onRestart() {
-        Log.d("life cycle", "onRestart");
         super.onRestart();
+        loadFragments();
     }
-
-    @Override
-    protected  void onDestroy() {
-        Log.d("life cycle", "onDestroy");
-        super.onDestroy();
-    }
-    /*---------------------------------------------------------------------------------------*/
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

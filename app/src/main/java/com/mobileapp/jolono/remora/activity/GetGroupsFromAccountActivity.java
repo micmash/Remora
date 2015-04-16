@@ -29,9 +29,7 @@ public class GetGroupsFromAccountActivity extends ActionBarActivity {
     private String FRAG_TAG_2 = "HSHSH";
     private List<Group> g;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private void loadFragments() {
 
         Fragment frag;
         if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG_2)) != null) {
@@ -59,7 +57,17 @@ public class GetGroupsFromAccountActivity extends ActionBarActivity {
 
         RequestManager.getInstance(this).addToRequestQueue(groupsRequest);
     }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loadFragments();
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadFragments();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

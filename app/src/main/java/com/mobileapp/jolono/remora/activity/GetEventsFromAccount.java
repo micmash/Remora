@@ -23,11 +23,16 @@ import org.json.JSONArray;
 public class GetEventsFromAccount extends ActionBarActivity {
 
     private String FRAG_TAG_2 = "fy";
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_events_from_account);
+
+
+    private void loadFragments() {
+        Fragment frag;
+        if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG_2)) != null) {
+            FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+            fragTrans.remove(frag);
+            fragTrans.commit();
+        }
+
         JsonArrayRequest groupsRequest = Profile.getEventsRequest(new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -48,6 +53,18 @@ public class GetEventsFromAccount extends ActionBarActivity {
         RequestManager.getInstance(this).addToRequestQueue(groupsRequest);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_get_events_from_account);
+        loadFragments();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadFragments();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

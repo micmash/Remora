@@ -81,5 +81,10 @@
                 android:layout_column="5" />
         </GridLayout>
 
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_get_account_base_account_credentials_frag_container"></FrameLayout>
+
     </LinearLayout>
 </ScrollView>

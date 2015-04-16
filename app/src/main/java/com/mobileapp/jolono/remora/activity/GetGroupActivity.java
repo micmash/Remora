@@ -33,19 +33,8 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
     private static Button mRemoveProfile;
     private static Button mDeleteGroup;
     private Group mGroup;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.d("life cycle", "view group, onCreate");
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_group);
 
-        mAddGroup = (Button)findViewById(R.id.activity_get_group_addProfile);
-        mAddGroup.setOnClickListener(this);
-        mRemoveProfile = (Button)findViewById(R.id.activity_get_group_removeProfile);
-        mRemoveProfile.setOnClickListener(this);
-        mDeleteGroup = (Button) findViewById(R.id.activity_get_group_delete);
-        mDeleteGroup.setOnClickListener(this);
-
+    private void loadFragments() {
         Fragment frag;
         if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
             FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
@@ -65,46 +54,69 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
         final String url1 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
                 "groups/" + g_id + ".json";
         JsonObjectRequest groupRequest = Group.getRequest(url1, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Group group = new Group(response);
-                        mGroup = group;
-                        group.mObjUrl = url1;
-                        Fragment headerFrag = GroupHeaderFragment.newInstance(group);
-                        FragmentTransaction f = getFragmentManager().beginTransaction();
-                        f.add(R.id.activity_get_group_header_fragment_base, headerFrag, FRAG_TAG_2);
-                        f.commit();
+            @Override
+            public void onResponse(JSONObject response) {
+                Group group = new Group(response);
+                mGroup = group;
+                group.mObjUrl = url1;
+                Fragment headerFrag = GroupHeaderFragment.newInstance(group);
+                FragmentTransaction f = getFragmentManager().beginTransaction();
+                f.add(R.id.activity_get_group_header_fragment_base, headerFrag, FRAG_TAG_2);
+                f.commit();
 
-                        String url2 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
-                                "view_attached_profiles_to_group.json?g_id=" + g_id;
-                        JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url2,
-                                new Response.Listener<JSONArray>() {
-                                    @Override
-                                    public void onResponse(JSONArray response) {
-                                        mGroup.setGroupMembers(response);
-                                        Fragment groupFrag = ProfileListFragment.newInstance(new Group(response));
-                                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-                                        fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
-                                        fragTrans.commit();
-                                    }
+                String url2 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
+                        "view_attached_profiles_to_group.json?g_id=" + g_id;
+                JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url2,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                mGroup.setGroupMembers(response);
+                                Fragment groupFrag = ProfileListFragment.newInstance(new Group(response));
+                                FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+                                fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
+                                fragTrans.commit();
+                            }
 
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.e("blah", "blah");
-                                    }
-                                });
-                        RequestManager.getInstance(GetGroupActivity.this).addToRequestQueue(groupMemberRequest);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Log.e("asdflkj;a", volleyError.getMessage());
-                    }
-                });
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("blah", "blah");
+                            }
+                        });
+                RequestManager.getInstance(GetGroupActivity.this).addToRequestQueue(groupMemberRequest);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("asdflkj;a", volleyError.getMessage());
+            }
+        });
 
         RequestManager.getInstance(this).addToRequestQueue(groupRequest);
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.d("life cycle", "view group, onCreate");
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_get_group);
+
+        loadFragments();
+
+        mAddGroup = (Button)findViewById(R.id.activity_get_group_addProfile);
+        mAddGroup.setOnClickListener(this);
+        mRemoveProfile = (Button)findViewById(R.id.activity_get_group_removeProfile);
+        mRemoveProfile.setOnClickListener(this);
+        mDeleteGroup = (Button) findViewById(R.id.activity_get_group_delete);
+        mDeleteGroup.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadFragments();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -52,22 +52,26 @@ public class EventListFragment extends Fragment implements AbsListView.OnItemCli
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new ArrayAdapter<Event>(getActivity(),
-                android.R.layout.simple_list_item_1, mEvents);
+        if(mEvents != null) {
+            mAdapter = new ArrayAdapter<Event>(getActivity(),
+                    android.R.layout.simple_list_item_1, mEvents);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_eventlist, container, false);
+        View view = null;
+        if(mEvents != null) {
+            view = inflater.inflate(R.layout.fragment_eventlist, container, false);
 
-        // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+            // Set the adapter
+            mListView = (AbsListView) view.findViewById(android.R.id.list);
+            ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
-
+            // Set OnItemClickListener so we can be notified on item clicks
+            mListView.setOnItemClickListener(this);
+        }
         return view;
     }
 
