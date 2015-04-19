@@ -29,37 +29,37 @@ public class SearchActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        handleIntent(getIntent());
+        //handleIntent(getIntent());
 
-//        Fragment frag;
-//        if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
-//            FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-//            fragTrans.remove(frag);
-//            fragTrans.commit();
-//            getFragmentManager().executePendingTransactions();
-//        }
-//
-//        findViewById(R.id.activity_search_search_button).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String search = ((EditText) findViewById(R.id.activity_search_search)).getText().toString();
-//                JsonArrayRequest searchRequest = SearchManager.getInstance().searchEventRequest(search, new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray jsonArray) {
-//                        SearchManager.getInstance().appendEventSearchResults(jsonArray);
-//                        Fragment eventListFrag = EventListFragment.newInstance(SearchManager.getInstance().mEventSearchResults);
-//                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-//                        fragTrans.add(R.id.activity_search_base, eventListFrag, FRAG_TAG);
-//                        fragTrans.commit();
-//                    }
-//                },new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError volleyError) {
-//                    }
-//                });
-//                RequestManager.getInstance(SearchActivity.this).addToRequestQueue(searchRequest);
-//            }
-//        });
+        Fragment frag;
+        if((frag = getFragmentManager().findFragmentByTag(FRAG_TAG)) != null) {
+            FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+            fragTrans.remove(frag);
+            fragTrans.commit();
+            getFragmentManager().executePendingTransactions();
+        }
+
+        findViewById(R.id.activity_search_search_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = ((EditText) findViewById(R.id.activity_search_search)).getText().toString();
+                JsonArrayRequest searchRequest = SearchManager.getInstance().searchEventRequest(search, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        SearchManager.getInstance().appendEventSearchResults(jsonArray);
+                        Fragment eventListFrag = EventListFragment.newInstance(SearchManager.getInstance().mEventSearchResults);
+                        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+                        fragTrans.add(R.id.activity_search_base, eventListFrag, FRAG_TAG);
+                        fragTrans.commit();
+                    }
+                },new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                    }
+                });
+                RequestManager.getInstance(SearchActivity.this).addToRequestQueue(searchRequest);
+            }
+        });
     }
 
     @Override

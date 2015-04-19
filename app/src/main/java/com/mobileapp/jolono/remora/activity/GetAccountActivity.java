@@ -59,7 +59,8 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                 Log.e("fuck you", volleyError.getMessage());
+                //go back to login screen if get account failed.
+                finish();
             }
         });
 

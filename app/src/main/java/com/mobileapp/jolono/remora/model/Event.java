@@ -2,6 +2,7 @@ package com.mobileapp.jolono.remora.model;
 
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -179,13 +180,16 @@ public class Event extends AbstractJsonBackedObject {
         return request;
     }
 
+    public static JsonObjectRequest addGroupRequest(String eventOwnerId, String groupId, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+        String url = "http://ec2-52-0-168-55.compute-1.amazonaws.com/attach_group_to_event.json?g_id=" + groupId + "&" + "e_id=" + eventOwnerId;
+        JsonObjectRequest addGroupRequest = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener);
+
+        return addGroupRequest;
+    }
+
     @Override
     public String toString() {
         return getName() + " " + getStartTime() + " " + getEndTime();
     }
-    
-    public static void deleteEvent(Event e) {
-        
-        
-    }
+
 }

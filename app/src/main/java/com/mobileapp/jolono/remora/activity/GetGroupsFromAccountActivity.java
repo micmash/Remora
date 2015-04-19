@@ -44,7 +44,7 @@ public class GetGroupsFromAccountActivity extends ActionBarActivity {
             @Override
             public void onResponse(JSONArray response) {
                 UserAccount.mUserProfile.getJoinedGroups(response);
-                Fragment groupsFrag = GroupListFragment.newInstance(UserAccount.mUserProfile.mJoinedGroups);
+                Fragment groupsFrag = GroupListFragment.newInstance(GetGroupsFromAccountActivity.this, UserAccount.mUserProfile.mJoinedGroups);
                 FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                 fragTrans.add(R.id.activity_get_groups_from_account_frag_container, groupsFrag, FRAG_TAG_2);
                 fragTrans.commit();

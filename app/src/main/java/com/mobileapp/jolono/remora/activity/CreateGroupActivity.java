@@ -17,10 +17,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.mobileapp.jolono.remora.R;
+import com.mobileapp.jolono.remora.model.Event;
 import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
@@ -86,17 +88,28 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                 JsonObjectRequest request = group.createRequest(new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Intent getGroupIntent = new Intent(CreateGroupActivity.this, GetEventActivity.class);
                         try {
-                            String id = getIntent().getStringExtra("id");
-                            getGroupIntent.putExtra("id", id);
+                            final String groupId = response.getString("id");
+                            final String eventId = getIntent().getStringExtra("eventId");
+                            JsonObjectRequest addGroupRequest = Event.addGroupRequest(eventId, groupId, new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject jsonObject) {
+                                    Intent intent = new Intent(CreateGroupActivity.this, GetEventActivity.class);
+                                    intent.putExtra("id", eventId);
+                                    startActivity(intent);
+                                    //finish();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    finish();
+                                }
+                            });
 
-
-                        } catch (Exception e) {
+                            RequestManager.getInstance(getApplicationContext()).addToRequestQueue(addGroupRequest);
+                        } catch(JSONException e) {
                         }
-                        
-                        startActivity(getGroupIntent);
-                        finish();
+
                     }
                 }, new Response.ErrorListener() {
                     @Override

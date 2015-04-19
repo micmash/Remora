@@ -59,4 +59,7 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_create">CreateActivity</string>
 
+
+    <color name="list_item_background_color">#F2F2F2</color>
+
 </resources>

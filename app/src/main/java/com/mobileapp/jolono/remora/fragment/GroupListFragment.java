@@ -1,5 +1,6 @@
 package com.mobileapp.jolono.remora.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -16,20 +18,24 @@ import com.mobileapp.jolono.remora.R;
 
 import com.mobileapp.jolono.remora.activity.GetGroupActivity;
 import com.mobileapp.jolono.remora.model.Group;
+import com.mobileapp.jolono.remora.view.ListItemView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  */
-public class GroupListFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class GroupListFragment extends Fragment implements View.OnClickListener {
     public List<Group> mGroups;
+    public List<ListItemView> mListItemViews;
 
-    private AbsListView mListView;
-    private ListAdapter mAdapter;
-
-    public static GroupListFragment newInstance(List<Group> groups) {
+    public static GroupListFragment newInstance(Context context, List<Group> groups) {
         GroupListFragment fragment = new GroupListFragment();
         fragment.mGroups = groups;
+        fragment.mListItemViews = new ArrayList<>(groups.size());
+        for(int i = 0; i < groups.size(); ++i) {
+            fragment.mListItemViews.add(new ListItemView(context));
+        }
         return fragment;
     }
 
@@ -41,52 +47,36 @@ public class GroupListFragment extends Fragment implements AbsListView.OnItemCli
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if(mGroups != null) {
-            mAdapter = new ArrayAdapter<Group>(getActivity(),
-                    android.R.layout.simple_list_item_1, mGroups);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = null;
         if(mGroups != null) {
-            view = inflater.inflate(R.layout.fragment_event, container, false);
-
-            // Set the adapter
-            mListView = (AbsListView) view.findViewById(android.R.id.list);
-            ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-
-            // Set OnItemClickListener so we can be notified on item clicks
-            mListView.setOnItemClickListener(this);
+            view = inflater.inflate(R.layout.fragment_group_list, container, false);
+            for(int i = 0; i < mListItemViews.size(); ++i) {
+                ListItemView listItemView = mListItemViews.get(i);
+                listItemView.position = i;
+                listItemView.setOnClickListener(this);
+                listItemView.setText(mGroups.get(i).toString());
+                listItemView.setTextAppearance(getActivity(), R.style.RemoraTheme_ListItem);
+                listItemView.setBackgroundColor(getResources().getColor(R.color.list_item_background_color));
+                LinearLayout linLayout = (LinearLayout) view.findViewById(R.id.fragment_group_list_base);
+                linLayout.addView(listItemView);
+            }
         }
 
         return view;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onClick(View v) {
+        ListItemView listItemView = (ListItemView) v;
+
         Intent getGroupIntent = new Intent(getActivity(), GetGroupActivity.class);
-        getGroupIntent.putExtra("id", Integer.toString(mGroups.get(position).getID()));
+        String groupId = Integer.toString(mGroups.get(listItemView.position).getID());
+        getGroupIntent.putExtra("id", groupId);
 
         startActivity(getGroupIntent);
     }
 
-    /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
-     */
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
-
-        if (emptyView instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
-        }
-    }
 
 }

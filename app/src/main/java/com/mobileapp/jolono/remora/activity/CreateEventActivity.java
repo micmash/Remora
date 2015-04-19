@@ -57,7 +57,7 @@ public class CreateEventActivity extends ActionBarActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-
+                        finish();
                     }
                 });
 

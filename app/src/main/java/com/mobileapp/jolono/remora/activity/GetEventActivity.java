@@ -65,8 +65,8 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
                 JsonArrayRequest groupsRequest = Event.getEventGroups(id, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        mEvent.getGroups(response); //TODO: only use on instance of Event and call getGroups
-                        Fragment eventFrag = GroupListFragment.newInstance(mEvent.mGroups);
+                        mEvent.getGroups(response);
+                        Fragment eventFrag = GroupListFragment.newInstance(GetEventActivity.this, mEvent.mGroups);
                         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                         fragTrans.add(R.id.activity_get_event_groups_fragment_container, eventFrag, FRAG_TAG_2);
                         fragTrans.commit();

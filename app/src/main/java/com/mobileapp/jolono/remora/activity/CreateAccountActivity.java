@@ -108,6 +108,7 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
+                                finish();
                             }
                         });
 

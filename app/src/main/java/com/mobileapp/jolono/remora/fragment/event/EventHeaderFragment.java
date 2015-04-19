@@ -98,7 +98,7 @@ public class EventHeaderFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
                     intent.putExtra("eventName", mEvent.getName());
-                    intent.putExtra("eventId", 3); //TODO: get id.
+                    intent.putExtra("eventId", Integer.toString(mEvent.getID()));
                     startActivity(intent);
                 }
 
