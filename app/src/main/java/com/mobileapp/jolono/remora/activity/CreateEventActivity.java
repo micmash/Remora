@@ -23,19 +23,24 @@ public class CreateEventActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+        
+        if(getIntent().getStringExtra("location") != null) {
+            EditText e = (EditText) findViewById(R.id.activity_create_event_location);
+            e.setText(getIntent().getStringExtra("location"));
+        }
 
         findViewById(R.id.activity_create_event_create_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText editText = (EditText) findViewById(R.id.activity_create_event_name);
-                String name = editText.getText().toString();
+                final String name = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_event_description);
                 String description = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_event_start_time);
                 String starttime = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_event_end_time);
                 String endtime = editText.getText().toString();
-                editText = (EditText) findViewById(R.id.activity_create_event_name);
+                editText = (EditText) findViewById(R.id.activity_create_event_location);
                 String location = editText.getText().toString();
 
                 Event event = new Event(name, location, description, starttime, endtime);
@@ -44,8 +49,9 @@ public class CreateEventActivity extends ActionBarActivity {
                     public void onResponse(JSONObject jsonObject) {
                         Event createdEvent = new Event(jsonObject);
 
-                        Intent getEventIntent = new Intent(CreateEventActivity.this, GetEventActivity.class);
+                        Intent getEventIntent = new Intent(CreateEventActivity.this, CreateGroupActivity.class);
                         getEventIntent.putExtra("id", Integer.toString(createdEvent.getID()));
+                        getEventIntent.putExtra("eventName", name);
                         startActivity(getEventIntent);
                     }
                 }, new Response.ErrorListener() {

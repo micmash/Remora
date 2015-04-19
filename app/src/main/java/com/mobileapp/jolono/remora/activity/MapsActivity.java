@@ -1,6 +1,7 @@
 package com.mobileapp.jolono.remora.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -34,16 +35,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     
     private EditText mAddressView;
     private Button mFindAddressButton;
     private Button mFindMeButton;
-    private LatLng mAddress;
+    private Address mAddress;
     private LatLng mMyLocation;
     private GoogleMap mMap = null;
     private Marker mMarker = null;
     private Marker mMyMarker = null;
+    private Geocoder geocoder;
     private GPSSystem gps;
 
     
@@ -56,9 +58,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = 
                 (SupportMapFragment) this.getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        geocoder = new Geocoder(this, Locale.getDefault());
         mAddressView = (EditText) findViewById(R.id.et_location);
-        mAddress = new LatLng(39.999446, -83.012967);
 
         mFindAddressButton = (Button) findViewById(R.id.btn_find);
         mFindMeButton = (Button) findViewById(R.id.find_me_map_button);
@@ -69,7 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 gps = new GPSSystem(MapsActivity.this);
                 mMyLocation = gps.getMyLoc();
                 if(mMyLocation != null) {
-                    mMyMarker = mMap.addMarker(new MarkerOptions().position(mMyLocation));
+                    mMarker = mMap.addMarker(new MarkerOptions().position(mMyLocation));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMyLocation, 13));
                     gps.stopUsingGPS();
                 }
@@ -89,6 +90,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+        
         
     }
 
@@ -115,6 +117,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Intent intent = new Intent(MapsActivity.this, CreateEventActivity.class);
+                try {
+                   Address a = geocoder.getFromLocation(marker.getPosition().latitude, marker.getPosition().longitude, 1).get(0);
+                    String address = a.getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    address += " " + a.getLocality();
+                    address += ", " + a.getAdminArea();
+                    address += " " + a.getPostalCode();
+                    intent.putExtra("location", address);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                
+
+                startActivity(intent);
+                return true;
+            }
+        });
         if(mAddressView.getText().toString() != null) {
             mFindAddressButton.performClick();
         }
@@ -147,6 +169,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Double lon = (double) (addresses.get(0).getLongitude());
 
                 Log.d("lat-long", "" + lat + "......." + lon);
+                mAddress = addresses.get(0);
                 return new LatLng(lat, lon);
             }
         } catch (IOException e) {

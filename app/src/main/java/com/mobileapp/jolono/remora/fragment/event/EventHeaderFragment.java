@@ -53,6 +53,7 @@ public class EventHeaderFragment extends Fragment {
             ((EditText) v.findViewById(R.id.fragment_event_header_start_time)).setText(mEvent.getStartTime());
             ((EditText) v.findViewById(R.id.fragment_event_header_end_time)).setText(mEvent.getEndTime());
             ((EditText) v.findViewById(R.id.fragment_event_header_description)).setText(mEvent.getDescription());
+            ((EditText) v.findViewById(R.id.fragment_event_header_location)).setText(mEvent.getLocation());
 
 
             (v.findViewById(R.id.fragment_event_header_save_button)).setOnClickListener(new View.OnClickListener() {

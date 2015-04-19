@@ -86,14 +86,15 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                 JsonObjectRequest request = group.createRequest(new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Intent getGroupIntent = new Intent(CreateGroupActivity.this, GetGroupActivity.class);
+                        Intent getGroupIntent = new Intent(CreateGroupActivity.this, GetEventActivity.class);
                         try {
-                            String id = response.getString("id");
+                            String id = getIntent().getStringExtra("id");
                             getGroupIntent.putExtra("id", id);
 
 
                         } catch (Exception e) {
                         }
+                        
                         startActivity(getGroupIntent);
                         finish();
                     }
@@ -101,7 +102,8 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         if (volleyError instanceof ParseError) {
-                            startActivity(new Intent(CreateGroupActivity.this, GetGroupActivity.class));
+                           
+                            startActivity(new Intent(CreateGroupActivity.this, GetEventActivity.class));
                             finish();
                         }
                     }
