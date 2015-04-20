@@ -182,7 +182,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 @Override
                 public void onResponse(JSONObject response) {
                     showProgress(false);
-                    if (response == null) {
+                    if (response.length()!=0) {
                         succeeded = true;
                     } else {
                         succeeded = false;

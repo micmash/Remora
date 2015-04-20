@@ -50,7 +50,7 @@ public class CreateEventActivity extends ActionBarActivity {
                         Event createdEvent = new Event(jsonObject);
 
                         Intent getEventIntent = new Intent(CreateEventActivity.this, CreateGroupActivity.class);
-                        getEventIntent.putExtra("id", Integer.toString(createdEvent.getID()));
+                        getEventIntent.putExtra("eventId", Integer.toString(createdEvent.getID()));
                         getEventIntent.putExtra("eventName", name);
                         startActivity(getEventIntent);
                     }
