@@ -1,7 +1,11 @@
 package com.mobileapp.jolono.remora.fragment;
 
+import android.app.Activity;
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -52,16 +56,18 @@ public class GroupListFragment extends Fragment implements View.OnClickListener 
         View view = null;
         if(mGroups != null) {
             view = inflater.inflate(R.layout.fragment_group_list, container, false);
-            for(int i = 0; i < mListItemViews.size(); ++i) {
-                ListItemView listItemView = mListItemViews.get(i);
-                listItemView.position = i;
-                listItemView.setOnClickListener(this);
-                listItemView.setText(mGroups.get(i).toString());
-                listItemView.setTextAppearance(getActivity(), R.style.RemoraTheme_ListItem);
-                listItemView.setBackgroundColor(getResources().getColor(R.color.list_item_background_color));
-                LinearLayout linLayout = (LinearLayout) view.findViewById(R.id.fragment_group_list_base);
-                linLayout.addView(listItemView);
-            }
+//            for(int i = 0; i < mListItemViews.size(); ++i) {
+//                ListItemView listItemView = mListItemViews.get(i);
+//                listItemView.position = i;
+//                listItemView.setOnClickListener(this);
+//                listItemView.setText(mGroups.get(i).toString());
+//                listItemView.setTextAppearance(getActivity(), R.style.RemoraTheme_ListItem);
+//                listItemView.setBackgroundColor(getResources().getColor(R.color.list_item_background_color));
+//                LinearLayout linLayout = (LinearLayout) view.findViewById(R.id.fragment_group_list_base);
+//                linLayout.addView(listItemView);
+//            }
+            CreateListAsyncTask task = new CreateListAsyncTask(getActivity(), this, view, mGroups, getResources());
+            task.doInBackground(mListItemViews);
         }
 
         return view;
@@ -77,6 +83,41 @@ public class GroupListFragment extends Fragment implements View.OnClickListener 
 
         startActivity(getGroupIntent);
     }
+}
 
+class CreateListAsyncTask extends AsyncTask<List<ListItemView>, Integer, View> {
+    public Activity mActivity;
+    public View.OnClickListener mClickListener;
+    public View mBaseView;
+    public List<Group> mGroups;
+    public Resources mResources;
 
+    public CreateListAsyncTask(Activity activity, View.OnClickListener clickListener, View view, List<Group> groups, Resources resources) {
+        mActivity = activity;
+        mClickListener = clickListener;
+        mBaseView = view;
+        mGroups = groups;
+        mResources = resources;
+    }
+    protected View doInBackground(List<ListItemView>... views) {
+        for(int i = 0; i < views[0].size(); ++i) {
+            ListItemView listItemView =  views[0].get(i);
+            listItemView.position = i;
+            listItemView.setOnClickListener(mClickListener);
+
+            listItemView.setText(mGroups.get(i).toString());
+            listItemView.setTextAppearance(mActivity, R.style.RemoraTheme_ListItem);
+            listItemView.setBackgroundColor(mResources.getColor(R.color.list_item_background_color));
+            LinearLayout linLayout = (LinearLayout) mBaseView.findViewById(R.id.fragment_group_list_base);
+            linLayout.addView(listItemView);
+        }
+
+        return mBaseView;
+    }
+
+    protected void onProgressUpdate(Integer... progress) {
+    }
+
+    protected void onPostExecute(View v) {
+    }
 }
