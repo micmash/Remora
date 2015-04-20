@@ -137,7 +137,6 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
                 JsonObjectRequest delete = mEvent.deleteRequest(new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
-                        Intent i = new Intent(GetEventActivity.this, GetAccountActivity.class);
 
                     }
                 }, new Response.ErrorListener() {
@@ -150,6 +149,7 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
                 Intent i = new Intent(GetEventActivity.this, GetAccountActivity.class);
                 i.putExtra("username", UserAccount.mAccountName);
                 startActivity(i);
+                finish();
                 break;
         }
     }

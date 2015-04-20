@@ -97,6 +97,7 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                                     Intent intent = new Intent(CreateGroupActivity.this, GetEventActivity.class);
                                     intent.putExtra("id", eventId);
                                     startActivity(intent);
+                                    finish();
 
                                 }
                             }, new Response.ErrorListener() {

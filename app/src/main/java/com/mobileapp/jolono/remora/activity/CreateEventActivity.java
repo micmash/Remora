@@ -53,6 +53,7 @@ public class CreateEventActivity extends ActionBarActivity {
                         getEventIntent.putExtra("eventId", Integer.toString(createdEvent.getID()));
                         getEventIntent.putExtra("eventName", name);
                         startActivity(getEventIntent);
+                        finish();
                     }
                 }, new Response.ErrorListener() {
                     @Override

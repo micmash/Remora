@@ -203,7 +203,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Log.e("Volley Error", volleyError.getMessage().toString());
+                    showProgress(false);
+                    mEmailView.setError(getString(R.string.error_invalid_email));
+                    mEmailView.requestFocus();
                     
                 }
             });
