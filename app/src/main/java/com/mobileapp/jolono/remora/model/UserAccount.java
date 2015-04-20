@@ -24,7 +24,7 @@ import java.util.UUID;
 public class UserAccount {
     public static Profile mUserProfile = null;
     public static String mAccountName = "AndrewMack"; //TODO: change to null once db is working.
-    public static UUID mUID;
+    public static String mUID;
     private static final String ACCOUNT_NAME_ARG = "username";
     private static final String UID_ARG = "u_id";
 
@@ -38,7 +38,7 @@ public class UserAccount {
         try {
             mAccountName = jsonObject.getString(ACCOUNT_NAME_ARG);
             mUserProfile = new Profile(jsonObject.getJSONObject("profile"));
-            mUID = UUID.fromString(jsonObject.getString(UID_ARG));
+            mUID = jsonObject.getString(UID_ARG);
         } catch(JSONException e) {
         }
     }
@@ -54,7 +54,7 @@ public class UserAccount {
         try {
             account.put("password", password);
             account.put(ACCOUNT_NAME_ARG, mAccountName);
-            account.put(UID_ARG, mUID.toString());
+            account.put(UID_ARG, mUID);
         } catch (JSONException e) {
         }
 
@@ -64,7 +64,6 @@ public class UserAccount {
     }
     
     public static void deleteAccount() {
-        
-        
+
     }
 }

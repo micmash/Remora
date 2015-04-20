@@ -98,7 +98,7 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                 JsonObjectRequest createProfileRequest = profile.createRequest(new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        UserAccount.mUID = uuid;
+                        UserAccount.mUID = uuid.toString();
                         //create account
                         JsonObjectRequest createAccountRequest = UserAccount.createAccountRequest(p_word, new Response.Listener<JSONObject>() {
                             @Override

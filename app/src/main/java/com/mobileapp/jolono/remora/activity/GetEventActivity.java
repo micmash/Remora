@@ -61,6 +61,13 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
                 f.add(R.id.activity_get_event_header_fragment_container, headerFrag, FRAG_TAG);
                 f.commit();
 
+                if(mdeleteButton != null) {
+                    if (mEvent.getOwnerUID().equals(UserAccount.mUID)) {
+                        mdeleteButton.setOnClickListener(GetEventActivity.this);
+                    } else {
+                        mdeleteButton.setEnabled(false);
+                    }
+                }
 
                 JsonArrayRequest groupsRequest = Event.getEventGroups(id, new Response.Listener<JSONArray>() {
                     @Override
@@ -94,10 +101,15 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
         setContentView(R.layout.activity_get_event);
 
         loadFragments();
-        
-        mdeleteButton = (Button) findViewById(R.id.activity_get_event_delete);
-        mdeleteButton.setOnClickListener(this);
 
+        mdeleteButton = (Button) findViewById(R.id.activity_get_event_delete);
+        if(mEvent != null) {
+            if (mEvent.getOwnerUID().equals(UserAccount.mUID)) {
+                mdeleteButton.setOnClickListener(this);
+            } else {
+                mdeleteButton.setEnabled(false);
+            }
+        }
     }
 
     @Override

@@ -23,7 +23,7 @@ import java.util.Map;
 public class Group extends AbstractJsonBackedObject {
     private static final String NAME_ARG = "name";
     private static final String DESCRIPTION_ARG = "description";
-    private static final String UID_ARG = "u_id";
+    private static final String OWNER_UID_ARG = "u_id";
     private static final String ID_ARG = "id";
 
     public List<Profile> mMembers = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Group extends AbstractJsonBackedObject {
         try {
             mPushData.put(NAME_ARG, name);
             mPushData.put(DESCRIPTION_ARG, description);
-            mPushData.put(UID_ARG, UserAccount.mUID.toString());
+            mPushData.put(OWNER_UID_ARG, UserAccount.mUID.toString());
         } catch (JSONException e) {
         }
 
@@ -101,7 +101,14 @@ public class Group extends AbstractJsonBackedObject {
         return -1;
     }
 
+    public String getOwnerUID() {
+        try {
+            return mData.getString(OWNER_UID_ARG);
+        } catch (JSONException e) {
 
+        }
+        return null;
+    }
 
     public static JsonArrayRequest getGroupMembers(String url, Response.Listener<JSONArray> responseListener, Response.ErrorListener errorListener) {
         JsonArrayRequest request = new JsonArrayRequest(url, responseListener, errorListener);
