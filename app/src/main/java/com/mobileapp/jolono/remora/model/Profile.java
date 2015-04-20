@@ -64,7 +64,7 @@ public class Profile extends AbstractJsonBackedObject {
 
     public String getBirthdate() {
         try {
-            mData.getString(BIRTHDATE_ARG);
+            return mData.getString(BIRTHDATE_ARG);
         } catch (JSONException e) {
 
         }
@@ -131,7 +131,7 @@ public class Profile extends AbstractJsonBackedObject {
         return 0;
     }
 
-    public int getAge() { return 0; }
+    public String getAge() { return getBirthdate(); }
 
     public Profile(String fname, String lname, String birthdate, String gender, UUID uid) {
         super();
@@ -199,7 +199,7 @@ public class Profile extends AbstractJsonBackedObject {
 
     @Override
     public String toString() {
-        return getFirstName() + getBirthdate() + getGender();
+        return getFirstName() + " " + getBirthdate() + " " + getGender();
     }
     
     @Override

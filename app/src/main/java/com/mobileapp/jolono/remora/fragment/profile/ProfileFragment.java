@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if(mProfile != null) {
             //display text
             ((TextView) getView().findViewById(R.id.fragment_profile_name)).setText(mProfile.getFirstName());
-            ((TextView) getView().findViewById(R.id.fragment_profile_age)).setText(Integer.toString(mProfile.getAge()));
+            ((TextView) getView().findViewById(R.id.fragment_profile_age)).setText(mProfile.getAge());
             ((TextView) getView().findViewById(R.id.fragment_profile_gender)).setText(mProfile.getGender());
             ((TextView) getView().findViewById(R.id.fragment_profile_description)).setText(mProfile.getDescription());
         }
