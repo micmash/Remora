@@ -26,23 +26,6 @@ import org.json.JSONObject;
 
  */
 public class EventHeaderFragment extends Fragment {
-    public Event mEvent;
-
-    public static EventHeaderFragment newInstance(Event event) {
-        EventHeaderFragment fragment = new EventHeaderFragment();
-        fragment.mEvent = event;
-        return fragment;
-    }
-
-    public EventHeaderFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,5 +89,22 @@ public class EventHeaderFragment extends Fragment {
         }
 
         return v;
+    }
+
+    public Event mEvent;
+
+    public static EventHeaderFragment newInstance(Event event) {
+        EventHeaderFragment fragment = new EventHeaderFragment();
+        fragment.mEvent = event;
+        return fragment;
+    }
+
+    public EventHeaderFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 }
