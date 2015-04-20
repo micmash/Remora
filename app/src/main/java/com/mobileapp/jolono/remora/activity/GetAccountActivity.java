@@ -121,7 +121,7 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
     //prob should just handle in fragment but wanted to show example of frag to activity interaction.
     @Override
     public void onChangePassword() {
-        Log.d("fragTEst", "I just changed the password! (not really)");
+
     }
 
     @Override

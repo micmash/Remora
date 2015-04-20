@@ -75,9 +75,6 @@ public class AccountCredentialsFragment extends Fragment implements View.OnClick
     @Override
     public void onClick(View v) {
         Log.d("sdaf", "clicked!!!!!");
-        if (mListener != null && v.getId() == R.id.fragment_account_credentials_change_password_button) {
-            mListener.onChangePassword();
-        }
     }
 
 
