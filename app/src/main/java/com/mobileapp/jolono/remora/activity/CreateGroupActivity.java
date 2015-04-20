@@ -11,28 +11,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.ParseError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Event;
 import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.RequestManager;
-import com.mobileapp.jolono.remora.model.UserAccount;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+
 
 public class CreateGroupActivity extends ActionBarActivity implements View.OnClickListener {
 
-    private TextView mEventName,  mGroupLeader;
-    private EditText mGroupName, mGroupDescription;
-    private Button mSaveGroupButton;
+    private TextView mEventName;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +34,6 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
         setContentView(R.layout.activity_create_group);
         
         mEventName = (TextView) findViewById(R.id.create_group_activity_event_name);
-        mGroupLeader = (TextView) findViewById(R.id.activity_create_group_leader);
-        mGroupName = (EditText) findViewById(R.id.activity_create_group_name);
-        mGroupDescription = (EditText) findViewById(R.id.activity_create_group_description);
-        mSaveGroupButton = (Button) findViewById(R.id.activity_create_group_save_group);
         
         mEventName.setText(getIntent().getStringExtra("eventName"));
 
