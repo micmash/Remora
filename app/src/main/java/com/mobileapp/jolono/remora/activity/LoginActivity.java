@@ -74,6 +74,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     private View mProgressView;
     private View mLoginFormView;
     public Profile p;
+    private Map<String, String> jsonMap;
+    boolean succeeded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +141,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-
+        jsonMap = new HashMap<>();
+        jsonMap.put("username", email);
+        jsonMap.put("p_word", password);
         boolean cancel = false;
         View focusView = null;
 
@@ -170,8 +174,41 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(this, email, password);
-            mAuthTask.execute((Void) null);
+            succeeded = false;
+
+            RequestFuture<JSONObject> future = RequestFuture.newFuture();
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
+                    "login.json", new JSONObject(jsonMap), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    showProgress(false);
+                    if (response == null) {
+                        succeeded = true;
+                    } else {
+                        succeeded = false;
+                    }
+
+                    if (succeeded) {
+                        Intent getAccountIntent = new Intent(LoginActivity.this, GetAccountActivity.class);
+                        getAccountIntent.putExtra("username", mEmailView.getText().toString());
+                        startActivity(getAccountIntent);
+                        finish();
+
+                    } else {
+                        mPasswordView.setError(getString(R.string.error_incorrect_password));
+                        mPasswordView.requestFocus();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Log.e("Volley Error", volleyError.getMessage().toString());
+                    
+                }
+            });
+            RequestManager.getInstance(this).addToRequestQueue(request);
+            
         }
     }
 
@@ -323,12 +360,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             RequestManager.getInstance(mLoginActivity).addToRequestQueue(request);
 
             try {
-                JSONObject response = future.get(10, TimeUnit.SECONDS);
+                JSONObject response = future.get(15, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
             } catch (ExecutionException e) {
             } catch (TimeoutException e) {
                 e.printStackTrace();
             }
+            RequestManager.getInstance(mLoginActivity);
             return succeeded;
         }
 
