@@ -75,10 +75,10 @@ public class ProfileListFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         ListItemView listItemView = (ListItemView) v;
 
-        Intent getGroupIntent = new Intent(getActivity(), GetGroupActivity.class);
-        String groupId = Integer.toString(mGroup.mMembers.get(listItemView.position).getID());
-        getGroupIntent.putExtra("id", groupId);
+        Intent getProfileIntent = new Intent(getActivity(), GetProfileActivity.class);
+        String profileId = Integer.toString(mGroup.mMembers.get(listItemView.position).getID());
+        getProfileIntent.putExtra("id", profileId);
 
-        startActivity(getGroupIntent);
+        startActivity(getProfileIntent);
     }
 }
