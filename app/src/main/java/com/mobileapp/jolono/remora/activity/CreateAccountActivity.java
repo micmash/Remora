@@ -38,7 +38,7 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
         EditText editText = (EditText) findViewById(R.id.activity_create_account_email);
         savedInstanceState.putString("account_name", editText.getText().toString());
 
-        editText = (EditText) findViewById(R.id.activity_create_account_name);
+        editText = (EditText) findViewById(R.id.activity_create_account_f_name);
         savedInstanceState.putString("name", editText.getText().toString());
     }
 
@@ -46,7 +46,7 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
     protected void onRestoreInstanceState(Bundle savedInstanceState){
         EditText editText = (EditText) findViewById(R.id.activity_create_account_email);
         editText.setText(savedInstanceState.getString("account_name"));
-        editText = (EditText) findViewById(R.id.activity_create_account_name);
+        editText = (EditText) findViewById(R.id.activity_create_account_l_name);
         editText.setText(savedInstanceState.getString("name"));
     }
 
@@ -79,16 +79,19 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                 EditText editText = (EditText) findViewById(R.id.activity_create_account_email);
                 UserAccount.mAccountName = editText.getText().toString();
                 //profile fields
-                editText = (EditText) findViewById(R.id.activity_create_account_name);
+                editText = (EditText) findViewById(R.id.activity_create_account_f_name);
                 String fname = editText.getText().toString();
-                editText = (EditText) findViewById(R.id.activity_create_account_name);
+                editText = (EditText) findViewById(R.id.activity_create_account_l_name);
                 String lname = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_account_birthdate);
                 String birthdate = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_account_gender);
                 String gender = editText.getText().toString();
+                
 
                 //create profile.
+                editText = (EditText) findViewById(R.id.activity_create_account_password);
+                final String p_word = editText.getText().toString(); //this is fucking retarded
                 final UUID uuid = UUID.randomUUID();
                 final Profile profile = new Profile(fname, lname, birthdate, gender, uuid);
 
@@ -97,7 +100,7 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                     public void onResponse(JSONObject response) {
                         UserAccount.mUID = uuid;
                         //create account
-                        JsonObjectRequest createAccountRequest = UserAccount.createAccountRequest(new Response.Listener<JSONObject>() {
+                        JsonObjectRequest createAccountRequest = UserAccount.createAccountRequest(p_word, new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject request) {
                                 Intent getAccountIntent = new Intent(CreateAccountActivity.this, GetAccountActivity.class);

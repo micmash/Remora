@@ -49,9 +49,10 @@ public class UserAccount {
         return request;
     }
 
-    public static JsonObjectRequest createAccountRequest(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+    public static JsonObjectRequest createAccountRequest(String password, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         JSONObject account =  new JSONObject();
         try {
+            account.put("password", password);
             account.put(ACCOUNT_NAME_ARG, mAccountName);
             account.put(UID_ARG, mUID.toString());
         } catch (JSONException e) {

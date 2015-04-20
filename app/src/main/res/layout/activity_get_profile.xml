@@ -9,20 +9,4 @@
     android:id="@+id/activity_view_profile_base"
     android:orientation="vertical">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Group"
-        android:id="@+id/viewprofile_activity_group_button"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="72dp"
-        android:layout_height="wrap_content"
-        android:text="Map"
-        android:id="@+id/viewmap_activity_map_button" />
-
 </LinearLayout>
