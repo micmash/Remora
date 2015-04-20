@@ -41,18 +41,5 @@
         android:text="Save"
         android:id="@+id/fragment_group_header_save_button" />
 
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Members:"
-            android:id="@+id/textView16"
-            android:layout_column="3" />
-    </TableRow>
-
 
 </TableLayout>

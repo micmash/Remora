@@ -1,53 +1,60 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.mobileapp.jolono.remora.activity.GetGroupActivity"
-    android:id="@+id/activity_get_group_base"
     android:orientation="vertical">
 
 
-    <FrameLayout
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/activity_get_group_header_fragment_base"></FrameLayout>
+        android:orientation="vertical"
+        android:id="@+id/activity_get_group_base">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Add Me"
-            android:id="@+id/activity_get_group_addProfile"
-            android:layout_gravity="bottom|left" />
+            android:id="@+id/activity_get_group_header_fragment_base"></FrameLayout>
 
-        <Button
+        <RelativeLayout
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Me"
+                android:id="@+id/activity_get_group_addProfile"
+                android:layout_gravity="bottom|left" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remove Me"
+                android:id="@+id/activity_get_group_removeProfile"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete Group"
+                android:id="@+id/activity_get_group_delete"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Remove Me"
-            android:id="@+id/activity_get_group_removeProfile"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:id="@+id/activity_get_group_list_fragment_base">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delete Group"
-            android:id="@+id/activity_get_group_delete"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
+        </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/activity_get_group_list_fragment_base">
+    </LinearLayout>
 
-    </FrameLayout>
-
-</LinearLayout>
+</ScrollView>

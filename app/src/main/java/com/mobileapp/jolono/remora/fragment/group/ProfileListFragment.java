@@ -1,5 +1,6 @@
 package com.mobileapp.jolono.remora.fragment.group;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,36 +10,36 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.mobileapp.jolono.remora.R;
 
+import com.mobileapp.jolono.remora.activity.GetGroupActivity;
 import com.mobileapp.jolono.remora.activity.GetProfileActivity;
 import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.Profile;
+import com.mobileapp.jolono.remora.view.ListItemView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A
  * interface.
  */
-public class ProfileListFragment extends Fragment implements AbsListView.OnItemClickListener {
-    private Group mGroup;
+public class ProfileListFragment extends Fragment implements View.OnClickListener {
+    public Group mGroup;
+    public List<ListItemView> mListItemViews;
 
-    /**
-     * The fragment's ListView/GridView.
-     */
-    private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
-
-    public static ProfileListFragment newInstance(Group group) {
+    public static ProfileListFragment newInstance(Context context, Group group) {
         ProfileListFragment fragment = new ProfileListFragment();
         fragment.mGroup = group;
+        fragment.mListItemViews = new ArrayList<>(group.mMembers.size());
+        for(int i = 0; i < group.mMembers.size(); ++i) {
+            fragment.mListItemViews.add(new ListItemView(context));
+        }
         return fragment;
     }
 
@@ -50,51 +51,34 @@ public class ProfileListFragment extends Fragment implements AbsListView.OnItemC
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if(mGroup != null) {
-            mAdapter = new ArrayAdapter<Profile>(getActivity(),
-                    android.R.layout.simple_list_item_1, mGroup.mMembers);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = null;
         if(mGroup != null) {
-            view = inflater.inflate(R.layout.fragment_groupmember, container, false);
-            // Set the adapter
-            mListView = (AbsListView) view.findViewById(android.R.id.list);
-            ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-
-            // Set OnItemClickListener so we can be notified on item clicks
-            mListView.setOnItemClickListener(this);
+            view = inflater.inflate(R.layout.fragment_profile_list, container, false);
+            for(int i = 0; i < mListItemViews.size(); ++i) {
+                ListItemView listItemView = mListItemViews.get(i);
+                listItemView.position = i;
+                listItemView.setOnClickListener(this);
+                listItemView.setText(mGroup.mMembers.get(i).toString());
+                listItemView.setTextAppearance(getActivity(), R.style.RemoraTheme_ListItem);
+                listItemView.setBackgroundColor(getResources().getColor(R.color.list_item_background_color));
+                LinearLayout linLayout = (LinearLayout) view.findViewById(R.id.fragment_profile_list_base);
+                linLayout.addView(listItemView);
+            }
         }
+
         return view;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent getProfileIntent = new Intent(getActivity(), GetProfileActivity.class);
-        String sId = Integer.toString(mGroup.mMembers.get(position).getID());
-        getProfileIntent.putExtra("id", sId);
-       
-        startActivity(getProfileIntent);
-    }
+    public void onClick(View v) {
+        ListItemView listItemView = (ListItemView) v;
 
-    /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
-     */
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
+        Intent getGroupIntent = new Intent(getActivity(), GetGroupActivity.class);
+        String groupId = Integer.toString(mGroup.mMembers.get(listItemView.position).getID());
+        getGroupIntent.putExtra("id", groupId);
 
-        if (emptyView instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
-        }
+        startActivity(getGroupIntent);
     }
 }

@@ -64,6 +64,14 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                 f.add(R.id.activity_get_group_header_fragment_base, headerFrag, FRAG_TAG_2);
                 f.commit();
 
+                if(mDeleteGroup != null) {
+                    if(mGroup.getOwnerUID().equals(UserAccount.mUID)) {
+                        mDeleteGroup.setOnClickListener(GetGroupActivity.this);
+                    } else {
+                        mDeleteGroup.setEnabled(false);
+                    }
+                }
+
                 String url2 = "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
                         "view_attached_profiles_to_group.json?g_id=" + g_id;
                 JsonArrayRequest groupMemberRequest = Group.getGroupMembers(url2,
@@ -71,7 +79,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                             @Override
                             public void onResponse(JSONArray response) {
                                 mGroup.setGroupMembers(response);
-                                Fragment groupFrag = ProfileListFragment.newInstance(new Group(response));
+                                Fragment groupFrag = ProfileListFragment.newInstance(GetGroupActivity.this, new Group(response));
                                 FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                                 fragTrans.add(R.id.activity_get_group_list_fragment_base, groupFrag, FRAG_TAG);
                                 fragTrans.commit();
@@ -108,7 +116,13 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
         mRemoveProfile = (Button)findViewById(R.id.activity_get_group_removeProfile);
         mRemoveProfile.setOnClickListener(this);
         mDeleteGroup = (Button) findViewById(R.id.activity_get_group_delete);
-        mDeleteGroup.setOnClickListener(this);
+        if(mGroup != null) {
+            if(mGroup.getOwnerUID().equals(UserAccount.mUID)) {
+                mDeleteGroup.setOnClickListener(this);
+            } else {
+                mDeleteGroup.setEnabled(false);
+            }
+        }
     }
 
     @Override
