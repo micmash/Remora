@@ -95,7 +95,7 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                                 @Override
                                 public void onResponse(JSONObject jsonObject) {
                                     Intent intent = new Intent(CreateGroupActivity.this, GetEventActivity.class);
-                                    intent.putExtra("eventId", eventId);
+                                    intent.putExtra("id", eventId);
                                     startActivity(intent);
 
                                 }
