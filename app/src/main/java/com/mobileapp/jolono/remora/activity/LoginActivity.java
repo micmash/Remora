@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,13 +27,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Profile;
+import com.mobileapp.jolono.remora.model.RequestManager;
+import com.mobileapp.jolono.remora.model.UserAccount;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 /**
@@ -265,49 +281,55 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
         private final Activity mLoginActivity;
-        private final String mEmail;
-        private final String mPassword;
         private RequestQueue queue;
+        private Map<String, String> jsonMap;
+        private boolean succeeded;
 
         UserLoginTask(Activity loginActivity, String email, String password) {
             mLoginActivity = loginActivity;
-            mEmail = email;
-            mPassword = password;
+            jsonMap = new HashMap<>();
+            jsonMap.put("p_word", password);
+            jsonMap.put("username", email);
             queue = Volley.newRequestQueue(mLoginActivity);
+
         }
+        
+
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-//
-//            // Simulate network access.
-//            String s = "http://ec2-52-0-168-55.compute-1.amazonaws.com/accounts/3.json";
-//            //String s = "http://www.android.com/";
-//
-//
-//            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, s, null,
-//                    new Response.Listener<JSONObject>() {
-//                        @Override
-//                        public void onResponse(JSONObject response) {
-//                            //Call a Static Factory Method (this is where we parse)
-//                            p = Profile.getSelectedProfile(0);
-//                        }
-//
-//                    }, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//
-//                }
-//            });
-//
-//
-//
-//
-//
+            RequestFuture<JSONObject> future = RequestFuture.newFuture();
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://ec2-52-0-168-55.compute-1.amazonaws.com/" +
+                    "login.json", new JSONObject(jsonMap), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if(response.getString("username").equals(jsonMap.get("username"))) {
+                            succeeded = true;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-            // TODO: register the new account here.
-            return true;
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Log.e("Volley Error", volleyError.getMessage().toString());
+                }
+            });
+            RequestManager.getInstance(mLoginActivity).addToRequestQueue(request);
+
+            try {
+                JSONObject response = future.get(10, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+            } catch (ExecutionException e) {
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            return succeeded;
         }
 
         @Override
