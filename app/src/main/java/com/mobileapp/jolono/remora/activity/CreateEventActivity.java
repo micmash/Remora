@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Event;
 import com.mobileapp.jolono.remora.model.RequestManager;
+import com.mobileapp.jolono.remora.view.Toaster;
 
 import org.json.JSONObject;
 
@@ -42,6 +43,8 @@ public class CreateEventActivity extends ActionBarActivity {
                 String endtime = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_event_location);
                 String location = editText.getText().toString();
+                //check empty.
+                if(name.isEmpty() || description.isEmpty() || starttime.isEmpty() || endtime.isEmpty() || location.isEmpty()) return;
 
                 Event event = new Event(name, location, description, starttime, endtime);
                 JsonObjectRequest createRequest = event.createRequest(new Response.Listener<JSONObject>() {
@@ -58,6 +61,7 @@ public class CreateEventActivity extends ActionBarActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
+                        Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
                         finish();
                     }
                 });

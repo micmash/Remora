@@ -17,6 +17,7 @@ import com.mobileapp.jolono.remora.fragment.event.EventListFragment;
 import com.mobileapp.jolono.remora.model.Profile;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
+import com.mobileapp.jolono.remora.view.Toaster;
 
 import org.json.JSONArray;
 
@@ -45,7 +46,9 @@ public class GetEventsFromAccount extends ActionBarActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("KADHK",volleyError.getMessage());
+                Log.e("KADHK", volleyError.getMessage());
+                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                finish();
 
             }
         });

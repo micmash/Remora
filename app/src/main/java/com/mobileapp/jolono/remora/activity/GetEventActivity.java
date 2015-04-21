@@ -21,6 +21,7 @@ import com.mobileapp.jolono.remora.fragment.event.EventHeaderFragment;
 import com.mobileapp.jolono.remora.model.Event;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
+import com.mobileapp.jolono.remora.view.Toaster;
 
 
 import org.json.JSONArray;
@@ -81,6 +82,8 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
+                        Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                        finish();
                     }
                 });
                 RequestManager.getInstance(GetEventActivity.this).addToRequestQueue(groupsRequest);
@@ -89,6 +92,8 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                finish();
             }
         });
 
@@ -155,6 +160,9 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         Log.e("HAHAHASIJBAEC", volleyError.getMessage());
+                        Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                        finish();
+
                     }
                 }, (url1 + mEvent.getID()));
                 RequestManager.getInstance(this).addToRequestQueue(delete);

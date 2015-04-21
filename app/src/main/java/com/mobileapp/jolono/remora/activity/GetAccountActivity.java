@@ -21,6 +21,7 @@ import com.mobileapp.jolono.remora.fragment.profile.ProfileFragment;
 import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
+import com.mobileapp.jolono.remora.view.Toaster;
 
 import org.json.JSONObject;
 
@@ -60,6 +61,7 @@ public class GetAccountActivity extends ActionBarActivity implements View.OnClic
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 //go back to login screen if get account failed.
+                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
                 finish();
             }
         });

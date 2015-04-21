@@ -21,6 +21,7 @@ import com.mobileapp.jolono.remora.fragment.group.GroupHeaderFragment;
 import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
+import com.mobileapp.jolono.remora.view.Toaster;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -88,7 +89,8 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("blah", "blah");
+                                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                                finish();
                             }
                         });
                 RequestManager.getInstance(GetGroupActivity.this).addToRequestQueue(groupMemberRequest);
@@ -97,6 +99,8 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.e("asdflkj;a", volleyError.getMessage());
+                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                finish();
             }
         });
 
@@ -168,11 +172,14 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
                             Log.e("blah", volleyError.getMessage());
+                            Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                            finish();
                         }
                     });
 
                     RequestManager.getInstance(this).addToRequestQueue(addMemberRequest);
                 }
+                break;
             case R.id.activity_get_group_removeProfile:
                 boolean q = mGroup.mMembers.contains(UserAccount.mUserProfile);
                 boolean e = q;
@@ -186,6 +193,8 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
                             Log.e("blah", volleyError.getMessage());
+                            Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                            finish();
                         }
                     });
 
@@ -207,6 +216,8 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         Log.e("kasdjhlakjh", volleyError.getMessage());
+                        Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                        finish();
                     }
                 }, url);
                 RequestManager.getInstance(this).addToRequestQueue(delete);
@@ -215,6 +226,7 @@ public class GetGroupActivity extends ActionBarActivity implements View.OnClickL
                 i.putExtra("username", UserAccount.mAccountName);
                 startActivity(i);
                 finish();
+                break;
 
         }
     }

@@ -60,6 +60,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if(mProfile != null) {
             //display text
             ((TextView) getView().findViewById(R.id.fragment_profile_name)).setText(mProfile.getFirstName());
+            ((TextView) getView().findViewById(R.id.fragment_profile_last_name)).setText(mProfile.getLastName());
             ((TextView) getView().findViewById(R.id.fragment_profile_age)).setText(mProfile.getAge());
             ((TextView) getView().findViewById(R.id.fragment_profile_gender)).setText(mProfile.getGender());
             ((TextView) getView().findViewById(R.id.fragment_profile_description)).setText(mProfile.getDescription());
@@ -71,10 +72,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if(v.getId() == R.id.fragment_profile_save_button) {
             EditText editText = (EditText) getView().findViewById(R.id.fragment_profile_name);
             String fName = editText.getText().toString();
+            editText = (EditText) getView().findViewById(R.id.fragment_profile_last_name);
+            String lName = editText.getText().toString();
             editText = (EditText) getView().findViewById(R.id.fragment_profile_description);
             String description = editText.getText().toString();
 
+            if(fName.isEmpty() || lName.isEmpty() || description.isEmpty()) return;
+
             mProfile.setFirstName(fName);
+            mProfile.setLastName(lName);
             mProfile.setDescription(description);
 
             
