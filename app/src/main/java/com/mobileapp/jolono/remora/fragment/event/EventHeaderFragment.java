@@ -53,6 +53,8 @@ public class EventHeaderFragment extends Fragment {
                     editText = (EditText) getView().findViewById(R.id.fragment_event_header_end_time);
                     String endtime = editText.getText().toString();
 
+                    if(name.isEmpty() || location.isEmpty() || description.isEmpty() || startime.isEmpty() || endtime.isEmpty()) return;
+
                     mEvent.setName(name);
                     mEvent.setLocation(location);
                     mEvent.setDescription(description);
@@ -68,7 +70,7 @@ public class EventHeaderFragment extends Fragment {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-                            //TODO: revert?
+
                         }
                     });
 

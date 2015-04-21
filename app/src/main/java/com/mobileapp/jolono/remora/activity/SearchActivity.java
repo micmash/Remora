@@ -18,6 +18,7 @@ import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.fragment.event.EventListFragment;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.SearchManager;
+import com.mobileapp.jolono.remora.view.Toaster;
 
 import org.json.JSONArray;
 
@@ -43,6 +44,8 @@ public class SearchActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 String search = ((EditText) findViewById(R.id.activity_search_search)).getText().toString();
+                if(search.isEmpty()) return; // no point in querying db.
+
                 JsonArrayRequest searchRequest = SearchManager.getInstance().searchEventRequest(search, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray jsonArray) {
@@ -55,6 +58,8 @@ public class SearchActivity extends ActionBarActivity {
                 },new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
+                        Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                        finish();
                     }
                 });
                 RequestManager.getInstance(SearchActivity.this).addToRequestQueue(searchRequest);
@@ -95,6 +100,8 @@ public class SearchActivity extends ActionBarActivity {
             },new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
+                    Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                    finish();
                 }
             });
             RequestManager.getInstance(SearchActivity.this).addToRequestQueue(searchRequest);

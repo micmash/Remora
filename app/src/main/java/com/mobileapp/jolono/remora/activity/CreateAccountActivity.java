@@ -16,6 +16,7 @@ import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Profile;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
+import com.mobileapp.jolono.remora.view.Toaster;
 
 import org.json.JSONObject;
 
@@ -91,8 +92,18 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                 //create profile.
                 editText = (EditText) findViewById(R.id.activity_create_account_password);
                 final String p_word = editText.getText().toString(); //this is fucking retarded
+                //check input for null.
+                if(p_word.isEmpty()
+                        || UserAccount.mAccountName.isEmpty()
+                        || fname.isEmpty()
+                        || lname.isEmpty()
+                        || birthdate.isEmpty()
+                        || gender.isEmpty())
+                    return;
+
                 final UUID uuid = UUID.randomUUID();
                 final Profile profile = new Profile(fname, lname, birthdate, gender, uuid);
+
 
                 JsonObjectRequest createProfileRequest = profile.createRequest(new Response.Listener<JSONObject>() {
                     @Override
@@ -110,6 +121,7 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
+                                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
                                 finish();
                             }
                         });
@@ -119,11 +131,14 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
+                        Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                        finish();
                     }
                 });
 
 
                 RequestManager.getInstance(this).addToRequestQueue(createProfileRequest);
+                break;
         }
     }
 }

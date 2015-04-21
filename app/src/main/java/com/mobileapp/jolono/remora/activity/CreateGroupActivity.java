@@ -18,6 +18,7 @@ import com.mobileapp.jolono.remora.R;
 import com.mobileapp.jolono.remora.model.Event;
 import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.RequestManager;
+import com.mobileapp.jolono.remora.view.Toaster;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,6 +74,7 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                 String name = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_group_description);
                 String description = editText.getText().toString();
+                if(name.isEmpty() || description.isEmpty()) return;
 
                 Group group = new Group(name, description);
                 JsonObjectRequest request = group.createRequest(new Response.Listener<JSONObject>() {
@@ -93,6 +95,7 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError volleyError) {
+                                    Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
                                     finish();
                                 }
                             });
@@ -108,6 +111,7 @@ public class CreateGroupActivity extends ActionBarActivity implements View.OnCli
                         if (volleyError instanceof ParseError) {
                            
                             startActivity(new Intent(CreateGroupActivity.this, GetEventActivity.class));
+                            Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
                             finish();
                         }
                     }

@@ -19,6 +19,7 @@ import com.mobileapp.jolono.remora.model.Group;
 import com.mobileapp.jolono.remora.model.Profile;
 import com.mobileapp.jolono.remora.model.RequestManager;
 import com.mobileapp.jolono.remora.model.UserAccount;
+import com.mobileapp.jolono.remora.view.Toaster;
 
 import org.json.JSONArray;
 
@@ -52,6 +53,8 @@ public class GetGroupsFromAccountActivity extends ActionBarActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                finish();
             }
         });
 

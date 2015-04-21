@@ -48,17 +48,6 @@
                 android:layout_column="5" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-                android:id="@+id/activity_get_account_delete_button"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_row="1"
-                android:layout_column="0" />
-
-            <Button
                 android:layout_width="177dp"
                 android:layout_height="wrap_content"
                 android:text="Create Event"

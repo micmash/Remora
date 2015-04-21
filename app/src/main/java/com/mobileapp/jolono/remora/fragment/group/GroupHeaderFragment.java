@@ -92,6 +92,8 @@ public class GroupHeaderFragment extends Fragment {
                 editText = (EditText) view.findViewById(R.id.group_header_group_description);
                 String description = editText.getText().toString();
 
+                if(name.isEmpty() || description.isEmpty()) return;
+
                 mGroup.setName(name);
                 mGroup.setDescription(description);
 

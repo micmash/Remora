@@ -20,6 +20,15 @@
         android:text="Full Name"
         android:id="@+id/fragment_profile_name" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Last Name"
+        android:ems="10"
+        android:id="@+id/fragment_profile_last_name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
