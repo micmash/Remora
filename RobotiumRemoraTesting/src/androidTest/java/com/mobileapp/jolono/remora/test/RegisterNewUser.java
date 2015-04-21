@@ -60,12 +60,14 @@ public class RegisterNewUser extends ActivityInstrumentationTestCase2 {
 		solo.clearEditText((android.widget.EditText) solo.getView("activity_create_account_password"));
 		solo.enterText((android.widget.EditText) solo.getView("activity_create_account_password"), "tqywr1");
 
-		solo.clickOnView(solo.getView("activity_create_account_name"));
-        solo.clearEditText((android.widget.EditText) solo.getView("activity_create_account_name"));
-        solo.enterText((android.widget.EditText) solo.getView("activity_create_account_name"), "MICKBAGZZS");
+		solo.clickOnView(solo.getView("activity_create_account_f_name"));
+        solo.clearEditText((android.widget.EditText) solo.getView("activity_create_account_f_name"));
+        solo.enterText((android.widget.EditText) solo.getView("activity_create_account_f_name"), "MICKBAGZZS");
         //Enter the text: 'test master flex'
-		solo.clearEditText((android.widget.EditText) solo.getView("activity_create_account_name"));
-		solo.enterText((android.widget.EditText) solo.getView("activity_create_account_name"), "test master flex");
+        
+        solo.clickOnView(solo.getView("activity_create_account_l_name"));
+		solo.clearEditText((android.widget.EditText) solo.getView("activity_create_account_l_name"));
+		solo.enterText((android.widget.EditText) solo.getView("activity_create_account_l_name"), "test master flex");
         //Click on Empty Text View
 		solo.clickOnView(solo.getView("activity_create_account_birthdate"));
         //Enter the text: '5/6/1987'

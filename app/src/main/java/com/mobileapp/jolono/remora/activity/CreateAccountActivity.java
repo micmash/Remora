@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -102,6 +103,23 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                     return;
 
                 final UUID uuid = UUID.randomUUID();
+//                JsonObjectRequest check = new JsonObjectRequest(Request.Method.GET,
+//                        "http://ec2-52-0-168-55.compute-1.amazonaws.com/check_account.json?username=" + UserAccount.mAccountName,
+//                        null,
+//                        new Response.Listener<JSONObject>() {
+//                            @Override
+//                            public void onResponse(JSONObject jsonObject) {
+//
+//                                Toaster.popShortSimpleToast(CreateAccountActivity.this, "THAT USERNAME EXISTS");
+//                            }
+//                        }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError volleyError) {
+//
+//                    }
+//                });
+
+//                RequestManager.getInstance(this).addToRequestQueue(check);
                 final Profile profile = new Profile(fname, lname, birthdate, gender, uuid);
 
 

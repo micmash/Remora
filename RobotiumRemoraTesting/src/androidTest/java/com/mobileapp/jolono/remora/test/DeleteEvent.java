@@ -67,7 +67,7 @@ public class DeleteEvent extends ActivityInstrumentationTestCase2 {
 
         solo.waitForActivity("GetEventActivity", 2000);
 
-        solo.clickOnView(solo.getView("activity_get_events_delete"));
+        solo.clickOnView(solo.getView("activity_get_event_delete"));
         
         assertFalse(solo.searchText("edited"));
 

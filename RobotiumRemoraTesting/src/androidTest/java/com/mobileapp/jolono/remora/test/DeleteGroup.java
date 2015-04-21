@@ -68,7 +68,22 @@ public class DeleteGroup extends ActivityInstrumentationTestCase2{
 
         solo.waitForActivity("GetEventActivity", 2000);
 
-        solo.clickOnText("edited");
+        solo.clickOnView(solo.getView("fragment_event_header_add_group_button"));
+        //Click on Empty Text View
+        solo.clickOnView(solo.getView("activity_create_group_name"));
+        //Enter the text: 'robots group'
+        solo.clearEditText((android.widget.EditText) solo.getView("activity_create_group_name"));
+        solo.enterText((android.widget.EditText) solo.getView("activity_create_group_name"), "robots group");
+        //Click on Empty Text View
+        solo.clickOnView(solo.getView("activity_create_group_description"));
+        //Enter the text: 'we are all robots'
+        solo.clearEditText((android.widget.EditText) solo.getView("activity_create_group_description"));
+        solo.enterText((android.widget.EditText) solo.getView("activity_create_group_description"), "we are all robots");
+        //Click on Save Group
+        solo.clickOnView(solo.getView("activity_create_group_save_group"));
+        
+        solo.clickOnText("robots group");
+
         
         solo.clickOnView(solo.getView("activity_get_group_delete"));
         
