@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -159,9 +160,12 @@ public class GetEventActivity extends ActionBarActivity implements View.OnClickL
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Log.e("HAHAHASIJBAEC", volleyError.getMessage());
-                        Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
-                        finish();
+                        if(!(volleyError instanceof ParseError)) {
+                            Log.e("HAHAHASIJBAEC", volleyError.getMessage());
+
+                            Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                            finish();
+                        }
 
                     }
                 }, (url1 + mEvent.getID()));

@@ -81,13 +81,13 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                 UserAccount.mAccountName = editText.getText().toString();
                 //profile fields
                 editText = (EditText) findViewById(R.id.activity_create_account_f_name);
-                String fname = editText.getText().toString();
+                final String fname = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_account_l_name);
-                String lname = editText.getText().toString();
+                final String lname = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_account_birthdate);
-                String birthdate = editText.getText().toString();
+                final String birthdate = editText.getText().toString();
                 editText = (EditText) findViewById(R.id.activity_create_account_gender);
-                String gender = editText.getText().toString();
+                final String gender = editText.getText().toString();
                 
 
                 //create profile.
@@ -102,60 +102,91 @@ public class CreateAccountActivity extends ActionBarActivity implements View.OnC
                         || gender.isEmpty())
                     return;
 
-                final UUID uuid = UUID.randomUUID();
-//                JsonObjectRequest check = new JsonObjectRequest(Request.Method.GET,
-//                        "http://ec2-52-0-168-55.compute-1.amazonaws.com/check_account.json?username=" + UserAccount.mAccountName,
-//                        null,
-//                        new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject jsonObject) {
-//
-//                                Toaster.popShortSimpleToast(CreateAccountActivity.this, "THAT USERNAME EXISTS");
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError volleyError) {
-//
-//                    }
-//                });
-
-//                RequestManager.getInstance(this).addToRequestQueue(check);
-                final Profile profile = new Profile(fname, lname, birthdate, gender, uuid);
-
-
-                JsonObjectRequest createProfileRequest = profile.createRequest(new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        UserAccount.mUID = uuid.toString();
-                        //create account
-                        JsonObjectRequest createAccountRequest = UserAccount.createAccountRequest(p_word, new Response.Listener<JSONObject>() {
+                JsonObjectRequest check = new JsonObjectRequest(Request.Method.GET,
+                        "http://ec2-52-0-168-55.compute-1.amazonaws.com/check_account.json?username=" + UserAccount.mAccountName,
+                        null,
+                        new Response.Listener<JSONObject>() {
                             @Override
-                            public void onResponse(JSONObject request) {
-                                Intent getAccountIntent = new Intent(CreateAccountActivity.this, GetAccountActivity.class);
-                                getAccountIntent.putExtra("username", UserAccount.mAccountName);
-                                startActivity(getAccountIntent);
-                                finish();
+                            public void onResponse(JSONObject jsonObject) {
+
+                                Toaster.popShortSimpleToast(CreateAccountActivity.this, "THAT USERNAME EXISTS");
                             }
                         }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
-                                finish();
-                            }
-                        });
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            final UUID uuid = UUID.randomUUID();
+                            final Profile profile = new Profile(fname, lname, birthdate, gender, uuid);
+                            JsonObjectRequest createProfileRequest = profile.createRequest(new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    UserAccount.mUID = uuid.toString();
+                                    //create account
+                                    JsonObjectRequest createAccountRequest = UserAccount.createAccountRequest(p_word, new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject request) {
+                                            Intent getAccountIntent = new Intent(CreateAccountActivity.this, GetAccountActivity.class);
+                                            getAccountIntent.putExtra("username", UserAccount.mAccountName);
+                                            startActivity(getAccountIntent);
+                                            finish();
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError volleyError) {
+                                            Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                                            finish();
+                                        }
+                                    });
 
-                        RequestManager.getInstance(CreateAccountActivity.this).addToRequestQueue(createAccountRequest);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
-                        finish();
-                    }
+                                    RequestManager.getInstance(CreateAccountActivity.this).addToRequestQueue(createAccountRequest);
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                                    finish();
+                                }
+                            });
+
+
+                            RequestManager.getInstance(getApplicationContext()).addToRequestQueue(createProfileRequest);
+                        }
                 });
 
-
-                RequestManager.getInstance(this).addToRequestQueue(createProfileRequest);
+                RequestManager.getInstance(this).addToRequestQueue(check);
+//                final Profile profile = new Profile(fname, lname, birthdate, gender, uuid);
+//                JsonObjectRequest createProfileRequest = profile.createRequest(new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        UserAccount.mUID = uuid.toString();
+//                        //create account
+//                        JsonObjectRequest createAccountRequest = UserAccount.createAccountRequest(p_word, new Response.Listener<JSONObject>() {
+//                            @Override
+//                            public void onResponse(JSONObject request) {
+//                                Intent getAccountIntent = new Intent(CreateAccountActivity.this, GetAccountActivity.class);
+//                                getAccountIntent.putExtra("username", UserAccount.mAccountName);
+//                                startActivity(getAccountIntent);
+//                                finish();
+//                            }
+//                        }, new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError volleyError) {
+//                                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+//                                finish();
+//                            }
+//                        });
+//
+//                        RequestManager.getInstance(CreateAccountActivity.this).addToRequestQueue(createAccountRequest);
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError volleyError) {
+//                        Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+//                        finish();
+//                    }
+//                });
+//
+//
+//                RequestManager.getInstance(this).addToRequestQueue(createProfileRequest);
                 break;
         }
     }

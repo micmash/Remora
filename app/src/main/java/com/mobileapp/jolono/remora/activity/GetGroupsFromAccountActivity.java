@@ -4,9 +4,11 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.ParseError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -53,8 +55,10 @@ public class GetGroupsFromAccountActivity extends ActionBarActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
-                finish();
+                if(!(volleyError instanceof ParseError)) {
+                    Toaster.popShortSimpleToast(getApplicationContext(), "Lost network connection.");
+                    finish();
+                }
             }
         });
 

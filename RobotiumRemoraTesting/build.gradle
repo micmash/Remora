@@ -53,7 +53,7 @@ android {
 task assembleDebug(overwrite: true) {}
 
 task copyTask(type: Copy) {
-    from 'C:/Users/Josh/Documents/GitHub/Remora/app/build/outputs/apk/app-release-unsigned_debug.apk'
+    from 'C:/Users/Noah/AndroidStudioProjects/Remora/app/build/outputs/apk/app-debug.apk'
     into 'build/outputs/apk/'
     rename {
         'RobotiumRemoraTesting-debug.apk'
