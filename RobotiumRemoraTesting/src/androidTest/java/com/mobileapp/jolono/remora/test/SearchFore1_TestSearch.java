@@ -64,8 +64,6 @@ public class SearchFore1_TestSearch extends ActivityInstrumentationTestCase2 {
         solo.enterText((android.widget.EditText) solo.getView("activity_search_search"), "e1");
         //Click on search
         solo.clickOnView(solo.getView("activity_search_search_button"));
-        //Wait for activity: 'com.mobileapp.jolono.remora.activity.GetAccountActivity'
-        assertTrue("EventListFragment is not found!", solo.waitForFragmentByTag("EventListFragment"));
-
+        assertTrue("GetEventsFromAccount is not found!", solo.waitForActivity("GetEventsFromAccount"));
     }
 }
