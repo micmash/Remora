@@ -59,10 +59,10 @@ public class RegisterNewUser extends ActivityInstrumentationTestCase2 {
         //Enter the text: 'tqywr1'
 		solo.clearEditText((android.widget.EditText) solo.getView("activity_create_account_password"));
 		solo.enterText((android.widget.EditText) solo.getView("activity_create_account_password"), "tqywr1");
-        //Click on Name
+
 		solo.clickOnView(solo.getView("activity_create_account_name"));
-        //Click on Name
-		solo.clickOnView(solo.getView("activity_create_account_name"));
+        solo.clearEditText((android.widget.EditText) solo.getView("activity_create_account_name"));
+        solo.enterText((android.widget.EditText) solo.getView("activity_create_account_name"), "MICKBAGZZS");
         //Enter the text: 'test master flex'
 		solo.clearEditText((android.widget.EditText) solo.getView("activity_create_account_name"));
 		solo.enterText((android.widget.EditText) solo.getView("activity_create_account_name"), "test master flex");
