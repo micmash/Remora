@@ -108,7 +108,8 @@ public class RoboCreateEventAndCreateGroupViewGroupsAfter extends ActivityInstru
 		solo.enterText((android.widget.EditText) solo.getView("activity_create_group_description"), "we are all robots");
         //Click on Save Group
 		solo.clickOnView(solo.getView("activity_create_group_save_group"));
-        solo.goBackToActivity("GetAccountActivity");
-        assertTrue("GetAccountActivity is not found!", solo.waitForActivity("GetAccountActivity"));
+        //solo.goBackToActivity("GetAccountActivity");
+        solo.goBack();
+        assertTrue("GetEventActivity is not found!", solo.waitForActivity("GetEventActivity"));
 	}
 }
