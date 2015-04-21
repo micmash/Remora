@@ -70,7 +70,7 @@ public class RegisterNewUser extends ActivityInstrumentationTestCase2 {
 		solo.clickOnView(solo.getView("activity_create_account_birthdate"));
         //Enter the text: '5/6/1987'
 		solo.clearEditText((android.widget.EditText) solo.getView("activity_create_account_birthdate"));
-		solo.enterText((android.widget.EditText) solo.getView("activity_create_account_birthdate"), "5/6/1987");
+		solo.enterText((android.widget.EditText) solo.getView("activity_create_account_birthdate"), "561987");
         //Click on Empty Text View
 		solo.clickOnView(solo.getView("activity_create_account_gender"));
         //Enter the text: 'm'
