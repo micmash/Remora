@@ -15,6 +15,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Event Name"
+            android:id="@+id/textView10" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/create_group_activity_event_name"
             android:layout_above="@+id/linearLayout"
@@ -25,8 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Event Name"
-            android:id="@+id/textView10" />
+            android:text="Group Name"
+            android:id="@+id/textView11" />
 
         <EditText
             android:layout_width="match_parent"
@@ -43,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Group Name"
-            android:id="@+id/textView11" />
+            android:text="Group Description"
+            android:id="@+id/textView12" />
 
         <EditText
             android:layout_width="match_parent"
@@ -57,22 +64,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Group Description"
-            android:id="@+id/textView12" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/activity_create_group_leader" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Group Leader"
-            android:id="@+id/textView13" />
 
         <Button
             android:layout_width="wrap_content"
