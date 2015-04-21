@@ -1,9 +1,12 @@
 package com.mobileapp.jolono.remora.test;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.TextView;
 
 import com.robotium.solo.Solo;
 import com.robotium.solo.Timeout;
+
+import java.util.ArrayList;
 
 
 @SuppressWarnings("rawtypes")
@@ -64,8 +67,8 @@ public class SearchFore1_TestSearch extends ActivityInstrumentationTestCase2 {
         solo.enterText((android.widget.EditText) solo.getView("activity_search_search"), "e1");
         //Click on search
         solo.clickOnView(solo.getView("activity_search_search_button"));
-        //Wait for activity: 'com.mobileapp.jolono.remora.activity.GetAccountActivity'
-        assertTrue("EventListFragment is not found!", solo.waitForFragmentByTag("EventListFragment"));
+        assertTrue("GetEventsFromAccount is not found!", solo.waitForActivity("GetEventsFromAccount"));
 
+        //assertTrue("GetEventActivity is not found!", solo.waitForActivity("GetEventActivity"));
     }
 }

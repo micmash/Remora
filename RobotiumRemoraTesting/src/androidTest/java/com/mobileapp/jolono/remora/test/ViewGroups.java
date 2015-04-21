@@ -54,17 +54,9 @@ public class ViewGroups extends ActivityInstrumentationTestCase2 {
         solo.clickOnView(solo.getView("email_sign_in_button"));
         //Wait for activity: 'com.mobileapp.jolono.remora.activity.GetAccountActivity'
         assertTrue("GetAccountActivity is not found!", solo.waitForActivity("GetAccountActivity"));
-        solo.clickOnView(solo.getView("activity_get_account_search_button"));
 
-        //Click on Empty Text View
-        solo.clickOnView(solo.getView("activity_get_groups_from_account"));
-        //Enter the text: 'e1'
-        solo.clearEditText((android.widget.EditText) solo.getView("activity_search_search"));
-        solo.enterText((android.widget.EditText) solo.getView("activity_search_search"), "e1");
-        //Click on search
-        solo.clickOnView(solo.getView("activity_search_search_button"));
-        //Wait for activity: 'com.mobileapp.jolono.remora.activity.GetAccountActivity'
-        assertTrue("EventListFragment is not found!", solo.waitForFragmentByTag("EventListFragment"));
+        solo.clickOnView(solo.getView("activity_get_account_groups_button"));
+        assertTrue("GetGroupsFromAccountActivity is not found!", solo.waitForActivity("GetGroupsFromAccountActivity"));
 
     }
 }
